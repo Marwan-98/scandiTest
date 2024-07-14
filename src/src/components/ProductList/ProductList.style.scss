@@ -1,0 +1,15 @@
+.ProductList {
+  padding-bottom: 186px;
+
+  &-Heading {
+    font-size: 42px;
+    font-weight: 400;
+    margin-bottom: 103px;
+  }
+
+  &-List {
+    display: inline-grid;
+    grid-template-columns: auto auto auto;
+    grid-column-gap: 40px;
+  }
+}

@@ -1,0 +1,114 @@
+.ProductDetails {
+  display: flex;
+  gap: 110px;
+
+  &-SubTitle {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  &-Images {
+    display: flex;
+    gap: 40px;
+
+    &List {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    &Boxes {
+      height: 80px;
+      width: 79px;
+    }
+
+    &Slider {
+      position: relative;
+
+      &Chevron {
+        cursor: pointer;
+        height: 32px;
+        width: 32px;
+        padding: 8px;
+        background: #000000ba;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 40%;
+
+        &-Right {
+          right: 0;
+        }
+      }
+    }
+
+    &Main {
+      width: 575px;
+      height: 478px;
+    }
+  }
+
+  &-AttributeOptions {
+    display: flex;
+    gap: 12px;
+
+    &-Text {
+      width: 63px;
+      height: 45px;
+      border: 1px solid #1d1f22;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      &.selected {
+        color: #fff;
+        background: #1d1f22;
+      }
+    }
+
+    &-Color {
+      width: 36px;
+      height: 36px;
+      border: 1px 0px 0px 0px;
+      color: transparent;
+      cursor: pointer;
+
+      &.selected {
+        border: 1px solid #5ece7b;
+      }
+    }
+  }
+
+  &-Price {
+    &Amount {
+      font-size: 24px;
+      font-weight: 700;
+    }
+  }
+
+  &-AddToCartBtn {
+    width: 292px;
+    height: 52px;
+    border: none;
+    padding: 16px 32px 16px 32px;
+    margin-block-start: 20px;
+    margin-block-end: 40px;
+    background-color: #5ece7b;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  &-Description {
+    width: 292px;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+    color: #1d1f22;
+  }
+}

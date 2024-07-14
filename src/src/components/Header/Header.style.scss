@@ -1,0 +1,26 @@
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 24px;
+
+  &-Nav {
+    display: flex;
+    list-style: none;
+    gap: 10px;
+
+    &-Item {
+      font-weight: 400;
+      font-size: 16px;
+      padding-inline: 16px;
+      padding-bottom: 32px;
+      text-transform: uppercase;
+
+      &-Selected {
+        font-weight: 600;
+        color: #5ece7b;
+        border-bottom: 2px solid #5ece7b;
+      }
+    }
+  }
+}

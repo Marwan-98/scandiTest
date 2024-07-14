@@ -1,0 +1,19 @@
+* {
+  font-family: "Raleway";
+}
+
+.App {
+  padding-inline: 101px;
+
+  .Cart {
+    &-Active {
+      position: absolute;
+      height: calc(100% - 101px);
+      width: 100%;
+      bottom: 0;
+      left: 0;
+      background: #39374838;
+      z-index: 2;
+    }
+  }
+}
