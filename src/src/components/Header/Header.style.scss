@@ -25,4 +25,21 @@
       }
     }
   }
+
+  .Cart {
+    &-ItemsCount {
+      position: absolute;
+      top: 45px;
+      right: 110px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%; /* This makes the div circular */
+      background-color: #000; /* Background color of the circle */
+      color: #fff; /* Text color */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+    }
+  }
 }

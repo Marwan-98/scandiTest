@@ -5,7 +5,11 @@ export const DataContext = createContext();
 export class DataProvider extends Component {
   constructor() {
     super();
-    this.state = { cartData: {} };
+    this.state = {
+      cartData: {
+        itemsCount: 2,
+      },
+    };
   }
 
   render() {
