@@ -22,16 +22,18 @@ class App extends Component {
     return (
       <DataProvider>
         <div className="App">
-          <Header cartActive={this.state.cartActive} setCartActive={this.updateState} />
-          <main>
-            <div className={`Overlay ${this.state.cartActive && "Overlay-Active"}`} />
-            <BrowserRouter>
+          <BrowserRouter>
+            <Header cartActive={this.state.cartActive} setCartActive={this.updateState} />
+            <main>
+              <div className={`Overlay ${this.state.cartActive && "Overlay-Active"}`} />
               <Routes>
                 <Route path="/all" element={<ProductList />} />
+                <Route path="/clothes" element={<ProductList />} />
+                <Route path="/tech" element={<ProductList />} />
                 <Route path="/products/:productId" element={<ProductDetails />} />
               </Routes>
-            </BrowserRouter>
-          </main>
+            </main>
+          </BrowserRouter>
         </div>
       </DataProvider>
     );

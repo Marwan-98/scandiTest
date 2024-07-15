@@ -3,19 +3,23 @@ import logo from "../../logo.png";
 import cartIcon from "./cart.png";
 import "./Header.style.scss";
 import CartOverlay from "../CartOverlay/CartOverlay";
+import { Link } from "react-router-dom";
+import WithRouter from "../../WithRouter";
 
 class Header extends Component {
-  log() {
-    console.log(this.props);
-  }
-
   render() {
     return (
       <header className="Header">
         <nav className="Header-Nav">
-          <li className="Header-Nav-Item Header-Nav-Item-Selected">Women</li>
-          <li className="Header-Nav-Item">Men</li>
-          <li className="Header-Nav-Item">Kids</li>
+          <Link to={"/all"} className="Header-Nav-Item Header-Nav-Item-Selected">
+            All
+          </Link>
+          <Link to={"/clothes"} className="Header-Nav-Item">
+            Clothes
+          </Link>
+          <Link to={"/tech"} className="Header-Nav-Item">
+            Tech
+          </Link>
         </nav>
         <img src={logo} alt="logo" height={41} width={41} />
         <img src={cartIcon} alt="cart icon" height={20} width={20} onClick={() => this.props.setCartActive()} />
@@ -25,4 +29,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default WithRouter(Header);
