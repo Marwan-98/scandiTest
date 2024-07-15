@@ -1,8 +1,24 @@
 import React, { Component } from "react";
 import "./ProductList.style.scss";
 import ProductListItem from "../ProductListItem/ProductListItem.jsx";
+import { gql, request } from "graphql-request";
+
+const document = gql`
+  query GetLocations {
+    locations {
+      id
+      name
+      description
+      photo
+    }
+  }
+`;
 
 class ProductList extends Component {
+  async componentDidMount() {
+    await request("https://flyby-router-demo.herokuapp.com/", document).then((data) => console.log(data));
+  }
+
   render() {
     return (
       <div className="ProductList">
