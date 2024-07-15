@@ -8,48 +8,6 @@
     text-transform: uppercase;
   }
 
-  &-Images {
-    display: flex;
-    gap: 40px;
-
-    &List {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    &Boxes {
-      height: 80px;
-      width: 79px;
-    }
-
-    &Slider {
-      position: relative;
-
-      &Chevron {
-        cursor: pointer;
-        height: 32px;
-        width: 32px;
-        padding: 8px;
-        background: #000000ba;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        top: 40%;
-
-        &-Right {
-          right: 0;
-        }
-      }
-    }
-
-    &Main {
-      width: 575px;
-      height: 478px;
-    }
-  }
-
   &-AttributeOptions {
     display: flex;
     gap: 12px;

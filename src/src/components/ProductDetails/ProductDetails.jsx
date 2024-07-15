@@ -1,36 +1,18 @@
 import React, { Component } from "react";
-import ProductImage from "../ProductListItem/image.png";
 import "./ProductDetails.style.scss";
-import ChevronIcon from "../ChevronIcon/ChevronIcon";
+import Gallery from "../Gallery/Gallery";
 
 class ProductDetails extends Component {
   render() {
     return (
       <div className="ProductDetails">
-        <div className="ProductDetails-Images">
-          <div className="ProductDetails-ImagesList">
-            {Array.from({ length: 4 }).map((_, idx) => (
-              <div key={idx}>
-                <img className="ProductDetails-ImagesBoxes" src={ProductImage} alt="product slide" />
-              </div>
-            ))}
-          </div>
-          <div className="ProductDetails-ImagesSlider">
-            <div className="ProductDetails-ImagesSliderChevron">
-              <ChevronIcon className="ProductDetails-ImagesSliderChevron-Right" />
-            </div>
-            <img className="ProductDetails-ImagesMain" src={ProductImage} alt="current slid" />
-            <div className="ProductDetails-ImagesSliderChevron ProductDetails-ImagesSliderChevron-Right">
-              <ChevronIcon rotate={180} className="ProductDetails-ImagesSliderChevron-Left" />
-            </div>
-          </div>
-        </div>
-        <div className="ProductDetails-Info">
+        <Gallery />
+        <div>
           <div className="ProductDetails-Title">
             <h1>Running Shorts</h1>
           </div>
-          <div className="ProductDetails-Attributes">
-            <div className="ProductDetails-AttributeSet">
+          <div>
+            <div>
               <h2 className="ProductDetails-SubTitle">Size:</h2>
               <div className="ProductDetails-AttributeOptions">
                 <div className="ProductDetails-AttributeOptions-Text">XS</div>
@@ -39,7 +21,7 @@ class ProductDetails extends Component {
                 <div className="ProductDetails-AttributeOptions-Text">L</div>
               </div>
             </div>
-            <div className="ProductDetails-AttributeSet">
+            <div>
               <h2 className="ProductDetails-SubTitle">Color:</h2>
               <div className="ProductDetails-AttributeOptions">
                 <div className="ProductDetails-AttributeOptions-Color selected" style={{ backgroundColor: "#D3D2D5" }}>
@@ -56,7 +38,7 @@ class ProductDetails extends Component {
           </div>
           <div className="ProductDetails-Price">
             <h2 className="ProductDetails-SubTitle">Price:</h2>
-            <span className="ProductDetails-PriceAmount">$50.00</span>
+            <span>$50.00</span>
           </div>
           <button className="ProductDetails-AddToCartBtn">ADD TO CART</button>
           <div className="ProductDetails-Description">

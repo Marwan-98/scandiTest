@@ -1,0 +1,55 @@
+.ProductGallery {
+  &-Images {
+    display: flex;
+    gap: 40px;
+
+    &List {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-height: 478px;
+      overflow-y: scroll;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    &Boxes {
+      height: 80px;
+      width: 79px;
+      cursor: pointer;
+    }
+
+    &Slider {
+      position: relative;
+
+      &Chevron {
+        cursor: pointer;
+        height: 40px;
+        width: 40px;
+        padding: 8px;
+        background-color: #000000ba;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 40%;
+        border: none;
+        outline: none;
+        box-shadow: none;
+
+        &-Right {
+          right: 0;
+        }
+      }
+    }
+
+    &Main {
+      width: 575px;
+      height: 478px;
+    }
+  }
+}
