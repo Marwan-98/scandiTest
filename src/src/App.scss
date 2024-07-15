@@ -4,16 +4,18 @@
 
 .App {
   padding-inline: 101px;
+  position: relative;
 
-  .Cart {
+  .Overlay {
     &-Active {
       position: absolute;
-      height: calc(100% - 101px);
+      height: 100%;
       width: 100%;
+      top: 101px;
       bottom: 0;
       left: 0;
       background: #39374838;
-      z-index: 2;
+      z-index: 1;
     }
   }
 }

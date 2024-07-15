@@ -22,7 +22,7 @@ class App extends Component {
       <div className="App">
         <Header cartActive={this.state.cartActive} setCartActive={this.updateState} />
         <main>
-          <div className={`Cart ${this.state.cartActive && "Cart-Active"}`} />
+          <div className={`Overlay ${this.state.cartActive && "Overlay-Active"}`} />
           <BrowserRouter>
             <Routes>
               <Route path="/all" element={<ProductList />} />
