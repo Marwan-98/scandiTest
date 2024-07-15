@@ -1,11 +1,10 @@
 .CartOverlay {
   position: absolute;
   right: 72px;
-  width: 325px;
+  width: 350px;
   top: 78px;
   padding: 32px 16px 32px 16px;
   gap: 32px;
-  opacity: 0px;
   background-color: #fff;
   z-index: 3;
 
@@ -20,6 +19,7 @@
     &ListItem {
       display: flex;
       gap: 4px;
+      justify-content: space-between;
     }
 
     &Info {
@@ -28,7 +28,7 @@
     }
 
     &Image {
-      width: 121px;
+      width: 170px;
       height: 175px;
 
       img {
