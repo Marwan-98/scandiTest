@@ -27,6 +27,8 @@
   }
 
   .Cart {
+    cursor: pointer;
+
     &-ItemsCount {
       position: absolute;
       top: 45px;

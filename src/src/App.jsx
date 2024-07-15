@@ -8,24 +8,14 @@ import { Component } from "react";
 import { DataProvider } from "./DataContext.js";
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = { cartActive: false };
-    this.updateState = this.updateState.bind(this);
-  }
-
-  updateState() {
-    this.setState({ cartActive: !this.state.cartActive });
-  }
-
   render() {
     return (
       <DataProvider>
         <div className="App">
           <BrowserRouter>
-            <Header cartActive={this.state.cartActive} setCartActive={this.updateState} />
+            <Header />
             <main>
-              <div className={`Overlay ${this.state.cartActive && "Overlay-Active"}`} />
+              {/* <div className={`Overlay ${this.state.cartActive && "Overlay-Active"}`} /> */}
               <Routes>
                 <Route path="/all" element={<ProductList />} />
                 <Route path="/clothes" element={<ProductList />} />

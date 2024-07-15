@@ -11,7 +11,7 @@ class Header extends Component {
   render() {
     return (
       <DataContext.Consumer>
-        {({ cartData: { itemsCount } }) => (
+        {({ cartData: { itemsCount }, isCartOverlayVisible, updateCartOverlayVisibilty }) => (
           <header className="Header">
             <nav className="Header-Nav">
               <Link to={"/all"} className="Header-Nav-Item Header-Nav-Item-Selected">
@@ -25,11 +25,11 @@ class Header extends Component {
               </Link>
             </nav>
             <img src={logo} alt="logo" height={41} width={41} />
-            <div>
+            <div onClick={() => updateCartOverlayVisibilty()} className="Cart">
               {itemsCount > 0 && <span className="Cart-ItemsCount">{itemsCount}</span>}
-              <img src={cartIcon} alt="cart icon" height={20} width={20} onClick={() => this.props.setCartActive()} />
+              <img src={cartIcon} alt="cart icon" height={20} width={20} />
             </div>
-            {this.props.cartActive && <CartOverlay />}
+            {isCartOverlayVisible && <CartOverlay />}
           </header>
         )}
       </DataContext.Consumer>
