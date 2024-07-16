@@ -17,9 +17,7 @@ class App extends Component {
             <main>
               {/* <div className={`Overlay ${this.state.cartActive && "Overlay-Active"}`} /> */}
               <Routes>
-                <Route path="/all" element={<ProductList />} />
-                <Route path="/clothes" element={<ProductList />} />
-                <Route path="/tech" element={<ProductList />} />
+                <Route path="/category/:categoryId" element={<ProductList />} />
                 <Route path="/products/:productId" element={<ProductDetails />} />
               </Routes>
             </main>

@@ -1,22 +1,36 @@
 import React, { Component } from "react";
 import "./ProductList.style.scss";
 import ProductListItem from "../ProductListItem/ProductListItem.jsx";
-import { gql, request } from "graphql-request";
-
-const document = gql`
-  query GetLocations {
-    locations {
-      id
-      name
-      description
-      photo
-    }
-  }
-`;
+import { request } from "graphql-request";
+import { PRODUCT_BY_CATEGORY } from "../../constants/queries.js";
+import WithRouter from "../../WithRouter.jsx";
 
 class ProductList extends Component {
+  constructor() {
+    super();
+    this.state = {
+      products: [],
+    };
+  }
+
+  async componentDidUpdate() {
+    try {
+      await request("http://192.168.1.8:80/scandiTest/", PRODUCT_BY_CATEGORY(this.props.router.params.categoryId)).then(
+        (data) => this.setState({ products: data })
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async componentDidMount() {
-    await request("https://flyby-router-demo.herokuapp.com/", document).then((data) => console.log(data));
+    try {
+      await request("http://192.168.1.8:80/scandiTest/", PRODUCT_BY_CATEGORY(this.props.router.params.categoryId)).then(
+        (data) => this.setState({ products: data })
+      );
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   render() {
@@ -24,8 +38,8 @@ class ProductList extends Component {
       <div className="ProductList">
         <h1 className="ProductList-Heading">Women</h1>
         <div className="ProductList-List">
-          {Array.from({ length: 6 }).map((_, idx) => (
-            <ProductListItem key={idx} />
+          {this.state.products.products?.map((product, idx) => (
+            <ProductListItem product={product} key={idx} />
           ))}
         </div>
       </div>
@@ -33,4 +47,4 @@ class ProductList extends Component {
   }
 }
 
-export default ProductList;
+export default WithRouter(ProductList);
