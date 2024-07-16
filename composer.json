@@ -1,11 +1,10 @@
 {
-    "require": {
-        "webonyx/graphql-php": "^15.12",
-        "ext-mysqli": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "./app"
-        }
+  "require": {
+    "webonyx/graphql-php": "^15.12"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "./app"
     }
+  }
 }
