@@ -14,9 +14,9 @@ class ProductResolver {
         $this->product = new ProductModel();
     }
 
-    public function resolveProducts(): array
+    public function resolveProducts(string $categoryId): array
     {
-        return $this->product->getProducts();
+        return $this->product->getProducts($categoryId);
     }
 
     public function resolveProductById(string $productId): array

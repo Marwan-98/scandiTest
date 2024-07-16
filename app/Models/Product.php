@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace App\Models;
 
 class Product extends Model {
-    public function getProducts(): array
+    public function getProducts(string $categoryId): array
     {
-        $result = $this->database->query("SELECT * FROM product");
+        $stmt = $this->database->prepare("SELECT * FROM product WHERE category_id = ?");
+        $stmt->bind_param('s', $categoryId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
         $products = [];
 
         while ($product = $result->fetch_assoc()) {

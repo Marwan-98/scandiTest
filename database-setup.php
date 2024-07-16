@@ -19,11 +19,11 @@ $data = json_decode($json, true);
 $categories = $data["data"]["categories"];
 $products = $data["data"]["products"];
 
-//$category_stmt = $conn->prepare("INSERT INTO Category (name, __typename) VALUES (?, ?)");
-//$category_stmt->bind_param("ss", $name, $category_typename);
+$create_category_stmt = $conn->prepare("INSERT INTO category (name) VALUES (?)");
+$create_category_stmt->bind_param("s", $category_name);
 
-$product_stmt = $conn->prepare("INSERT INTO product (id, name, inStock, gallery, description, brand) VALUES (?, ?, ?, ?, ?, ?)");
-$product_stmt->bind_param("ssisss", $product_id, $product_name, $in_stock, $gallery, $product_description, $brand);
+$product_stmt = $conn->prepare("INSERT INTO product (id, name, category_id, inStock, gallery, description, brand) VALUES (?, ?, ?, ?, ?, ?, ?)");
+$product_stmt->bind_param("ssiisss", $product_id, $product_name, $category_id, $in_stock, $gallery, $product_description, $brand);
 
 $find_attribute_stmt = $conn->prepare("SELECT * FROM attribute where id = ?");
 $find_attribute_stmt->bind_param("s", $attribute_id);
@@ -37,8 +37,8 @@ $find_value_stmt->bind_param("s", $item_id);
 $create_value_stmt = $conn->prepare("INSERT INTO value (id, displayValue, value) VALUES (?, ?, ?)");
 $create_value_stmt->bind_param("sss", $item_id,$item_name, $item_value);
 
-//$find_category_stmt = $conn->prepare("SELECT * FROM Category where name = ?");
-//$find_category_stmt->bind_param("s", $category_name);
+$find_category_stmt = $conn->prepare("SELECT * FROM category where name = ?");
+$find_category_stmt->bind_param("s", $category_name);
 
 $create_price_stmt = $conn->prepare("INSERT INTO price (product_id, currency_id, amount) VALUES (?, ?, ?)");
 $create_price_stmt->bind_param("sid", $product_id, $currency_id, $product_amount);
@@ -59,27 +59,26 @@ $create_attribute_set_stmt->bind_param("ss", $product_id, $attribute_id);
 $create_product_attribute_value_stmt = $conn->prepare("INSERT INTO product_attribute_value (product_id, attribute_id, item_id) VALUES (?, ?, ?)");
 $create_product_attribute_value_stmt->bind_param("sss", $product_id, $attribute_id, $item_id);
 
-//foreach ($categories as $category) {
-//    $category_name = $category["name"];
-//    $category_typename = $category["__typename"];
-//    $category_stmt->execute();
-//}
+foreach ($categories as $category) {
+    $category_name = $category["name"];
+    $create_category_stmt->execute();
+}
 
 foreach ($products as $product) {
     $product_id = $product["id"];
     $product_name = $product["name"];
-//    $category_name = $product["category"];
+    $category_name = $product["category"];
     $in_stock = $product["inStock"];
     $gallery = json_encode($product["gallery"]);
     $product_description = $product["description"];
     $brand = $product["brand"];
 
+    $find_category_stmt->execute();
+    $result = $find_category_stmt->get_result();
+    $found_category = $result->fetch_assoc();
+    $category_id = $found_category["id"];
 
     $product_stmt->execute();
-
-//    $category_stmt->execute();
-//    $result = $category_stmt->get_result();
-//    $found_category = $result->fetch_assoc();
 
     $attributes = $product["attributes"];
 

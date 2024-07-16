@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Resolvers\CategoryResolver;
 use App\Resolvers\ProductResolver;
+use App\Types\CategoryType;
 use GraphQL\GraphQL as GraphQLBase;
 use App\Types\ProductType;
 use GraphQL\Type\Definition\ObjectType;
@@ -17,15 +19,19 @@ class GraphQL {
     {
         try {
             $productType = new ProductType();
+            $categoryType = new CategoryType();
 
             $queryType = new ObjectType([
                 'name' => 'Query',
                 'fields' => [
                     'products' => [
                         'type' => Type::listOf($productType),
-                        'resolve' => function() {
+                        'args' => [
+                            'categoryId' => ['type' => Type::string()],
+                        ],
+                        'resolve' => function($root, $args) {
                             $productModel = new ProductResolver();
-                            return $productModel->resolveProducts();
+                            return $productModel->resolveProducts($args["categoryId"]);
                         },
                     ],
                     'product' => [
@@ -36,6 +42,14 @@ class GraphQL {
                         'resolve' => function($rootValue, $args) {
                             $productModel = new ProductResolver();
                             return $productModel->resolveProductById($args['id']);
+                        }
+                    ],
+                    'categories' => [
+                        'type' => Type::listOf($categoryType),
+                        'resolve' => function($rootValue, $args) {
+                            $categoryResolver = new CategoryResolver();
+
+                            return $categoryResolver->resolveCategories();
                         }
                     ]
                 ],
