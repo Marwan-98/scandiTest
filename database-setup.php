@@ -1,8 +1,8 @@
 <?php
 
-$servername = "127.0.0.1";
+$servername = "mysql";
 $username = "root";
-$password = 'xcJUBDq*Li4$YZ';
+$password = 'temppassword';
 $dbname = "SCANDI_TEST";
 
 // Create connection
@@ -18,6 +18,71 @@ $data = json_decode($json, true);
 
 $categories = $data["data"]["categories"];
 $products = $data["data"]["products"];
+
+$conn->query("CREATE TABLE category (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL
+            );");
+
+$conn->query("CREATE TABLE product (
+                id VARCHAR(255) PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                category_id INT NOT NULL,
+                inStock BOOLEAN NOT NULL,
+                gallery VARCHAR(255),
+                description VARCHAR(255),
+                brand VARCHAR(255),
+                FOREIGN KEY (category_id) REFERENCES category(id)
+            );");
+
+$conn->query("CREATE TABLE attribute (
+                id VARCHAR(255) PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                type VARCHAR(255) NOT NULL
+            );");
+
+$conn->query("CREATE TABLE value (
+                id VARCHAR(255) PRIMARY KEY,
+                displayValue VARCHAR(255) NOT NULL,
+                value VARCHAR(255) NOT NULL
+            );");
+
+$conn->query("CREATE TABLE currency (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                label VARCHAR(3),
+                symbol VARCHAR(1) NOT NULL
+            );");
+
+$conn->query("CREATE TABLE price (
+                product_id VARCHAR(255) NOT NULL,
+                currency_id INT NOT NULL,
+                amount DECIMAL(5, 2) NOT NULL,
+                FOREIGN KEY (product_id) REFERENCES product(id),
+                FOREIGN KEY (currency_id) REFERENCES currency(id),
+
+                PRIMARY KEY (product_id, currency_id)
+            );");
+
+$conn->query("CREATE TABLE attribute_set (
+                product_id VARCHAR(255) NOT NULL,
+                attribute_id VARCHAR(255) NOT NULL,
+                FOREIGN KEY (product_id) REFERENCES product(id),
+                FOREIGN KEY (attribute_id) REFERENCES attribute(id),
+
+                PRIMARY KEY (product_id, attribute_id)
+            );");
+
+$conn->query("CREATE TABLE product_attribute_value (
+                product_id VARCHAR(255) NOT NULL,
+                attribute_id VARCHAR(255) NOT NULL,
+                item_id VARCHAR(255) NOT NULL,
+                FOREIGN KEY (attribute_id) REFERENCES attribute(id),
+                FOREIGN KEY (product_id) REFERENCES product(id),
+                FOREIGN KEY (item_id) REFERENCES value(id),
+
+                PRIMARY KEY (product_id, attribute_id, item_id)
+            );");
+
 
 $create_category_stmt = $conn->prepare("INSERT INTO category (name) VALUES (?)");
 $create_category_stmt->bind_param("s", $category_name);
