@@ -13,7 +13,7 @@ class Database extends Mysqli {
     /**
      * @var string
      */
-    private string $servername = "127.0.0.1";
+    private string $servername = "mysql";
 
     /**
      * @var string
@@ -23,7 +23,7 @@ class Database extends Mysqli {
     /**
      * @var string
      */
-    private string $password = 'xcJUBDq*Li4$YZ';
+    private string $password = 'temppassword';
 
     /**
      * @var string
