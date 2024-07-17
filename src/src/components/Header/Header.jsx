@@ -19,9 +19,7 @@ class Header extends Component {
 
   async componentDidMount() {
     try {
-      await request("http://192.168.1.8:80/scandiTest/", CATEGORIES_LIST).then((data) =>
-        this.setState({ categories: data })
-      );
+      await request("http://localhost:8000/", CATEGORIES_LIST).then((data) => this.setState({ categories: data }));
     } catch (e) {
       console.log(e);
     }

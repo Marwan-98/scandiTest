@@ -15,9 +15,11 @@ class ProductList extends Component {
 
   async componentDidUpdate() {
     try {
-      await request("http://192.168.1.8:80/scandiTest/", PRODUCT_BY_CATEGORY(this.props.router.params.categoryId)).then(
-        (data) => this.setState({ products: data })
-      );
+      await request("http://localhost:8000/", PRODUCT_BY_CATEGORY(this.props.router.params.categoryId)).then((data) => {
+        if (JSON.stringify(this.state.products) !== JSON.stringify(data.products)) {
+          this.setState({ products: data.products });
+        }
+      });
     } catch (e) {
       console.log(e);
     }
@@ -25,8 +27,8 @@ class ProductList extends Component {
 
   async componentDidMount() {
     try {
-      await request("http://192.168.1.8:80/scandiTest/", PRODUCT_BY_CATEGORY(this.props.router.params.categoryId)).then(
-        (data) => this.setState({ products: data })
+      await request("http://localhost:8000/", PRODUCT_BY_CATEGORY(this.props.router.params.categoryId)).then((data) =>
+        this.setState({ products: data.products })
       );
     } catch (e) {
       console.log(e);
@@ -38,7 +40,7 @@ class ProductList extends Component {
       <div className="ProductList">
         <h1 className="ProductList-Heading">Women</h1>
         <div className="ProductList-List">
-          {this.state.products.products?.map((product, idx) => (
+          {this.state.products?.map((product, idx) => (
             <ProductListItem product={product} key={idx} />
           ))}
         </div>
