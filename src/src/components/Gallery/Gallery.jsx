@@ -24,6 +24,10 @@ export class Gallery extends Component {
     this.setState({ currentImageIdx: index });
   }
 
+  componentDidUpdate() {
+    console.log(this.props);
+  }
+
   render() {
     return (
       <div className="ProductGallery-Images">

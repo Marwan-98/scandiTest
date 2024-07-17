@@ -16,6 +16,34 @@ export const PRODUCTS_LIST = gql`
   }
 `;
 
+export const PRODUCT_DETAILS = (id) => gql`
+  query Query {
+    product(id: "${id}") {
+      id
+      name
+      gallery
+      description
+      attributes {
+        id
+        name
+        items {
+          id
+          displayValue
+          value
+        }
+        type
+      }
+      prices {
+        amount
+        currency {
+          label
+          symbol
+        }
+      }
+    }
+  }
+`;
+
 export const CATEGORIES_LIST = gql`
   query Query {
     categories {

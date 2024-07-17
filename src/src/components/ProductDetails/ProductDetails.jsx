@@ -1,51 +1,65 @@
 import React, { Component } from "react";
 import "./ProductDetails.style.scss";
 import Gallery from "../Gallery/Gallery";
+import request from "graphql-request";
+import { PRODUCT_DETAILS } from "../../constants/queries";
+import WithRouter from "../../WithRouter";
 
 class ProductDetails extends Component {
+  constructor() {
+    super();
+    this.state = {
+      product: {},
+    };
+  }
+
+  async componentDidMount() {
+    try {
+      await request("http://localhost:8000/", PRODUCT_DETAILS(this.props.router.params.productId)).then((data) =>
+        this.setState({ product: data.product }, () => console.log(this.state.product))
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   render() {
     return (
       <div className="ProductDetails">
-        <Gallery />
+        <Gallery gallery={this.state.product?.gallery} />
         <div>
           <div className="ProductDetails-Title">
-            <h1>Running Shorts</h1>
+            <h1>{this.state.product.name}</h1>
           </div>
           <div>
-            <div>
-              <h2 className="ProductDetails-SubTitle">Size:</h2>
-              <div className="ProductDetails-AttributeOptions">
-                <div className="ProductDetails-AttributeOptions-Text">XS</div>
-                <div className="ProductDetails-AttributeOptions-Text selected">S</div>
-                <div className="ProductDetails-AttributeOptions-Text">M</div>
-                <div className="ProductDetails-AttributeOptions-Text">L</div>
-              </div>
-            </div>
-            <div>
-              <h2 className="ProductDetails-SubTitle">Color:</h2>
-              <div className="ProductDetails-AttributeOptions">
-                <div className="ProductDetails-AttributeOptions-Color selected" style={{ backgroundColor: "#D3D2D5" }}>
-                  XS
-                </div>
-                <div className="ProductDetails-AttributeOptions-Color" style={{ backgroundColor: "#2B2B2B" }}>
-                  S
-                </div>
-                <div className="ProductDetails-AttributeOptions-Color" style={{ backgroundColor: "#0F6450" }}>
-                  M
+            {this.state.product.attributes?.map((attribute) => (
+              <div key={attribute.id}>
+                <h2 className="ProductDetails-SubTitle">{attribute.name}:</h2>
+                <div className="ProductDetails-AttributeOptions">
+                  {attribute.items.map((item) => (
+                    <div
+                      key={item.id}
+                      className={`ProductDetails-AttributeOptions-${
+                        attribute.type[0].toUpperCase() + attribute.type.slice(1)
+                      }`}
+                      style={{ backgroundColor: item.value }}
+                    >
+                      {item.displayValue}
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
+            ))}
           </div>
           <div className="ProductDetails-Price">
             <h2 className="ProductDetails-SubTitle">Price:</h2>
-            <span>$50.00</span>
+            <span>
+              {this.state.product.prices?.currency.symbol} {this.state.product.prices?.amount}
+            </span>
           </div>
           <button className="ProductDetails-AddToCartBtn">ADD TO CART</button>
           <div className="ProductDetails-Description">
-            <p>
-              Find stunning women's cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses
-              and party dresses from all your favorite brands.
-            </p>
+            <p>{this.state.product?.description}</p>
           </div>
         </div>
       </div>
@@ -53,4 +67,4 @@ class ProductDetails extends Component {
   }
 }
 
-export default ProductDetails;
+export default WithRouter(ProductDetails);
