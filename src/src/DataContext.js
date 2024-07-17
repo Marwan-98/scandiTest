@@ -7,16 +7,27 @@ export class DataProvider extends Component {
     super();
     this.state = {
       cartData: {
+        products: [],
         itemsCount: 2,
       },
       isCartOverlayVisible: false,
     };
 
     this.updateCartOverlayVisibilty = this.updateCartOverlayVisibilty.bind(this);
+    this.addProductToCart = this.addProductToCart.bind(this);
   }
 
   updateCartOverlayVisibilty() {
     this.setState({ isCartOverlayVisible: !this.state.isCartOverlayVisible });
+  }
+
+  addProductToCart(newProduct) {
+    this.setState(
+      {
+        cartData: { ...this.state.cartData, products: [...this.state.cartData.products, { ...newProduct }] },
+      },
+      () => console.log(this.state.cartData)
+    );
   }
 
   render() {
@@ -26,6 +37,7 @@ export class DataProvider extends Component {
           cartData: this.state.cartData,
           isCartOverlayVisible: this.state.isCartOverlayVisible,
           updateCartOverlayVisibilty: this.updateCartOverlayVisibilty,
+          addProductToCart: this.addProductToCart,
         }}
       >
         {this.props.children}
