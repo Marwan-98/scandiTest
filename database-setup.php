@@ -29,10 +29,17 @@ $conn->query("CREATE TABLE product (
                 name VARCHAR(255) NOT NULL,
                 category_id INT NOT NULL,
                 inStock BOOLEAN NOT NULL,
-                gallery VARCHAR(255),
                 description VARCHAR(255),
                 brand VARCHAR(255),
                 FOREIGN KEY (category_id) REFERENCES category(id)
+            );");
+
+$conn->query("CREATE TABLE gallery (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                product_id VARCHAR(255) NOT NULL,
+                url VARCHAR(255) NOT NULL,
+
+                FOREIGN KEY (product_id) REFERENCES product(id)
             );");
 
 $conn->query("CREATE TABLE attribute (
@@ -87,8 +94,11 @@ $conn->query("CREATE TABLE product_attribute_value (
 $create_category_stmt = $conn->prepare("INSERT INTO category (name) VALUES (?)");
 $create_category_stmt->bind_param("s", $category_name);
 
-$product_stmt = $conn->prepare("INSERT INTO product (id, name, category_id, inStock, gallery, description, brand) VALUES (?, ?, ?, ?, ?, ?, ?)");
-$product_stmt->bind_param("ssiisss", $product_id, $product_name, $category_id, $in_stock, $gallery, $product_description, $brand);
+$product_stmt = $conn->prepare("INSERT INTO product (id, name, category_id, inStock, description, brand) VALUES (?, ?, ?, ?, ?, ?)");
+$product_stmt->bind_param("ssiiss", $product_id, $product_name, $category_id, $in_stock, $product_description, $brand);
+
+$gallery_stmt = $conn->prepare("INSERT INTO gallery (product_id, url) VALUES (?,?)");
+$gallery_stmt->bind_param("ss", $product_id, $url);
 
 $find_attribute_stmt = $conn->prepare("SELECT * FROM attribute where id = ?");
 $find_attribute_stmt->bind_param("s", $attribute_id);
@@ -134,7 +144,6 @@ foreach ($products as $product) {
     $product_name = $product["name"];
     $category_name = $product["category"];
     $in_stock = $product["inStock"];
-    $gallery = json_encode($product["gallery"]);
     $product_description = $product["description"];
     $brand = $product["brand"];
 
@@ -144,6 +153,10 @@ foreach ($products as $product) {
     $category_id = $found_category["id"];
 
     $product_stmt->execute();
+
+    foreach ($product["gallery"] as $url) {
+        $gallery_stmt->execute();
+    }
 
     $attributes = $product["attributes"];
 

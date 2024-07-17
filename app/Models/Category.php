@@ -9,8 +9,7 @@ class Category extends Model {
     {
         $stmt = $this->database->prepare('SELECT * FROM category');
         $stmt->execute();
-        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
-        return $result;
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 }

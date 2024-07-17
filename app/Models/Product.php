@@ -15,7 +15,6 @@ class Product extends Model {
         $products = [];
 
         while ($product = $result->fetch_assoc()) {
-            $product["gallery"] = json_decode($product["gallery"]);
             $products[] = $product;
         }
 
@@ -28,9 +27,6 @@ class Product extends Model {
         $stmt->bind_param("s", $id);
         $stmt->execute();
 
-        $product = $stmt->get_result()->fetch_assoc();
-        $product["gallery"] = json_decode($product["gallery"]);
-
-        return $product;
+        return $stmt->get_result()->fetch_assoc();
     }
 }

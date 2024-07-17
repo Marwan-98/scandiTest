@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Types;
 
 use App\Resolvers\AttributeResolver;
+use App\Resolvers\GalleryResolver;
 use App\Resolvers\PriceResolver;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
@@ -17,7 +18,14 @@ class ProductType extends ObjectType {
             'fields' => [
                 'id' => Type::string(),
                 'name' => Type::string(),
-                'gallery' => Type::listOf(Type::string()),
+                'gallery' => [
+                    'type' => Type::listOf(Type::string()),
+                    'resolve' => function ($product) {
+                        $galleryResolver = new GalleryResolver();
+
+                        return $galleryResolver->resolveProductGallery($product["id"]);
+                    }
+                ],
                 'description' => Type::string(),
                 'attributes' => [
                     'type' => Type::listOf(new AttributeType()),

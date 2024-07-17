@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ProductImage from "../ProductListItem/image.png";
 import ChevronIcon from "../ChevronIcon/ChevronIcon";
 import "./Gallery.style.scss";
 
@@ -15,7 +14,8 @@ export class Gallery extends Component {
     const currentIndex = this.state.currentImageIdx;
     const newIndex = currentIndex + amount;
 
-    const wrappedIndex = newIndex > 5 ? 0 : newIndex < 0 ? 5 : newIndex;
+    const wrappedIndex =
+      newIndex > this.props.gallery.length - 1 ? 0 : newIndex < 0 ? this.props.gallery.length - 1 : newIndex;
 
     this.setState({ currentImageIdx: wrappedIndex });
   }
@@ -24,17 +24,13 @@ export class Gallery extends Component {
     this.setState({ currentImageIdx: index });
   }
 
-  componentDidUpdate() {
-    console.log(this.props);
-  }
-
   render() {
     return (
       <div className="ProductGallery-Images">
         <div className="ProductGallery-ImagesList">
-          {Array.from({ length: 5 }).map((_, idx) => (
+          {this.props.gallery?.map((url, idx) => (
             <div key={idx} onClick={() => this.setCurrentImageIndex(idx)}>
-              <img className="ProductGallery-ImagesBoxes" src={ProductImage} alt="product slide" />
+              <img className="ProductGallery-ImagesBoxes" src={url} alt="product slide" />
             </div>
           ))}
         </div>
@@ -42,7 +38,11 @@ export class Gallery extends Component {
           <button className="ProductGallery-ImagesSliderChevron" onClick={() => this.updateCurrentImageIndex(-1)}>
             <ChevronIcon className="ProductGallery-ImagesSliderChevron-Right" />
           </button>
-          <img className="ProductGallery-ImagesMain" src={ProductImage} alt="current slid" />
+          <img
+            className="ProductGallery-ImagesMain"
+            src={this.props.gallery ? this.props.gallery[this.state.currentImageIdx] : ""}
+            alt="current slid"
+          />
           <button
             className="ProductGallery-ImagesSliderChevron ProductGallery-ImagesSliderChevron-Right"
             onClick={() => this.updateCurrentImageIndex(1)}
