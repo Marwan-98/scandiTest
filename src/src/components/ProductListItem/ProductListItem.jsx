@@ -8,7 +8,7 @@ class ProductListItem extends Component {
   render() {
     return (
       <Link to={`/products/${this.props.product.id}`} className="ProductListItem">
-        <img src={productImage} alt="product" width={354} height={330} />
+        <div style={{ backgroundImage: `url(${productImage})` }} alt="product" className="ProductListItem-Image" />
         <button className="ProductListItem-AddToCartButton">
           <img src={cartImage} alt="add to cart" width={24} height={24} />
         </button>

@@ -21,6 +21,9 @@
       height: 80px;
       width: 79px;
       cursor: pointer;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
     }
 
     &Slider {
@@ -48,8 +51,11 @@
     }
 
     &Main {
-      width: 575px;
-      height: 478px;
+      min-width: 575px;
+      min-height: 478px;
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
     }
   }
 }

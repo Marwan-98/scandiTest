@@ -30,7 +30,11 @@ export class Gallery extends Component {
         <div className="ProductGallery-ImagesList">
           {this.props.gallery?.map((url, idx) => (
             <div key={idx} onClick={() => this.setCurrentImageIndex(idx)}>
-              <img className="ProductGallery-ImagesBoxes" src={url} alt="product slide" />
+              <div
+                className="ProductGallery-ImagesBoxes"
+                style={{ backgroundImage: `url(${url})` }}
+                alt="product slide"
+              />
             </div>
           ))}
         </div>
@@ -38,9 +42,11 @@ export class Gallery extends Component {
           <button className="ProductGallery-ImagesSliderChevron" onClick={() => this.updateCurrentImageIndex(-1)}>
             <ChevronIcon className="ProductGallery-ImagesSliderChevron-Right" />
           </button>
-          <img
+          <div
             className="ProductGallery-ImagesMain"
-            src={this.props.gallery ? this.props.gallery[this.state.currentImageIdx] : ""}
+            style={{
+              backgroundImage: `url(${this.props.gallery ? this.props.gallery[this.state.currentImageIdx] : ""})`,
+            }}
             alt="current slid"
           />
           <button

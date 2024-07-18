@@ -5,6 +5,14 @@
   text-decoration: none;
   color: #000;
 
+  &-Image {
+    width: 354px;
+    height: 330px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
   &-AddToCartButton {
     display: none;
     position: absolute;
