@@ -8,7 +8,7 @@ export class DataProvider extends Component {
     this.state = {
       cartData: {
         products: [],
-        itemsCount: 2,
+        itemsCount: 0,
       },
       isCartOverlayVisible: false,
     };
@@ -23,8 +23,37 @@ export class DataProvider extends Component {
 
   addProductToCart(newProduct) {
     this.setState(
-      {
-        cartData: { ...this.state.cartData, products: [...this.state.cartData.products, { ...newProduct }] },
+      (prevState) => {
+        const {
+          cartData: { products, itemsCount },
+        } = prevState;
+
+        const index = products.findIndex(
+          (product) =>
+            JSON.stringify(product.selectedAttributes) === JSON.stringify(newProduct.selectedAttributes) &&
+            product.id === newProduct.id
+        );
+
+        if (index === -1) {
+          return {
+            cartData: {
+              ...prevState.cartData,
+              products: [...products, { ...newProduct }],
+              itemsCount: itemsCount + 1,
+            },
+          };
+        }
+
+        const updatedProducts = [...products];
+
+        updatedProducts[index] = {
+          ...updatedProducts[index],
+          quantity: updatedProducts[index].quantity + 1,
+        };
+
+        return {
+          cartData: { ...prevState.cartData, products: updatedProducts, itemsCount: itemsCount + 1 },
+        };
       },
       () => console.log(this.state.cartData)
     );

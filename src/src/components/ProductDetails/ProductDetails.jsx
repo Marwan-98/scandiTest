@@ -18,7 +18,7 @@ class ProductDetails extends Component {
   async componentDidMount() {
     try {
       await request("http://localhost:8000/", PRODUCT_DETAILS(this.props.router.params.productId)).then((data) =>
-        this.setState({ product: data.product }, () => console.log(this.state.product))
+        this.setState({ product: data.product })
       );
     } catch (e) {
       console.log(e);
@@ -26,23 +26,18 @@ class ProductDetails extends Component {
   }
 
   updateSelectedAttributes = (clickedAttribute) => {
-    this.setState(
-      (prevState) => {
-        const { selectedAttributes } = prevState;
-        const index = selectedAttributes.findIndex((attr) => attr.id === clickedAttribute.id);
+    this.setState((prevState) => {
+      const { selectedAttributes } = prevState;
+      const index = selectedAttributes.findIndex((attr) => attr.id === clickedAttribute.id);
 
-        if (index === -1) {
-          // If the attribute doesn't exist, add it
-          return { selectedAttributes: [...selectedAttributes, clickedAttribute] };
-        } else {
-          // If the attribute exists, update it
-          const newAttributes = [...selectedAttributes];
-          newAttributes[index] = clickedAttribute;
-          return { selectedAttributes: newAttributes };
-        }
-      },
-      () => console.log(this.state.selectedAttributes)
-    );
+      if (index === -1) {
+        return { selectedAttributes: [...selectedAttributes, clickedAttribute] };
+      } else {
+        const newAttributes = [...selectedAttributes];
+        newAttributes[index] = clickedAttribute;
+        return { selectedAttributes: newAttributes };
+      }
+    });
   };
 
   render() {
@@ -94,8 +89,13 @@ class ProductDetails extends Component {
               <button
                 className="ProductDetails-AddToCartBtn"
                 onClick={() =>
-                  context.addProductToCart({ ...this.state.product, selectedAttributes: this.state.selectedAttributes })
+                  context.addProductToCart({
+                    ...this.state.product,
+                    quantity: 1,
+                    selectedAttributes: this.state.selectedAttributes,
+                  })
                 }
+                disabled={this.state.selectedAttributes?.length !== this.state.product.attributes?.length}
               >
                 ADD TO CART
               </button>
