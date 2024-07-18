@@ -12,17 +12,25 @@ class ProductDetails extends Component {
     this.state = {
       product: {},
       selectedAttributes: [],
+      loading: false,
     };
   }
 
-  async componentDidMount() {
+  async fetchData() {
+    this.setState({ loading: true });
     try {
-      await request("http://localhost:8000/", PRODUCT_DETAILS(this.props.router.params.productId)).then((data) =>
-        this.setState({ product: data.product })
-      );
+      const productData = await request("http://localhost:8000/", PRODUCT_DETAILS(this.props.router.params.productId));
+
+      this.setState({ product: productData.product });
     } catch (e) {
       console.log(e);
+    } finally {
+      this.setState({ loading: false });
     }
+  }
+
+  componentDidMount() {
+    this.fetchData();
   }
 
   updateSelectedAttributes = (clickedAttribute) => {
@@ -41,6 +49,12 @@ class ProductDetails extends Component {
   };
 
   render() {
+    const { loading } = this.state;
+
+    if (loading) {
+      return null;
+    }
+
     return (
       <DataContext.Consumer>
         {(context) => (

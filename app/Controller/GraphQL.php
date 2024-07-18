@@ -51,6 +51,17 @@ class GraphQL {
 
                             return $categoryResolver->resolveCategories();
                         }
+                    ],
+                    'category' => [
+                        'type' => $categoryType,
+                        'args' => [
+                            'id' => ['type' => Type::nonNull(Type::string())],
+                        ],
+                        'resolve' => function($rootValue, $args) {
+                            $categoryResolver = new CategoryResolver();
+
+                            return $categoryResolver->resolveCategoryById($args["id"]);
+                        }
                     ]
                 ],
             ]);

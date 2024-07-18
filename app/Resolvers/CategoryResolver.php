@@ -12,4 +12,10 @@ class CategoryResolver {
 
         return $categoryModel->getCategories();
     }
+
+    public function resolveCategoryById(string $categoryId): array {
+        $categoryModel = new CategoryModel();
+
+        return $categoryModel->getCategoryById($categoryId);
+    }
 }

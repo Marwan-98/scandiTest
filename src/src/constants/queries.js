@@ -53,6 +53,15 @@ export const CATEGORIES_LIST = gql`
   }
 `;
 
+export const CATEGORY_BY_ID = (id) => gql`
+  query Query {
+    category(id: "${id}") {
+      id
+      name
+    }
+  }
+`;
+
 export const PRODUCT_BY_CATEGORY = (id) => gql`
   query Query {
     products(categoryId: "${id}") {

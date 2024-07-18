@@ -11,11 +11,17 @@ export class DataProvider extends Component {
         itemsCount: 0,
       },
       isCartOverlayVisible: false,
+      selectedCategory: {},
     };
 
     this.updateCartOverlayVisibilty = this.updateCartOverlayVisibilty.bind(this);
     this.addProductToCart = this.addProductToCart.bind(this);
     this.updateProductQuantity = this.updateProductQuantity.bind(this);
+    this.updateSelectedCategory = this.updateSelectedCategory.bind(this);
+  }
+
+  updateSelectedCategory(category) {
+    this.setState({ selectedCategory: category });
   }
 
   updateCartOverlayVisibilty() {
@@ -103,9 +109,11 @@ export class DataProvider extends Component {
         value={{
           cartData: this.state.cartData,
           isCartOverlayVisible: this.state.isCartOverlayVisible,
+          selectedCategory: this.state.selectedCategory,
           updateCartOverlayVisibilty: this.updateCartOverlayVisibilty,
           addProductToCart: this.addProductToCart,
           updateProductQuantity: this.updateProductQuantity,
+          updateSelectedCategory: this.updateSelectedCategory,
         }}
       >
         {this.props.children}

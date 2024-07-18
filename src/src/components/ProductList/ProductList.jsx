@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./ProductList.style.scss";
 import ProductListItem from "../ProductListItem/ProductListItem.jsx";
 import { request } from "graphql-request";
-import { PRODUCT_BY_CATEGORY } from "../../constants/queries.js";
+import { CATEGORY_BY_ID, PRODUCT_BY_CATEGORY } from "../../constants/queries.js";
 import WithRouter from "../../WithRouter.jsx";
 
 class ProductList extends Component {
@@ -10,35 +10,52 @@ class ProductList extends Component {
     super();
     this.state = {
       products: [],
+      loading: false,
     };
   }
 
-  async componentDidUpdate() {
+  async fetchData() {
+    this.setState({ loading: true });
+
     try {
-      await request("http://localhost:8000/", PRODUCT_BY_CATEGORY(this.props.router.params.categoryId)).then((data) => {
-        if (JSON.stringify(this.state.products) !== JSON.stringify(data.products)) {
-          this.setState({ products: data.products });
-        }
-      });
+      const categoryData = await request("http://localhost:8000/", CATEGORY_BY_ID(this.props.router.params.categoryId));
+
+      this.props.updateSelectedCategory(categoryData.category);
+
+      const productData = await request(
+        "http://localhost:8000/",
+        PRODUCT_BY_CATEGORY(this.props.router.params.categoryId)
+      );
+
+      this.setState({ products: productData.products });
     } catch (e) {
-      console.log(e);
+      console.error(e);
+    } finally {
+      this.setState({ loading: false });
     }
   }
 
-  async componentDidMount() {
-    try {
-      await request("http://localhost:8000/", PRODUCT_BY_CATEGORY(this.props.router.params.categoryId)).then((data) =>
-        this.setState({ products: data.products })
-      );
-    } catch (e) {
-      console.log(e);
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.router.params.categoryId !== this.props.router.params.categoryId) {
+      this.fetchData();
     }
   }
 
   render() {
+    const { selectedCategory: { name } = {} } = this.props;
+    const { loading } = this.state;
+
+    if (loading) {
+      return null;
+    }
+
     return (
       <div className="ProductList">
-        <h1 className="ProductList-Heading">Women</h1>
+        <h1 className="ProductList-Heading">{name}</h1>
         <div className="ProductList-List">
           {this.state.products?.map((product, idx) => (
             <ProductListItem product={product} key={idx} />

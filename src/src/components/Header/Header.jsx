@@ -17,12 +17,18 @@ class Header extends Component {
     };
   }
 
-  async componentDidMount() {
+  async fetchData() {
     try {
-      await request("http://localhost:8000/", CATEGORIES_LIST).then((data) => this.setState({ categories: data }));
+      const categoriesList = await request("http://localhost:8000/", CATEGORIES_LIST);
+
+      this.setState({ categories: categoriesList });
     } catch (e) {
       console.log(e);
     }
+  }
+
+  componentDidMount() {
+    this.fetchData();
   }
 
   render() {
@@ -36,7 +42,7 @@ class Header extends Component {
                   to={`/category/${category.id}`}
                   key={category.id}
                   className={`Header-Nav-Item ${
-                    this.props.router.location.pathname.includes(category.id) ? "Header-Nav-Item-Selected" : ""
+                    this.props.selectedCategory.id === category.id ? "Header-Nav-Item-Selected" : ""
                   }`}
                 >
                   {category.name}

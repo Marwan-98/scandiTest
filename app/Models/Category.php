@@ -12,4 +12,12 @@ class Category extends Model {
 
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function getCategoryById(string $categoryId) {
+        $stmt = $this->database->prepare("SELECT * FROM category WHERE id = ?");
+        $stmt->bind_param("s", $categoryId);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_assoc();
+    }
 }
