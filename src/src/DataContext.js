@@ -15,6 +15,7 @@ export class DataProvider extends Component {
 
     this.updateCartOverlayVisibilty = this.updateCartOverlayVisibilty.bind(this);
     this.addProductToCart = this.addProductToCart.bind(this);
+    this.updateProductQuantity = this.updateProductQuantity.bind(this);
   }
 
   updateCartOverlayVisibilty() {
@@ -59,6 +60,43 @@ export class DataProvider extends Component {
     );
   }
 
+  updateProductQuantity(targetProduct, quantityChange) {
+    this.setState((prevState) => {
+      const {
+        cartData: { products, itemsCount },
+      } = prevState;
+
+      const newItemsCount = itemsCount + quantityChange;
+
+      const index = products.findIndex(
+        (product) =>
+          JSON.stringify(product.selectedAttributes) === JSON.stringify(targetProduct.selectedAttributes) &&
+          product.id === targetProduct.id
+      );
+
+      if (products[index].quantity + quantityChange === 0) {
+        const productsCopy = [...products];
+
+        productsCopy.splice(index, 1);
+
+        return {
+          cartData: { ...prevState.cartData, products: productsCopy, itemsCount: newItemsCount },
+        };
+      }
+
+      const updatedProducts = [...products];
+
+      updatedProducts[index] = {
+        ...updatedProducts[index],
+        quantity: updatedProducts[index].quantity + quantityChange,
+      };
+
+      return {
+        cartData: { ...prevState.cartData, products: updatedProducts, itemsCount: newItemsCount },
+      };
+    });
+  }
+
   render() {
     return (
       <DataContext.Provider
@@ -67,6 +105,7 @@ export class DataProvider extends Component {
           isCartOverlayVisible: this.state.isCartOverlayVisible,
           updateCartOverlayVisibilty: this.updateCartOverlayVisibilty,
           addProductToCart: this.addProductToCart,
+          updateProductQuantity: this.updateProductQuantity,
         }}
       >
         {this.props.children}

@@ -61,8 +61,9 @@ class ProductDetails extends Component {
                           className={`ProductDetails-AttributeOptions-${
                             attribute.type[0].toUpperCase() + attribute.type.slice(1)
                           } ${
-                            this.state.selectedAttributes.find((attribute) => attribute.itemId === item.id) &&
-                            "selected"
+                            this.state.selectedAttributes.find(
+                              (currAttribute) => currAttribute.itemId === item.id && currAttribute.id === attribute.id
+                            ) && "selected"
                           }`}
                           style={{ backgroundColor: item.value }}
                           onClick={() =>
