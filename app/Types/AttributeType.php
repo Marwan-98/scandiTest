@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Types;
 
-use App\Resolvers\ItemResolver;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 
@@ -17,12 +16,7 @@ class AttributeType extends ObjectType {
                 'name' => Type::string(),
                 'type' => Type::string(),
                 'items' => [
-                    'type' => Type::listOf(new ItemType()),
-                    'resolve' => function ($attribute) {
-                        $itemResolver = new ItemResolver();
-
-                        return $itemResolver->getAttributeItems($attribute['product_id'], $attribute['id']);
-                    }
+                    'type' => Type::listOf(new ItemType())
                 ]
             ]
         ]);
