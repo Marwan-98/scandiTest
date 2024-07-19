@@ -67,6 +67,7 @@ export const PRODUCT_BY_CATEGORY = (id) => gql`
     products(categoryId: "${id}") {
       id
       name
+      gallery(first: 1)
       prices {
         amount
         currency {

@@ -5,10 +5,22 @@ declare(strict_types=1);
 namespace App\Models;
 
 class Gallery extends Model {
-    public function getProductGallery(string $productId): array
+    public function getProductGallery(string $productId, ?int $first): array
     {
-        $stmt = $this->database->prepare("SELECT id, product_id, url FROM gallery WHERE product_id = ?");
-        $stmt->bind_param('s', $productId);
+        $query = "SELECT id, product_id, url FROM gallery WHERE product_id = ?";
+
+        if ($first !== null) {
+            $query .= " LIMIT ?";
+        }
+        
+        $stmt = $this->database->prepare($query);
+
+        if ($first !== null) {
+            $stmt->bind_param('si', $productId, $first);
+        } else {
+            $stmt->bind_param('s', $productId);
+        }
+        
         $stmt->execute();
         $result = $stmt->get_result();
 

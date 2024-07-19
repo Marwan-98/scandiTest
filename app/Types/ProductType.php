@@ -20,10 +20,13 @@ class ProductType extends ObjectType {
                 'name' => Type::string(),
                 'gallery' => [
                     'type' => Type::listOf(Type::string()),
-                    'resolve' => function ($product) {
+                    'args' => [
+                        'first' => ['type' => Type::int()],
+                    ],
+                    'resolve' => function ($product, $args) {
                         $galleryResolver = new GalleryResolver();
 
-                        return $galleryResolver->resolveProductGallery($product["id"]);
+                        return $galleryResolver->resolveProductGallery($product["id"], $args["first"] ?? null);
                     }
                 ],
                 'description' => Type::string(),

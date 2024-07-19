@@ -7,9 +7,9 @@ namespace App\Resolvers;
 use App\Models\Gallery;
 
 class GalleryResolver {
-    public function resolveProductGallery(string $productId): array {
+    public function resolveProductGallery(string $productId, ?int $first): array {
         $galleryModel = new Gallery();
 
-        return $galleryModel->getProductGallery($productId);
+        return $galleryModel->getProductGallery($productId, $first);
     }
 }
