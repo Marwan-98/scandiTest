@@ -18,8 +18,8 @@ class ProductListItem extends Component {
         <div className="ProductListItem-Details">
           <h3 className="ProductListItem-Details-Title">{this.props.product.name}</h3>
           <span className="ProductListItem-Details-Price">
-            {this.props.product.prices.currency.symbol}
-            {this.props.product.prices.amount}
+            {this.props.product.prices[0].currency.symbol}
+            {this.props.product.prices[0].amount}
           </span>
         </div>
       </Link>

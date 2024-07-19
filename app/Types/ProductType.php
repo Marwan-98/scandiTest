@@ -40,7 +40,7 @@ class ProductType extends ObjectType {
                 ],
                 'brand' => Type::string(),
                 'prices' => [
-                    'type' => new PriceType(),
+                    'type' => Type::listOf(new PriceType()),
                     'resolve' => function($product) {
                         $priceResolver = new PriceResolver();
 

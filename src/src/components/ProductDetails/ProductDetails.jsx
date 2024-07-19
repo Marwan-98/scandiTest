@@ -98,7 +98,9 @@ class ProductDetails extends Component {
               <div className="ProductDetails-Price">
                 <h2 className="ProductDetails-SubTitle">Price:</h2>
                 <span>
-                  {this.state.product.prices?.currency.symbol} {this.state.product.prices?.amount}
+                  {this.state.product.prices
+                    ? `${this.state.product.prices[0].currency.symbol}${this.state.product.prices[0].amount}`
+                    : ""}
                 </span>
               </div>
               <button

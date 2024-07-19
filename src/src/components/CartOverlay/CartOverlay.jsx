@@ -19,8 +19,8 @@ class CartOverlay extends Component {
                     <div className="CartOverlay-ProductDetails">
                       <h4 className="CartOverlay-ProductTitle">{product.name}</h4>
                       <h5 className="CartOverlay-ProductPrice">
-                        {product.prices.currency.symbol}
-                        {product.prices.amount}
+                        {product.prices[0].currency.symbol}
+                        {product.prices[0].amount}
                       </h5>
                       <div className="CartOverlay-ProductAttributes">
                         {product.attributes?.map((attribute) => (
