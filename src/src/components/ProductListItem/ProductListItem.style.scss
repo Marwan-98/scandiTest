@@ -16,6 +16,7 @@
   &-AddToCartButton {
     display: none;
     position: absolute;
+    cursor: pointer;
     right: 31px;
     bottom: 72px;
     background-color: #5ece7b;
@@ -23,6 +24,12 @@
     height: 52px;
     border: none;
     border-radius: 100%;
+
+    &:hover {
+      width: 62px;
+      height: 62px;
+      transition: 150ms;
+    }
   }
 
   &-Details {
