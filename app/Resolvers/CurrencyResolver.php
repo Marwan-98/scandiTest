@@ -11,6 +11,6 @@ class CurrencyResolver {
     {
         $currencyModel = new CurrencyModel();
 
-        return $currencyModel->getPriceCurrency($priceId);
+        return $currencyModel->getById($priceId);
     }
 }

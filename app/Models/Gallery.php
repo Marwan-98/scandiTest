@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 class Gallery extends Model {
-    public function getProductGallery(string $productId, ?int $first): array
+    public function getById(string $productId, ?int $first = null): array
     {
         $query = "SELECT id, product_id, url FROM gallery WHERE product_id = ?";
 

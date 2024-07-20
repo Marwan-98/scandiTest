@@ -11,6 +11,6 @@ class AttributeResolver {
     {
         $attributeModel = new AttributeModel();
 
-        return $attributeModel->getProductAttributes($productId);
+        return $attributeModel->getById($productId);
     }
 }

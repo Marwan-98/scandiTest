@@ -6,11 +6,13 @@ namespace App\Models;
 
 use App\Config\Database;
 
-class Model {
+abstract class Model {
     protected Database $database;
 
     public function __construct()
     {
         $this->database = new Database();
     }
+
+    abstract public function getById(string $id, ?int $first);
 }

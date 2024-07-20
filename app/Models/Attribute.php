@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Models;
 
 class Attribute extends Model {
-    public function getProductAttributes($productId): array {
-        $stmt = $this->database->prepare('SELECT
+    public function getById(string $productId, ?int $first = null): array {
+        $query = 'SELECT
             attribute.id,
             attribute.name,
             attribute.type,
@@ -14,22 +14,28 @@ class Attribute extends Model {
                 FROM attribute_set
                 INNER JOIN attribute
                 ON attribute_set.attribute_id=attribute.id
-                AND attribute_set.product_id = ?'
-        );
-        $stmt->bind_param('s', $productId);
-        $stmt->execute();
-        $result = $stmt->get_result();
+                AND attribute_set.product_id = ?
+            ';
+
+        $attribute_stmt = $this->database->prepare($query);
+
+        $attribute_stmt->bind_param('s', $productId);        
+        $attribute_stmt->execute();
+        $result = $attribute_stmt->get_result();
+
 
         $attributes = [];
 
         while ($attribute = $result->fetch_assoc()) {
-            $item_stmt = $this->database->prepare('SELECT value.id, value.displayValue, value.value
+            $query = 'SELECT value.id, value.displayValue, value.value
             FROM value
             INNER JOIN product_attribute_value 
             ON value.id = product_attribute_value.item_id
             WHERE product_attribute_value.product_id = ?
-            AND product_attribute_value.attribute_id = ?');
+            AND product_attribute_value.attribute_id = ?';
 
+            $item_stmt = $this->database->prepare($query);
+            
             $item_stmt->bind_param('ss', $productId, $attribute['id']);
             $item_stmt->execute();
             $item_result = $item_stmt->get_result();

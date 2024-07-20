@@ -10,6 +10,6 @@ class GalleryResolver {
     public function resolveProductGallery(string $productId, ?int $first): array {
         $galleryModel = new Gallery();
 
-        return $galleryModel->getProductGallery($productId, $first);
+        return $galleryModel->getById($productId, $first);
     }
 }

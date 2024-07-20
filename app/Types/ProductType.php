@@ -34,7 +34,7 @@ class ProductType extends ObjectType {
                     'type' => Type::listOf(new AttributeType()),
                     'resolve' => function($product) {
                         $attributeResolver = new AttributeResolver();
-
+                        
                         return $attributeResolver->resolveProductAttributes($product["id"]);
                     }
                 ],

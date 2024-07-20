@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 class Price extends Model {
-    public function getProductPrice(string $productId): array
+    public function getById(string $productId, ?int $first = null): array
     {
         $stmt = $this->database->prepare("SELECT amount, currency_id FROM price where product_id = ?");
         $stmt->bind_param("s", $productId);

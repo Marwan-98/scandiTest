@@ -8,6 +8,6 @@ class PriceResolver {
     public function resolveProductPrice($productId): array {
         $priceModel = new PriceModel();
 
-        return $priceModel->getProductPrice($productId);
+        return $priceModel->getById($productId);
     }
 }

@@ -16,6 +16,6 @@ class CategoryResolver {
     public function resolveCategoryById(string $categoryId): array {
         $categoryModel = new CategoryModel();
 
-        return $categoryModel->getCategoryById($categoryId);
+        return $categoryModel->getById($categoryId);
     }
 }

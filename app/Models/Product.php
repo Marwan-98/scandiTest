@@ -21,7 +21,7 @@ class Product extends Model {
         return $products;
     }
 
-    public function getProductById(string $id): array
+    public function getById(string $id, ?int $first = null): array
     {
         $stmt = $this->database->prepare("SELECT * FROM product WHERE id = ?");
         $stmt->bind_param("s", $id);

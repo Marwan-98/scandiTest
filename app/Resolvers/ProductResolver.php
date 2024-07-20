@@ -21,6 +21,6 @@ class ProductResolver {
 
     public function resolveProductById(string $productId): array
     {
-        return $this->product->getProductById($productId);
+        return $this->product->getById($productId);
     }
 }
