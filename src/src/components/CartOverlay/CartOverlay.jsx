@@ -30,7 +30,7 @@ class CartOverlay extends Component {
                               {attribute.items.map((item) => (
                                 <div
                                   key={item.id}
-                                  className={`ProductDetails-AttributeOptions-${
+                                  className={`CartOverlay-ProductAttributeOptions-${
                                     attribute.type[0].toUpperCase() + attribute.type.slice(1)
                                   } ${
                                     product.selectedAttributes.find(
