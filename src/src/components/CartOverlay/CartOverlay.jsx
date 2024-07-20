@@ -14,7 +14,7 @@ class CartOverlay extends Component {
             <span>{context.cartData.itemsCount ? `My Bag, ${context.cartData.itemsCount} items` : ""}</span>
             <div className="CartOverlay-ProductList">
               {context.cartData.products?.map((product) => (
-                <div className="CartOverlay-ProductListItem">
+                <div className="CartOverlay-ProductListItem" key={product.id}>
                   <div className="CartOverlay-ProductInfo">
                     <div className="CartOverlay-ProductDetails">
                       <h4 className="CartOverlay-ProductTitle">{product.name}</h4>
@@ -24,7 +24,7 @@ class CartOverlay extends Component {
                       </h5>
                       <div className="CartOverlay-ProductAttributes">
                         {product.attributes?.map((attribute) => (
-                          <div className="CartOverlay-ProductAttributeSet">
+                          <div className="CartOverlay-ProductAttributeSet" key={attribute.id}>
                             <h2 className="CartOverlay-ProductSubTitle">{attribute.name}:</h2>
                             <div className="CartOverlay-ProductAttributeOptions">
                               {attribute.items.map((item) => (

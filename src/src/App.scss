@@ -2,9 +2,16 @@
   font-family: "Raleway";
 }
 
+body {
+  margin: 0;
+}
+
 .App {
-  padding-inline: 101px;
   position: relative;
+
+  &-Wrapper {
+    padding-inline: 101px;
+  }
 
   .Overlay {
     &-Active {

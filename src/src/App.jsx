@@ -13,27 +13,29 @@ class App extends Component {
       <DataContext.Consumer>
         {(context) => (
           <div className="App">
-            <BrowserRouter>
-              <Header
-                selectedCategory={context.selectedCategory}
-                updateSelectedCategory={context.updateSelectedCategory}
-              />
-              <main>
-                {/* <div className={`Overlay ${this.state.cartActive && "Overlay-Active"}`} /> */}
-                <Routes>
-                  <Route
-                    path="/category/:categoryId"
-                    element={
-                      <ProductList
-                        selectedCategory={context.selectedCategory}
-                        updateSelectedCategory={context.updateSelectedCategory}
-                      />
-                    }
-                  />
-                  <Route path="/products/:productId" element={<ProductDetails />} />
-                </Routes>
-              </main>
-            </BrowserRouter>
+            <div className="App-Wrapper">
+              <BrowserRouter>
+                <Header
+                  selectedCategory={context.selectedCategory}
+                  updateSelectedCategory={context.updateSelectedCategory}
+                />
+                <main>
+                  <div className={`Overlay ${context.isCartOverlayVisible && "Overlay-Active"}`} />
+                  <Routes>
+                    <Route
+                      path="/category/:categoryId"
+                      element={
+                        <ProductList
+                          selectedCategory={context.selectedCategory}
+                          updateSelectedCategory={context.updateSelectedCategory}
+                        />
+                      }
+                    />
+                    <Route path="/products/:productId" element={<ProductDetails />} />
+                  </Routes>
+                </main>
+              </BrowserRouter>
+            </div>
           </div>
         )}
       </DataContext.Consumer>
