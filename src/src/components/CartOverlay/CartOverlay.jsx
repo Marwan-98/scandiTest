@@ -1,42 +1,35 @@
 import React, { Component } from "react";
 import "./CartOverlay.style.scss";
 import PlusIcon from "../PlusIcon/PlusIcon";
-import productImage from "../ProductListItem/image.png";
 
 import { DataContext } from "../../DataContext";
+import Price from "../Price/Price";
+import { capitalizeString } from "../../utils/capitalizeString";
 
 class CartOverlay extends Component {
   render() {
     return (
       <DataContext.Consumer>
-        {(context) => (
+        {({ cartData: { itemsCount, products }, updateProductQuantity, storeLabel }) => (
           <div className="CartOverlay">
-            <span>{context.cartData.itemsCount ? `My Bag, ${context.cartData.itemsCount} items` : ""}</span>
+            <span>{itemsCount ? `My Bag, ${itemsCount} items` : ""}</span>
             <div className="CartOverlay-ProductList">
-              {context.cartData.products?.map((product) => (
-                <div className="CartOverlay-ProductListItem" key={product.id}>
+              {products?.map(({ id, name, prices, attributes, selectedAttributes, quantity, gallery }) => (
+                <div className="CartOverlay-ProductListItem" key={id}>
                   <div className="CartOverlay-ProductInfo">
                     <div className="CartOverlay-ProductDetails">
-                      <h4 className="CartOverlay-ProductTitle">{product.name}</h4>
-                      <h5 className="CartOverlay-ProductPrice">
-                        {product.prices[0].currency.symbol}
-                        {product.prices[0].amount}
-                      </h5>
+                      <h4 className="CartOverlay-ProductTitle">{name}</h4>
+                      <Price storeLabel={storeLabel} prices={prices} />
                       <div className="CartOverlay-ProductAttributes">
-                        {product.attributes?.map((attribute) => (
-                          <div className="CartOverlay-ProductAttributeSet" key={attribute.id}>
-                            <h2 className="CartOverlay-ProductSubTitle">{attribute.name}:</h2>
+                        {attributes?.map(({ id, name, items, type }) => (
+                          <div className="CartOverlay-ProductAttributeSet" key={id}>
+                            <h2 className="CartOverlay-ProductSubTitle">{name}:</h2>
                             <div className="CartOverlay-ProductAttributeOptions">
-                              {attribute.items.map((item) => (
+                              {items.map((item) => (
                                 <div
                                   key={item.id}
-                                  className={`CartOverlay-ProductAttributeOptions-${
-                                    attribute.type[0].toUpperCase() + attribute.type.slice(1)
-                                  } ${
-                                    product.selectedAttributes.find(
-                                      (currAttribute) =>
-                                        currAttribute.itemId === item.id && currAttribute.id === attribute.id
-                                    ) && "selected"
+                                  className={`CartOverlay-ProductAttributeOptions-${capitalizeString(type)} ${
+                                    selectedAttributes[id]?.itemId === item.id ? "selected" : ""
                                   }`}
                                   style={{ backgroundColor: item.value }}
                                 >
@@ -51,23 +44,23 @@ class CartOverlay extends Component {
                     <div className="CartOverlay-ProductCount">
                       <div
                         className="CartOverlay-CountControl"
-                        onClick={() => context.updateProductQuantity(product, 1)}
+                        onClick={() => updateProductQuantity({ id, selectedAttributes }, 1)}
                       >
                         <PlusIcon />
                       </div>
                       <div className="CartOverlay-CountNumber">
-                        <span>{product.quantity}</span>
+                        <span>{quantity}</span>
                       </div>
                       <div
                         className="CartOverlay-CountControl"
-                        onClick={() => context.updateProductQuantity(product, -1)}
+                        onClick={() => updateProductQuantity({ id, selectedAttributes }, -1)}
                       >
                         <PlusIcon />
                       </div>
                     </div>
                   </div>
                   <div className="CartOverlay-ProductImage">
-                    <img src={productImage} alt="product" />
+                    <div style={{ backgroundImage: `url(${gallery[0]})` }} />
                   </div>
                 </div>
               ))}

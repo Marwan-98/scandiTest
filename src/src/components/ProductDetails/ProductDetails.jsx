@@ -5,13 +5,15 @@ import request from "graphql-request";
 import { PRODUCT_DETAILS } from "../../constants/queries";
 import WithRouter from "../../WithRouter";
 import { DataContext } from "../../DataContext";
+import { capitalizeString } from "../../utils/capitalizeString";
+import Price from "../Price/Price";
 
 class ProductDetails extends Component {
   constructor() {
     super();
     this.state = {
       product: {},
-      selectedAttributes: [],
+      selectedAttributes: {},
       loading: false,
     };
   }
@@ -36,20 +38,16 @@ class ProductDetails extends Component {
   updateSelectedAttributes = (clickedAttribute) => {
     this.setState((prevState) => {
       const { selectedAttributes } = prevState;
-      const index = selectedAttributes.findIndex((attr) => attr.id === clickedAttribute.id);
+      const updatedAttributes = selectedAttributes;
 
-      if (index === -1) {
-        return { selectedAttributes: [...selectedAttributes, clickedAttribute] };
-      } else {
-        const newAttributes = [...selectedAttributes];
-        newAttributes[index] = clickedAttribute;
-        return { selectedAttributes: newAttributes };
-      }
+      updatedAttributes[clickedAttribute.id] = clickedAttribute;
+
+      return { selectedAttributes: updatedAttributes };
     });
   };
 
   render() {
-    const { loading } = this.state;
+    const { loading, product: { id, name, gallery, attributes, prices } = {}, selectedAttributes = {} } = this.state;
 
     if (loading) {
       return null;
@@ -59,36 +57,31 @@ class ProductDetails extends Component {
       <DataContext.Consumer>
         {(context) => (
           <div className="ProductDetails">
-            <Gallery gallery={this.state.product?.gallery} />
+            <Gallery gallery={gallery} />
             <div>
               <div className="ProductDetails-Title">
-                <h1>{this.state.product.name}</h1>
+                <h1>{name}</h1>
               </div>
               <div>
-                {this.state.product.attributes?.map((attribute) => (
-                  <div key={attribute.id}>
-                    <h2 className="ProductDetails-SubTitle">{attribute.name}:</h2>
+                {attributes?.map(({ id, name, items, type }) => (
+                  <div key={id}>
+                    <h2 className="ProductDetails-SubTitle">{name}:</h2>
                     <div className="ProductDetails-AttributeOptions">
-                      {attribute.items.map((item) => (
+                      {items.map(({ id: itemId, value, displayValue }) => (
                         <div
-                          key={item.id}
-                          className={`ProductDetails-AttributeOptions-${
-                            attribute.type[0].toUpperCase() + attribute.type.slice(1)
-                          } ${
-                            this.state.selectedAttributes.find(
-                              (currAttribute) => currAttribute.itemId === item.id && currAttribute.id === attribute.id
-                            ) && "selected"
-                          }`}
-                          style={{ backgroundColor: item.value }}
+                          key={itemId}
+                          className={`ProductDetails-AttributeOptions-${capitalizeString(type)}
+                          ${selectedAttributes[id]?.itemId === itemId ? "selected" : ""}`}
+                          style={{ backgroundColor: value }}
                           onClick={() =>
                             this.updateSelectedAttributes({
-                              id: attribute.id,
-                              itemId: item.id,
-                              productId: this.state.product.id,
+                              id,
+                              itemId,
+                              productId: id,
                             })
                           }
                         >
-                          {item.displayValue}
+                          {displayValue}
                         </div>
                       ))}
                     </div>
@@ -96,12 +89,7 @@ class ProductDetails extends Component {
                 ))}
               </div>
               <div className="ProductDetails-Price">
-                <h2 className="ProductDetails-SubTitle">Price:</h2>
-                <span>
-                  {this.state.product.prices
-                    ? `${this.state.product.prices[0].currency.symbol}${this.state.product.prices[0].amount}`
-                    : ""}
-                </span>
+                <Price prices={prices} storeLabel={context.storeLabel} renderTitle />
               </div>
               <button
                 className="ProductDetails-AddToCartBtn"
@@ -109,10 +97,10 @@ class ProductDetails extends Component {
                   context.addProductToCart({
                     ...this.state.product,
                     quantity: 1,
-                    selectedAttributes: this.state.selectedAttributes,
+                    selectedAttributes: selectedAttributes,
                   })
                 }
-                disabled={this.state.selectedAttributes?.length !== this.state.product.attributes?.length}
+                disabled={Object.keys(selectedAttributes).length !== attributes?.length}
               >
                 ADD TO CART
               </button>

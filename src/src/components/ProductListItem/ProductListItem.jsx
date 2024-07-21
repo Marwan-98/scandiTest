@@ -8,13 +8,19 @@ class ProductListItem extends Component {
   quickShop(e, product, addToCart) {
     e.preventDefault();
 
-    const selectedAttributes = product.attributes.map((attribute) => {
-      return {
+    const selectedAttributes = {};
+
+    product.attributes.map((attribute) => {
+      selectedAttributes[attribute.id] = {
         id: attribute.id,
         itemId: attribute.items[0].id,
         productId: product.id,
       };
+
+      return attribute;
     });
+
+    console.log(selectedAttributes);
 
     addToCart({
       ...product,

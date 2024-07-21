@@ -30,14 +30,18 @@
     }
 
     &Image {
-      width: 170px;
+      height: 175px;
+      width: 175px;
       display: flex;
       justify-content: center;
       align-items: center;
 
-      img {
+      div {
+        height: 100%;
         width: 100%;
-        height: 175px;
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
       }
     }
 
@@ -80,11 +84,12 @@
         }
       }
 
-      &-Color {
+      &-Swatch {
         width: 20px;
         height: 20px;
         border: 1px 0px 0px 0px;
         color: transparent;
+        user-select: none;
         cursor: pointer;
 
         &.selected {
