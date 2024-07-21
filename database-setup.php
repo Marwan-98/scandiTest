@@ -90,6 +90,24 @@ $conn->query("CREATE TABLE product_attribute_value (
                 PRIMARY KEY (product_id, attribute_id, item_id)
             );");
 
+$conn->query("CREATE TABLE orders (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                total DECIMAL(10, 2) NOT NULL
+);");
+
+$conn->query("CREATE TABLE order_item (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                order_id INT NOT NULL,
+                product_id VARCHAR(255) NOT NULL,
+                attributes TEXT NOT NULL,
+                quantity INT NOT NULL,
+
+                FOREIGN KEY (product_id) REFERENCES product(id),
+                FOREIGN KEY (order_id) REFERENCES orders(id)
+);");
+
+
+
 
 $create_category_stmt = $conn->prepare("INSERT INTO category (name) VALUES (?)");
 $create_category_stmt->bind_param("s", $category_name);

@@ -9,10 +9,10 @@ export class Price extends Component {
   }
 
   componentDidMount() {
-    const { prices = [], storeLabel } = this.props;
+    const { prices = [], currencyLabel } = this.props;
 
     prices.map((price) => {
-      if (price.currency.label === storeLabel) {
+      if (price.currency.label === currencyLabel) {
         this.setState({
           price,
         });

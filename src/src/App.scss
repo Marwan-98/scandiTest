@@ -4,6 +4,15 @@
 
 html {
   height: 100dvh;
+
+  &:has(.Overlay-Active) {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 body,

@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Controller;
+use App\Config\Database;
 
 use App\Resolvers\CategoryResolver;
 use App\Resolvers\ProductResolver;
 use App\Types\CategoryType;
 use GraphQL\GraphQL as GraphQLBase;
 use App\Types\ProductType;
+use GraphQL\Type\Definition\InputObjectType;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
@@ -70,13 +72,54 @@ class GraphQL {
             $mutationType = new ObjectType([
                 'name' => 'Mutation',
                 'fields' => [
-                    'sum' => [
-                        'type' => Type::int(),
+                    'createOrder' => [
+                        'type' => Type::string(),
                         'args' => [
-                            'x' => ['type' => Type::int()],
-                            'y' => ['type' => Type::int()],
+                            'cartData' => [
+                                'type' => new InputObjectType([
+                                    'name' => 'CartDataInput',
+                                    'fields' => [
+                                        'total' => Type::string(),
+                                        'orderProducts' => Type::listOf(new InputObjectType([
+                                            'name' => 'OrderProducts',
+                                            'fields' => [
+                                                'productId' => Type::string(),
+                                                'quantity' => Type::int(),
+                                                'selectedAttributes' => Type::listOf(new InputObjectType([
+                                                    'name' => 'SelectedAttributes',
+                                                    'fields' => [
+                                                        'id' => Type::string(),
+                                                        'itemId' => Type::string(),
+                                                        'productId' => Type::string(),
+                                                    ]
+                                                ]))
+                                            ]
+                                        ])),
+                                    ],
+                                ])
+                            ],
                         ],
-                        'resolve' => static fn ($calc, array $args): int => $args['x'] + $args['y'],
+                        'resolve' => function ($rootValue, $args) {
+                            $db = new DataBase();
+                            
+
+                            $stmt = $db->prepare("INSERT INTO orders (total) VALUES (?)");
+                            $stmt->bind_param('d', $args['cartData']['total']);
+                            $stmt->execute();
+                            $orderId = $stmt->insert_id;
+
+                            $order_item_stmt = $db->prepare("INSERT INTO order_item (order_id, product_id, attributes, quantity) VALUES (?, ?, ?, ?)");
+
+                            foreach ($args['cartData']['orderProducts'] as $orderProduct) {
+                                $productAttributes = json_encode($orderProduct['selectedAttributes']);
+
+                                $order_item_stmt->bind_param('issi', $orderId, $orderProduct['productId'], $productAttributes, $orderProduct['quantity']);
+                                $order_item_stmt->execute();
+                            }
+
+
+                            return "Hello World!";
+                        }
                     ],
                 ],
             ]);

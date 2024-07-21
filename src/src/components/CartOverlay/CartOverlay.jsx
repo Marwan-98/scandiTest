@@ -1,70 +1,56 @@
 import React, { Component } from "react";
 import "./CartOverlay.style.scss";
-import PlusIcon from "../PlusIcon/PlusIcon";
 
 import { DataContext } from "../../DataContext";
-import Price from "../Price/Price";
-import { capitalizeString } from "../../utils/capitalizeString";
+import CartListItem from "../CartListItem/CartListItem";
+import request from "graphql-request";
+import { PLACE_ORDER } from "../../constants/queries";
 
 class CartOverlay extends Component {
+  async placeOrder(cartData) {
+    const orderProducts = cartData.products.map((product) => {
+      return {
+        productId: product.id,
+        quantity: product.quantity,
+        selectedAttributes: {
+          ...product.selectedAttributes,
+        },
+      };
+    });
+
+    console.log(orderProducts);
+
+    const variables = {
+      input: {
+        total: cartData.cartTotal,
+        orderProducts: orderProducts,
+      },
+    };
+
+    await request("http://localhost:8000/", PLACE_ORDER, variables).then((data) => console.log(data));
+  }
+
   render() {
     return (
       <DataContext.Consumer>
-        {({ cartData: { itemsCount, products }, updateProductQuantity, storeLabel }) => (
+        {({ cartData, cartData: { itemsCount, products, cartTotal }, storeCurrency: { currencySymbol } }) => (
           <div className="CartOverlay">
             <span>{itemsCount ? `My Bag, ${itemsCount} items` : ""}</span>
-            <div className="CartOverlay-ProductList">
-              {products?.map(({ id, name, prices, attributes, selectedAttributes, quantity, gallery }) => (
-                <div className="CartOverlay-ProductListItem" key={id}>
-                  <div className="CartOverlay-ProductInfo">
-                    <div className="CartOverlay-ProductDetails">
-                      <h4 className="CartOverlay-ProductTitle">{name}</h4>
-                      <Price storeLabel={storeLabel} prices={prices} />
-                      <div className="CartOverlay-ProductAttributes">
-                        {attributes?.map(({ id, name, items, type }) => (
-                          <div className="CartOverlay-ProductAttributeSet" key={id}>
-                            <h2 className="CartOverlay-ProductSubTitle">{name}:</h2>
-                            <div className="CartOverlay-ProductAttributeOptions">
-                              {items.map((item) => (
-                                <div
-                                  key={item.id}
-                                  className={`CartOverlay-ProductAttributeOptions-${capitalizeString(type)} ${
-                                    selectedAttributes[id]?.itemId === item.id ? "selected" : ""
-                                  }`}
-                                  style={{ backgroundColor: item.value }}
-                                >
-                                  {item.displayValue}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="CartOverlay-ProductCount">
-                      <div
-                        className="CartOverlay-CountControl"
-                        onClick={() => updateProductQuantity({ id, selectedAttributes }, 1)}
-                      >
-                        <PlusIcon />
-                      </div>
-                      <div className="CartOverlay-CountNumber">
-                        <span>{quantity}</span>
-                      </div>
-                      <div
-                        className="CartOverlay-CountControl"
-                        onClick={() => updateProductQuantity({ id, selectedAttributes }, -1)}
-                      >
-                        <PlusIcon />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="CartOverlay-ProductImage">
-                    <div style={{ backgroundImage: `url(${gallery[0]})` }} />
-                  </div>
-                </div>
+            <div className="CartOverlay-CartList">
+              {products?.map((product) => (
+                <CartListItem key={product.id} product={product} />
               ))}
             </div>
+            <div className="CartOverlay-Total">
+              <span>Total:</span>
+              <span>
+                {currencySymbol}
+                {cartTotal}
+              </span>
+            </div>
+            <button className="CartOverlay-PlaceOrder" onClick={() => this.placeOrder(cartData)}>
+              Place Order
+            </button>
           </div>
         )}
       </DataContext.Consumer>

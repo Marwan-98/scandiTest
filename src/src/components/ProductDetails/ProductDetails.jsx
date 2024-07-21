@@ -7,6 +7,7 @@ import WithRouter from "../../WithRouter";
 import { DataContext } from "../../DataContext";
 import { capitalizeString } from "../../utils/capitalizeString";
 import Price from "../Price/Price";
+import Attribute from "../Attribute/Attribute";
 
 class ProductDetails extends Component {
   constructor() {
@@ -47,7 +48,11 @@ class ProductDetails extends Component {
   };
 
   render() {
-    const { loading, product: { id, name, gallery, attributes, prices } = {}, selectedAttributes = {} } = this.state;
+    const {
+      loading,
+      product: { id: productId, name, gallery, attributes, prices } = {},
+      selectedAttributes = {},
+    } = this.state;
 
     if (loading) {
       return null;
@@ -63,33 +68,18 @@ class ProductDetails extends Component {
                 <h1>{name}</h1>
               </div>
               <div>
-                {attributes?.map(({ id, name, items, type }) => (
-                  <div key={id}>
-                    <h2 className="ProductDetails-SubTitle">{name}:</h2>
-                    <div className="ProductDetails-AttributeOptions">
-                      {items.map(({ id: itemId, value, displayValue }) => (
-                        <div
-                          key={itemId}
-                          className={`ProductDetails-AttributeOptions-${capitalizeString(type)}
-                          ${selectedAttributes[id]?.itemId === itemId ? "selected" : ""}`}
-                          style={{ backgroundColor: value }}
-                          onClick={() =>
-                            this.updateSelectedAttributes({
-                              id,
-                              itemId,
-                              productId: id,
-                            })
-                          }
-                        >
-                          {displayValue}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                {attributes?.map((attribute) => (
+                  <Attribute
+                    key={attribute.id}
+                    attribute={attribute}
+                    selectedAttributes={selectedAttributes}
+                    updateSelectedAttributes={this.updateSelectedAttributes}
+                    productId={productId}
+                  />
                 ))}
               </div>
               <div className="ProductDetails-Price">
-                <Price prices={prices} storeLabel={context.storeLabel} renderTitle />
+                <Price prices={prices} currencyLabel={context.storeCurrency.currencyLabel} renderTitle />
               </div>
               <button
                 className="ProductDetails-AddToCartBtn"

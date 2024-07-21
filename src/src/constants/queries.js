@@ -88,3 +88,9 @@ export const PRODUCT_BY_CATEGORY = (id) => gql`
     }
   }
 `;
+
+export const PLACE_ORDER = gql`
+  mutation Mutation($input: CartDataInput!) {
+    createOrder(cartData: $input)
+  }
+`;

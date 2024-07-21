@@ -9,10 +9,14 @@ export class DataProvider extends Component {
       cartData: {
         products: [],
         itemsCount: 0,
+        cartTotal: 0,
       },
       isCartOverlayVisible: false,
       selectedCategory: {},
-      storeLabel: "USD",
+      storeCurrency: {
+        currencyLabel: "USD",
+        currencySymbol: "$",
+      },
     };
 
     this.updateCartOverlayVisibilty = this.updateCartOverlayVisibilty.bind(this);
@@ -29,42 +33,67 @@ export class DataProvider extends Component {
     this.setState({ isCartOverlayVisible: !this.state.isCartOverlayVisible });
   }
 
+  getProductPrice(prices) {
+    const {
+      storeCurrency: { currencyLabel },
+    } = this.state;
+
+    const price = prices.filter((price) => price.currency.label === currencyLabel);
+
+    return price;
+  }
+
+  updateCartTotal(products) {
+    const cartTotal = products.reduce((acc, product) => {
+      this.getProductPrice(product.prices);
+
+      return acc + product.prices[0].amount * product.quantity;
+    }, 0);
+
+    return cartTotal.toFixed(2);
+  }
+
   addProductToCart(newProduct) {
-    this.setState(
-      (prevState) => {
-        const {
-          cartData: { products, itemsCount },
-        } = prevState;
+    this.setState((prevState) => {
+      const {
+        cartData: { products, itemsCount },
+      } = prevState;
 
-        const index = products.findIndex(
-          (product) =>
-            JSON.stringify(product.selectedAttributes) === JSON.stringify(newProduct.selectedAttributes) &&
-            product.id === newProduct.id
-        );
+      const index = products.findIndex(
+        (product) =>
+          JSON.stringify(product.selectedAttributes) === JSON.stringify(newProduct.selectedAttributes) &&
+          product.id === newProduct.id
+      );
 
-        if (index === -1) {
-          return {
-            cartData: {
-              ...prevState.cartData,
-              products: [...products, { ...newProduct }],
-              itemsCount: itemsCount + 1,
-            },
-          };
-        }
+      const newProducts = [...products, { ...newProduct }];
 
-        const updatedProducts = [...products];
-
-        updatedProducts[index] = {
-          ...updatedProducts[index],
-          quantity: updatedProducts[index].quantity + 1,
-        };
-
+      if (index === -1) {
         return {
-          cartData: { ...prevState.cartData, products: updatedProducts, itemsCount: itemsCount + 1 },
+          cartData: {
+            ...prevState.cartData,
+            products: newProducts,
+            itemsCount: itemsCount + 1,
+            cartTotal: this.updateCartTotal(newProducts),
+          },
         };
-      },
-      () => console.log(this.state.cartData)
-    );
+      }
+
+      const updatedProducts = [...products];
+
+      updatedProducts[index] = {
+        ...updatedProducts[index],
+        quantity: updatedProducts[index].quantity + 1,
+      };
+
+      return {
+        cartData: {
+          ...prevState.cartData,
+          products: updatedProducts,
+          itemsCount: itemsCount + 1,
+          cartTotal: this.updateCartTotal(updatedProducts),
+        },
+      };
+    });
   }
 
   updateProductQuantity(targetProduct, quantityChange) {
@@ -89,7 +118,12 @@ export class DataProvider extends Component {
         productsCopy.splice(index, 1);
 
         return {
-          cartData: { ...cartData, products: productsCopy, itemsCount: newItemsCount },
+          cartData: {
+            ...cartData,
+            products: productsCopy,
+            itemsCount: newItemsCount,
+            cartTotal: this.updateCartTotal(productsCopy),
+          },
         };
       }
 
@@ -101,7 +135,12 @@ export class DataProvider extends Component {
       };
 
       return {
-        cartData: { ...prevState.cartData, products: updatedProducts, itemsCount: newItemsCount },
+        cartData: {
+          ...prevState.cartData,
+          products: updatedProducts,
+          itemsCount: newItemsCount,
+          cartTotal: this.updateCartTotal(updatedProducts),
+        },
       };
     });
   }
@@ -113,7 +152,7 @@ export class DataProvider extends Component {
           cartData: this.state.cartData,
           isCartOverlayVisible: this.state.isCartOverlayVisible,
           selectedCategory: this.state.selectedCategory,
-          storeLabel: this.state.storeLabel,
+          storeCurrency: this.state.storeCurrency,
           updateCartOverlayVisibilty: this.updateCartOverlayVisibilty,
           addProductToCart: this.addProductToCart,
           updateProductQuantity: this.updateProductQuantity,
@@ -125,5 +164,3 @@ export class DataProvider extends Component {
     );
   }
 }
-
-// export const useDataContext = () => useContext(DataContext);
