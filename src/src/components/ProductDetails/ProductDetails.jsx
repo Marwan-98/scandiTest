@@ -7,6 +7,7 @@ import WithRouter from "../../WithRouter";
 import { DataContext } from "../../DataContext";
 import Price from "../Price/Price";
 import Attribute from "../Attribute/Attribute";
+import Button from "../Button/Button";
 
 class ProductDetails extends Component {
   constructor() {
@@ -75,8 +76,11 @@ class ProductDetails extends Component {
               <div className="ProductDetails-Price">
                 <Price prices={prices} currencyLabel={context.storeCurrency.currencyLabel} renderTitle />
               </div>
-              <button
-                className="ProductDetails-AddToCartBtn"
+              <Button
+                className={`ProductDetails-AddToCartBtn ${
+                  Object.keys(selectedAttributes).length !== attributes?.length ? "disabled" : ""
+                }`}
+                title={"ADD TO CART"}
                 onClick={() =>
                   context.addProductToCart({
                     ...this.state.product,
@@ -85,9 +89,7 @@ class ProductDetails extends Component {
                   })
                 }
                 disabled={Object.keys(selectedAttributes).length !== attributes?.length}
-              >
-                ADD TO CART
-              </button>
+              />
               <div className="ProductDetails-Description">
                 <p>{this.state.product?.description}</p>
               </div>

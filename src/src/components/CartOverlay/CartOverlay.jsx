@@ -5,6 +5,7 @@ import { DataContext } from "../../DataContext";
 import CartListItem from "../CartListItem/CartListItem";
 import request from "graphql-request";
 import { PLACE_ORDER } from "../../constants/queries";
+import Button from "../Button/Button";
 
 class CartOverlay extends Component {
   async placeOrder(cartData, emptyCart) {
@@ -67,9 +68,12 @@ class CartOverlay extends Component {
                 {cartTotal}
               </span>
             </div>
-            <button className="CartOverlay-PlaceOrder" onClick={() => this.placeOrder(cartData, emptyCart)}>
-              Place Order
-            </button>
+            <Button
+              className={`CartOverlay-PlaceOrder ${cartData.products.length < 1 ? "disabled" : ""}`}
+              title={"Place Order"}
+              onClick={() => this.placeOrder(cartData, emptyCart)}
+              disabled={cartData.products.length < 1}
+            />
           </div>
         )}
       </DataContext.Consumer>
