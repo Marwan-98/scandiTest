@@ -5,7 +5,6 @@ import request from "graphql-request";
 import { PRODUCT_DETAILS } from "../../constants/queries";
 import WithRouter from "../../WithRouter";
 import { DataContext } from "../../DataContext";
-import { capitalizeString } from "../../utils/capitalizeString";
 import Price from "../Price/Price";
 import Attribute from "../Attribute/Attribute";
 
@@ -48,11 +47,7 @@ class ProductDetails extends Component {
   };
 
   render() {
-    const {
-      loading,
-      product: { id: productId, name, gallery, attributes, prices } = {},
-      selectedAttributes = {},
-    } = this.state;
+    const { loading, product: { name, gallery, attributes, prices } = {}, selectedAttributes = {} } = this.state;
 
     if (loading) {
       return null;
@@ -74,7 +69,6 @@ class ProductDetails extends Component {
                     attribute={attribute}
                     selectedAttributes={selectedAttributes}
                     updateSelectedAttributes={this.updateSelectedAttributes}
-                    productId={productId}
                   />
                 ))}
               </div>

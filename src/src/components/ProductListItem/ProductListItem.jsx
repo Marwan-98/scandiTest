@@ -14,13 +14,10 @@ class ProductListItem extends Component {
       selectedAttributes[attribute.id] = {
         id: attribute.id,
         itemId: attribute.items[0].id,
-        productId: product.id,
       };
 
       return attribute;
     });
-
-    console.log(selectedAttributes);
 
     addToCart({
       ...product,

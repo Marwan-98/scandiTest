@@ -8,7 +8,7 @@ import { PLACE_ORDER } from "../../constants/queries";
 
 class CartOverlay extends Component {
   async placeOrder(cartData, emptyCart) {
-    const orderProducts = cartData.products.map((product) => {
+    const orderItems = cartData.products.map((product) => {
       return {
         productId: product.id,
         quantity: product.quantity,
@@ -21,7 +21,7 @@ class CartOverlay extends Component {
     const variables = {
       input: {
         total: cartData.cartTotal,
-        orderProducts: orderProducts,
+        orderItems: orderItems,
       },
     };
 

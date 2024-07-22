@@ -7,14 +7,12 @@ export class Attribute extends Component {
     const {
       attribute: { id: attributeId },
       updateSelectedAttributes,
-      productId,
     } = this.props;
 
     if (updateSelectedAttributes) {
       updateSelectedAttributes({
         id: attributeId,
         itemId: item.id,
-        productId,
       });
 
       return;

@@ -6,6 +6,7 @@ use App\Config\Database;
 use App\Resolvers\CategoryResolver;
 use App\Resolvers\ProductResolver;
 use App\Types\CategoryType;
+use App\Types\OrderType;
 use GraphQL\GraphQL as GraphQLBase;
 use App\Types\ProductType;
 use GraphQL\Type\Definition\InputObjectType;
@@ -22,6 +23,7 @@ class GraphQL {
         try {
             $productType = new ProductType();
             $categoryType = new CategoryType();
+            $orderType = new OrderType();
 
             $queryType = new ObjectType([
                 'name' => 'Query',
@@ -76,27 +78,7 @@ class GraphQL {
                         'type' => Type::string(),
                         'args' => [
                             'cartData' => [
-                                'type' => new InputObjectType([
-                                    'name' => 'CartDataInput',
-                                    'fields' => [
-                                        'total' => Type::string(),
-                                        'orderProducts' => Type::listOf(new InputObjectType([
-                                            'name' => 'OrderProducts',
-                                            'fields' => [
-                                                'productId' => Type::string(),
-                                                'quantity' => Type::int(),
-                                                'selectedAttributes' => Type::listOf(new InputObjectType([
-                                                    'name' => 'SelectedAttributes',
-                                                    'fields' => [
-                                                        'id' => Type::string(),
-                                                        'itemId' => Type::string(),
-                                                        'productId' => Type::string(),
-                                                    ]
-                                                ]))
-                                            ]
-                                        ])),
-                                    ],
-                                ])
+                                'type' => $orderType
                             ],
                         ],
                         'resolve' => function ($rootValue, $args) {
@@ -110,7 +92,7 @@ class GraphQL {
 
                             $order_item_stmt = $db->prepare("INSERT INTO order_item (order_id, product_id, attributes, quantity) VALUES (?, ?, ?, ?)");
 
-                            foreach ($args['cartData']['orderProducts'] as $orderProduct) {
+                            foreach ($args['cartData']['orderItems'] as $orderProduct) {
                                 $productAttributes = json_encode($orderProduct['selectedAttributes']);
 
                                 $order_item_stmt->bind_param('issi', $orderId, $orderProduct['productId'], $productAttributes, $orderProduct['quantity']);
