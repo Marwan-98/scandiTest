@@ -32,6 +32,18 @@ class CartOverlay extends Component {
     }
   }
 
+  renderItemsCount(itemsCount) {
+    if (itemsCount === 0) {
+      return null;
+    }
+
+    if (itemsCount > 1) {
+      return `My Bag, ${itemsCount} items`;
+    }
+
+    return `My Bag, ${itemsCount} item`;
+  }
+
   render() {
     return (
       <DataContext.Consumer>
@@ -42,7 +54,7 @@ class CartOverlay extends Component {
           emptyCart,
         }) => (
           <div className="CartOverlay">
-            <span>{itemsCount ? `My Bag, ${itemsCount} items` : ""}</span>
+            <span>{this.renderItemsCount(itemsCount)}</span>
             <div className="CartOverlay-CartList">
               {products?.map((product) => (
                 <CartListItem key={product.id} product={product} />
