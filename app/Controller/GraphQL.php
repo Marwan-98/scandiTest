@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Config\Database;
 
 use App\Resolvers\CategoryResolver;
+use App\Resolvers\OrderResolver;
 use App\Resolvers\ProductResolver;
 use App\Types\CategoryType;
 use App\Types\OrderType;
@@ -82,25 +83,10 @@ class GraphQL {
                             ],
                         ],
                         'resolve' => function ($rootValue, $args) {
-                            $db = new DataBase();
+                            $orderResolver = new OrderResolver();
+                            $order_id = $orderResolver->resolveOrder($rootValue, $args);
                             
-
-                            $stmt = $db->prepare("INSERT INTO orders (total) VALUES (?)");
-                            $stmt->bind_param('d', $args['cartData']['total']);
-                            $stmt->execute();
-                            $orderId = $stmt->insert_id;
-
-                            $order_item_stmt = $db->prepare("INSERT INTO order_item (order_id, product_id, attributes, quantity) VALUES (?, ?, ?, ?)");
-
-                            foreach ($args['cartData']['orderItems'] as $orderProduct) {
-                                $productAttributes = json_encode($orderProduct['selectedAttributes']);
-
-                                $order_item_stmt->bind_param('issi', $orderId, $orderProduct['productId'], $productAttributes, $orderProduct['quantity']);
-                                $order_item_stmt->execute();
-                            }
-
-
-                            return "Hello World!";
+                            return "Order created with the id ".$order_id;
                         }
                     ],
                 ],
