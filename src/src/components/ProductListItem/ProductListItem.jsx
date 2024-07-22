@@ -26,27 +26,41 @@ class ProductListItem extends Component {
     });
   }
 
+  renderQuickShop(inStock, addProductToCart) {
+    if (!inStock) {
+      return null;
+    }
+
+    return (
+      <button
+        className="ProductListItem-AddToCartButton"
+        onClick={(e) => this.quickShop(e, this.props.product, addProductToCart)}
+      >
+        <img src={cartImage} alt="add to cart" width={24} height={24} />
+      </button>
+    );
+  }
+
   render() {
+    const {
+      product: { id, inStock, gallery, name, prices },
+    } = this.props;
+
     return (
       <DataContext.Consumer>
-        {(context) => (
-          <Link to={`/products/${this.props.product.id}`} className="ProductListItem">
-            <div
-              style={{ backgroundImage: `url(${this.props.product.gallery[0]})` }}
-              alt="product"
-              className="ProductListItem-Image"
-            />
-            <button
-              className="ProductListItem-AddToCartButton"
-              onClick={(e) => this.quickShop(e, this.props.product, context.addProductToCart)}
-            >
-              <img src={cartImage} alt="add to cart" width={24} height={24} />
-            </button>
+        {({ addProductToCart }) => (
+          <Link to={`/products/${id}`} className="ProductListItem">
+            <div className="ProductListItem-ImageContainer">
+              <div className={`ProductListItem-Overlay ${inStock ? "" : "ProductListItem-Overlay-Active"}`} />
+              <span className={`ProductListItem-OverlayText ${inStock ? "" : "active"}`}>OUT OF STOCK</span>
+              <div style={{ backgroundImage: `url(${gallery[0]})` }} alt="product" className="ProductListItem-Image" />
+            </div>
+            {this.renderQuickShop(inStock, addProductToCart)}
             <div className="ProductListItem-Details">
-              <h3 className="ProductListItem-Details-Title">{this.props.product.name}</h3>
+              <h3 className="ProductListItem-Details-Title">{name}</h3>
               <span className="ProductListItem-Details-Price">
-                {this.props.product.prices[0].currency.symbol}
-                {this.props.product.prices[0].amount}
+                {prices[0].currency.symbol}
+                {prices[0].amount}
               </span>
             </div>
           </Link>

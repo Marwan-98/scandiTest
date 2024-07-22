@@ -5,6 +5,44 @@
   text-decoration: none;
   color: #000;
 
+  &-ImageContainer {
+    position: relative;
+  }
+
+  &-Overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-Active {
+      position: absolute;
+
+      height: 100%;
+      width: 100%;
+      background-color: #ffffff;
+      opacity: 0.5;
+    }
+
+    &Text {
+      display: none;
+      color: transparent;
+      user-select: none;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      color: #5f5f5f;
+      font-weight: 400;
+      font-size: 24px;
+      z-index: 2;
+
+      &.active {
+        display: block;
+      }
+    }
+  }
+
   &-Image {
     width: 354px;
     height: 330px;

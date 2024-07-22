@@ -67,6 +67,7 @@ export const PRODUCT_BY_CATEGORY = (id) => gql`
     products(categoryId: "${id}") {
       id
       name
+      inStock
       attributes {
         id
         name

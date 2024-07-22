@@ -18,6 +18,7 @@ class ProductType extends ObjectType {
             'fields' => [
                 'id' => Type::string(),
                 'name' => Type::string(),
+                'inStock' => Type::int(),
                 'gallery' => [
                     'type' => Type::listOf(Type::string()),
                     'args' => [
