@@ -55,46 +55,49 @@ export class DataProvider extends Component {
   }
 
   addProductToCart(newProduct) {
-    this.setState((prevState) => {
-      const {
-        cartData: { products, itemsCount },
-      } = prevState;
+    this.setState(
+      (prevState) => {
+        const {
+          cartData: { products, itemsCount },
+        } = prevState;
 
-      const index = products.findIndex(
-        (product) =>
-          JSON.stringify(product.selectedAttributes) === JSON.stringify(newProduct.selectedAttributes) &&
-          product.id === newProduct.id
-      );
+        const index = products.findIndex(
+          (product) =>
+            JSON.stringify(product.selectedAttributes) === JSON.stringify(newProduct.selectedAttributes) &&
+            product.id === newProduct.id
+        );
 
-      const newProducts = [...products, { ...newProduct }];
+        const newProducts = [...products, { ...newProduct }];
 
-      if (index === -1) {
+        if (index === -1) {
+          return {
+            cartData: {
+              ...prevState.cartData,
+              products: newProducts,
+              itemsCount: itemsCount + 1,
+              cartTotal: this.updateCartTotal(newProducts),
+            },
+          };
+        }
+
+        const updatedProducts = [...products];
+
+        updatedProducts[index] = {
+          ...updatedProducts[index],
+          quantity: updatedProducts[index].quantity + 1,
+        };
+
         return {
           cartData: {
             ...prevState.cartData,
-            products: newProducts,
+            products: updatedProducts,
             itemsCount: itemsCount + 1,
-            cartTotal: this.updateCartTotal(newProducts),
+            cartTotal: this.updateCartTotal(updatedProducts),
           },
         };
-      }
-
-      const updatedProducts = [...products];
-
-      updatedProducts[index] = {
-        ...updatedProducts[index],
-        quantity: updatedProducts[index].quantity + 1,
-      };
-
-      return {
-        cartData: {
-          ...prevState.cartData,
-          products: updatedProducts,
-          itemsCount: itemsCount + 1,
-          cartTotal: this.updateCartTotal(updatedProducts),
-        },
-      };
-    });
+      },
+      () => this.updateCartOverlayVisibilty()
+    );
   }
 
   updateProductQuantity(targetProduct, quantityChange) {
