@@ -23,6 +23,7 @@ export class DataProvider extends Component {
     this.addProductToCart = this.addProductToCart.bind(this);
     this.updateProductQuantity = this.updateProductQuantity.bind(this);
     this.updateSelectedCategory = this.updateSelectedCategory.bind(this);
+    this.emptyCart = this.emptyCart.bind(this);
   }
 
   updateSelectedCategory(category) {
@@ -40,14 +41,14 @@ export class DataProvider extends Component {
 
     const price = prices.filter((price) => price.currency.label === currencyLabel);
 
-    return price;
+    return price[0];
   }
 
   updateCartTotal(products) {
     const cartTotal = products.reduce((acc, product) => {
-      this.getProductPrice(product.prices);
+      const productPrice = this.getProductPrice(product.prices);
 
-      return acc + product.prices[0].amount * product.quantity;
+      return acc + productPrice.amount * product.quantity;
     }, 0);
 
     return cartTotal.toFixed(2);
@@ -145,6 +146,19 @@ export class DataProvider extends Component {
     });
   }
 
+  emptyCart() {
+    this.setState(
+      {
+        cartData: {
+          products: [],
+          itemsCount: 0,
+          cartTotal: 0,
+        },
+      },
+      () => this.updateCartOverlayVisibilty()
+    );
+  }
+
   render() {
     return (
       <DataContext.Provider
@@ -157,6 +171,7 @@ export class DataProvider extends Component {
           addProductToCart: this.addProductToCart,
           updateProductQuantity: this.updateProductQuantity,
           updateSelectedCategory: this.updateSelectedCategory,
+          emptyCart: this.emptyCart,
         }}
       >
         {this.props.children}

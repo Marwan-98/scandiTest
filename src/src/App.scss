@@ -8,6 +8,7 @@ html {
   &:has(.Overlay-Active) {
     scrollbar-width: none;
     -ms-overflow-style: none;
+    overflow: hidden;
 
     &::-webkit-scrollbar {
       display: none;
