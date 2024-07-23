@@ -8,16 +8,16 @@ use App\Resolvers\Resolver;
 use App\Models\Category as CategoryModel;
 
 class CategoryResolver extends Resolver {
-    private CategoryModel $category;
-
     public function __construct()
     {
-        $this->category = new CategoryModel();
-    }
+        $category_model = new CategoryModel();
+        
+        parent::__construct($category_model);
+    } 
 
     public function resolve($rootValue, $args): array {
         $category_id = $args["id"];
 
-        return $this->category->getById($category_id);
+        return $this->model->getById($category_id);
     }
 }

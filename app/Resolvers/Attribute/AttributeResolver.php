@@ -8,17 +8,17 @@ use App\Resolvers\Resolver;
 use App\Models\Attribute as AttributeModel;
 
 class AttributeResolver extends Resolver {
-    private AttributeModel $attribute;
-
     public function __construct()
     {
-        $this->attribute = new AttributeModel();
-    }
+        $attribute_model = new AttributeModel();
+        
+        parent::__construct($attribute_model);
+    } 
 
     public function resolve($root_value, $args): array
     {
         $product_id = $root_value["id"];
 
-        return $this->attribute->getById($product_id);
+        return $this->model->getById($product_id);
     }
 }

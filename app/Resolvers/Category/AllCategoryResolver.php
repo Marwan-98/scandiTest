@@ -8,14 +8,14 @@ use App\Resolvers\Resolver;
 use App\Models\Category as CategoryModel;
 
 class AllCategoryResolver extends Resolver {
-    private CategoryModel $category;
-
     public function __construct()
     {
-        $this->category = new CategoryModel();
-    }
+        $category_model = new CategoryModel();
+        
+        parent::__construct($category_model);
+    } 
     
     public function resolve($root_value, $args): array {
-        return $this->category->getAll();
+        return $this->model->getAll();
     }
 }

@@ -6,16 +6,16 @@ use App\Resolvers\Resolver;
 use App\Models\Price as PriceModel;
 
 class PriceResolver extends Resolver {
-    private PriceModel $price;
-
     public function __construct()
     {
-        $this->price = new PriceModel();
-    }
+        $price_model = new PriceModel();
+        
+        parent::__construct($price_model);
+    }   
 
     public function resolve($root_value, $args): array {
         $product_id = $root_value["id"];
 
-        return $this->price->getById($product_id);
+        return $this->model->getById($product_id);
     }
 }

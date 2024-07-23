@@ -8,12 +8,12 @@ use App\Resolvers\Resolver;
 use App\Models\Order as OrderModel;
 
 class OrderResolver {
-    private OrderModel $order;
-
     public function __construct()
     {
-        $this->order = new OrderModel();
-    }
+        $order_model = new OrderModel();
+        
+        parent::__construct($order_model);
+    }   
 
     public function resolve($rootValue, $args): int
     {
@@ -22,6 +22,6 @@ class OrderResolver {
 
 
 
-        return $this->order->set($total, $order_items);
+        return $this->model->set($total, $order_items);
     }
 }

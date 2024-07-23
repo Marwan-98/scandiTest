@@ -8,17 +8,17 @@ use App\Resolvers\Resolver;
 use App\Models\Product as ProductModel;
 
 class AllProductsResolver extends Resolver {
-    private ProductModel $product;
-
     public function __construct()
     {
-        $this->product = new ProductModel();
-    }
+        $product_model = new ProductModel();
+        
+        parent::__construct($product_model);
+    }   
 
     public function resolve($root_value, $args): array
     {
         $category_id = $args["categoryId"];
 
-        return $this->product->getAll($category_id);
+        return $this->model->getAll($category_id);
     }
 }
