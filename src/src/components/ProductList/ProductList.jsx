@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import "./ProductList.style.scss";
 import ProductListItem from "../ProductListItem/ProductListItem.jsx";
 import { request } from "graphql-request";
-import { CATEGORY_BY_ID, PRODUCT_BY_CATEGORY } from "../../constants/queries.js";
-import WithRouter from "../../WithRouter.jsx";
+import { PRODUCT_BY_CATEGORY } from "../../constants/queries.js";
 
 class ProductList extends Component {
   constructor() {
@@ -18,13 +17,8 @@ class ProductList extends Component {
     this.setState({ loading: true });
 
     try {
-      const { updateSelectedCategory } = this.props;
       const pathname = window.location.pathname.split("/");
       const categoryId = pathname[pathname.length - 1];
-
-      const categoryData = await request("http://localhost:8000/", CATEGORY_BY_ID(categoryId));
-
-      updateSelectedCategory(categoryData.category);
 
       const productData = await request("http://localhost:8000/", PRODUCT_BY_CATEGORY(categoryId));
 
@@ -42,18 +36,14 @@ class ProductList extends Component {
 
   componentDidUpdate(prevProps) {
     const {
-      router: {
-        params: { categoryId },
-      },
+      selectedCategory: { id: selectedCategory },
     } = this.props;
 
     const {
-      router: {
-        params: { categoryId: prevCategoryId },
-      },
+      selectedCategory: { id: prevSelectedCategory },
     } = prevProps;
 
-    if (prevCategoryId !== categoryId) {
+    if (selectedCategory !== prevSelectedCategory) {
       this.fetchData();
     }
   }
@@ -79,4 +69,4 @@ class ProductList extends Component {
   }
 }
 
-export default WithRouter(ProductList);
+export default ProductList;

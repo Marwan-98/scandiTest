@@ -5,7 +5,7 @@ import "./Header.style.scss";
 import CartOverlay from "../CartOverlay/CartOverlay";
 import { Link } from "react-router-dom";
 import { DataContext } from "../../DataContext";
-import { CATEGORIES_LIST } from "../../constants/queries";
+import { CATEGORIES_LIST, CATEGORY_BY_ID } from "../../constants/queries";
 import request from "graphql-request";
 
 class Header extends Component {
@@ -18,9 +18,12 @@ class Header extends Component {
 
   async fetchData() {
     try {
+      const { updateSelectedCategory } = this.props;
+
       const data = await request("http://localhost:8000/", CATEGORIES_LIST);
 
       this.setState({ categories: data.categories });
+      updateSelectedCategory(data.categories[0]);
     } catch (e) {
       console.log(e);
     }
@@ -28,6 +31,14 @@ class Header extends Component {
 
   componentDidMount() {
     this.fetchData();
+  }
+
+  async updateCategory(categoryId) {
+    const { updateSelectedCategory } = this.props;
+
+    const categoryData = await request("http://localhost:8000/", CATEGORY_BY_ID(categoryId));
+
+    updateSelectedCategory(categoryData.category);
   }
 
   render() {
@@ -47,6 +58,7 @@ class Header extends Component {
                   to={`/category/${category.id}`}
                   key={category.id}
                   className={`Header-Nav-Item ${id === category.id ? "Header-Nav-Item-Selected" : ""}`}
+                  onClick={() => this.updateCategory(category.id)}
                 >
                   {category.name}
                 </Link>
