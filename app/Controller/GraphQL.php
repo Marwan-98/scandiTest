@@ -6,7 +6,8 @@ use App\Config\Database;
 use App\Resolvers\Category\CategoryResolver;
 use App\Resolvers\Category\AllCategoryResolver;
 use App\Resolvers\OrderResolver;
-use App\Resolvers\ProductResolver;
+use App\Resolvers\Product\AllProductsResolver;
+use App\Resolvers\Product\ProductResolver;
 use App\Types\CategoryType;
 use App\Types\OrderType;
 use GraphQL\GraphQL as GraphQLBase;
@@ -35,9 +36,9 @@ class GraphQL {
                         'args' => [
                             'categoryId' => ['type' => Type::string()],
                         ],
-                        'resolve' => function($root, $args) {
-                            $productModel = new ProductResolver();
-                            return $productModel->resolveProducts($args["categoryId"]);
+                        'resolve' => function($root_value, $args) {
+                            $productModel = new AllProductsResolver();
+                            return $productModel->resolve($root_value, $args);
                         },
                     ],
                     'product' => [
@@ -47,7 +48,7 @@ class GraphQL {
                         ],
                         'resolve' => function($rootValue, $args) {
                             $productModel = new ProductResolver();
-                            return $productModel->resolveProductById($args['id']);
+                            return $productModel->resolve($rootValue, $args);
                         }
                     ],
                     'categories' => [
