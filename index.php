@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
-use App\Controller\GraphQL;
+use App\GraphQL\Controller as GraphQLController;
 
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     // allow all origins
@@ -30,6 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 //
 //route($uri);
 
-$graphQL = new GraphQL();
+$graphQL = new GraphQLController();
 
 echo $graphQL->handle();
