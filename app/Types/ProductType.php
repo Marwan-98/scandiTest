@@ -6,7 +6,7 @@ namespace App\Types;
 
 use App\Resolvers\AttributeResolver;
 use App\Resolvers\GalleryResolver;
-use App\Resolvers\PriceResolver;
+use App\Resolvers\Price\PriceResolver;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 
@@ -42,10 +42,10 @@ class ProductType extends ObjectType {
                 'brand' => Type::string(),
                 'prices' => [
                     'type' => Type::listOf(new PriceType()),
-                    'resolve' => function($product) {
-                        $priceResolver = new PriceResolver();
+                    'resolve' => function($rootValue, $args) {
+                        $price_resolver = new PriceResolver();
 
-                        return $priceResolver->resolveProductPrice($product["id"]);
+                        return $price_resolver->resolve($rootValue, $args);
                     }
                 ]
             ],
