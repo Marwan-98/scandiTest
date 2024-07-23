@@ -22,6 +22,7 @@ export const PRODUCT_DETAILS = (id) => gql`
       id
       name
       gallery
+      inStock
       description
       attributes {
         id

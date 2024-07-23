@@ -47,8 +47,36 @@ class ProductDetails extends Component {
     });
   };
 
+  renderAddToCart(selectedAttributes, addProductToCart) {
+    const {
+      product: { attributes, inStock },
+    } = this.state;
+
+    const isDisabled = Object.keys(selectedAttributes).length !== attributes?.length || !!!inStock;
+    const title = inStock ? "ADD TO CART" : "OUT OF STOCK";
+
+    return (
+      <Button
+        className={`ProductDetails-AddToCartBtn ${isDisabled ? "disabled" : ""}`}
+        title={title}
+        onClick={() =>
+          addProductToCart({
+            ...this.state.product,
+            quantity: 1,
+            selectedAttributes,
+          })
+        }
+        disabled={isDisabled}
+      />
+    );
+  }
+
   render() {
-    const { loading, product: { name, gallery, attributes, prices } = {}, selectedAttributes = {} } = this.state;
+    const {
+      loading,
+      product: { name, gallery, attributes, prices, description } = {},
+      selectedAttributes = {},
+    } = this.state;
 
     if (loading) {
       return null;
@@ -56,7 +84,7 @@ class ProductDetails extends Component {
 
     return (
       <DataContext.Consumer>
-        {(context) => (
+        {({ addProductToCart, storeCurrency }) => (
           <div className="ProductDetails">
             <Gallery gallery={gallery} />
             <div>
@@ -74,24 +102,11 @@ class ProductDetails extends Component {
                 ))}
               </div>
               <div className="ProductDetails-Price">
-                <Price prices={prices} currencyLabel={context.storeCurrency.currencyLabel} renderTitle />
+                <Price prices={prices} currencyLabel={storeCurrency.currencyLabel} renderTitle />
               </div>
-              <Button
-                className={`ProductDetails-AddToCartBtn ${
-                  Object.keys(selectedAttributes).length !== attributes?.length ? "disabled" : ""
-                }`}
-                title={"ADD TO CART"}
-                onClick={() =>
-                  context.addProductToCart({
-                    ...this.state.product,
-                    quantity: 1,
-                    selectedAttributes: selectedAttributes,
-                  })
-                }
-                disabled={Object.keys(selectedAttributes).length !== attributes?.length}
-              />
+              {this.renderAddToCart(selectedAttributes, addProductToCart)}
               <div className="ProductDetails-Description">
-                <p>{this.state.product?.description}</p>
+                <p>{description}</p>
               </div>
             </div>
           </div>
