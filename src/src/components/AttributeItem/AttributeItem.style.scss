@@ -10,11 +10,15 @@
         font-size: 14px;
         font-weight: 400;
         text-transform: none;
+        cursor: auto;
+        user-select: none;
       }
 
       &-Swatch {
         width: 20px;
         height: 20px;
+        cursor: auto;
+        user-select: none;
       }
     }
   }

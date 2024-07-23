@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { DataContext } from "../../DataContext";
 import PlusIcon from "../PlusIcon/PlusIcon";
+import MinusIcon from "../MinusIcon/MinusIcon";
 
 export class QuantityControl extends Component {
   render() {
@@ -23,7 +24,7 @@ export class QuantityControl extends Component {
               className="CartOverlay-CountControl"
               onClick={() => updateProductQuantity({ id: productId, selectedAttributes }, -1)}
             >
-              <PlusIcon />
+              <MinusIcon />
             </div>
           </div>
         )}

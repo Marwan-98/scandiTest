@@ -118,6 +118,8 @@
     width: 24px;
     height: 24px;
     border: 1px solid #1d1f22;
+    cursor: pointer;
+    user-select: none;
   }
 
   &-Total {
