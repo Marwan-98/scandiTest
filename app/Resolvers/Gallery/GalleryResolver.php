@@ -12,8 +12,8 @@ class GalleryResolver extends Resolver {
         $product_id = $root_value["id"];
         $first = $args["first"] ?? null;
 
-        $galleryModel = new Gallery();
+        $gallery_model = new Gallery();
 
-        return $galleryModel->getById($product_id, $first);
+        return $gallery_model->getById($product_id, $first);
     }
 }
