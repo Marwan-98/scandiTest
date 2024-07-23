@@ -8,11 +8,17 @@ use App\Resolvers\Resolver;
 use App\Models\Currency as CurrencyModel;
 
 class CurrencyResolver extends Resolver{
+    private CurrencyModel $currency;
+
+    public function __construct()
+    {
+        $this->currency = new CurrencyModel();
+    }
+
     public function resolve($root_value, $args): array
     {
         $price_id = $root_value['currency_id'];
-        $currencyModel = new CurrencyModel();
 
-        return $currencyModel->getById($price_id);
+        return $this->currency->getById($price_id);
     }
 }

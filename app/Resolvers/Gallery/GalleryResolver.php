@@ -8,12 +8,17 @@ use App\Resolvers\Resolver;
 use App\Models\Gallery;
 
 class GalleryResolver extends Resolver {
+    private Gallery $gallery;
+
+    public function __construct()
+    {
+        $this->gallery = new Gallery();
+    }
+
     public function resolve($root_value, $args): array {
         $product_id = $root_value["id"];
         $first = $args["first"] ?? null;
 
-        $gallery_model = new Gallery();
-
-        return $gallery_model->getById($product_id, $first);
+        return $this->gallery->getById($product_id, $first);
     }
 }
