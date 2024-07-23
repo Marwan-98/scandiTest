@@ -96,7 +96,10 @@ export class DataProvider extends Component {
           },
         };
       },
-      () => this.updateCartOverlayVisibilty()
+      () => {
+        this.updateCartOverlayVisibilty();
+        window.scrollTo(0, 0);
+      }
     );
   }
 
