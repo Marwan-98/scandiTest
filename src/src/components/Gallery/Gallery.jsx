@@ -11,11 +11,11 @@ export class Gallery extends Component {
   }
 
   updateCurrentImageIndex(amount) {
+    const { gallery } = this.props;
     const currentIndex = this.state.currentImageIdx;
     const newIndex = currentIndex + amount;
 
-    const wrappedIndex =
-      newIndex > this.props.gallery.length - 1 ? 0 : newIndex < 0 ? this.props.gallery.length - 1 : newIndex;
+    const wrappedIndex = newIndex > gallery.length - 1 ? 0 : newIndex < 0 ? gallery.length - 1 : newIndex;
 
     this.setState({ currentImageIdx: wrappedIndex });
   }
@@ -25,10 +25,12 @@ export class Gallery extends Component {
   }
 
   render() {
+    const { gallery } = this.props;
+
     return (
       <div className="ProductGallery-Images">
         <div className="ProductGallery-ImagesList">
-          {this.props.gallery?.map((url, idx) => (
+          {gallery?.map((url, idx) => (
             <div key={idx} onClick={() => this.setCurrentImageIndex(idx)}>
               <div
                 className="ProductGallery-ImagesBoxes"
@@ -45,7 +47,7 @@ export class Gallery extends Component {
           <div
             className="ProductGallery-ImagesMain"
             style={{
-              backgroundImage: `url(${this.props.gallery ? this.props.gallery[this.state.currentImageIdx] : ""})`,
+              backgroundImage: `url(${gallery ? gallery[this.state.currentImageIdx] : ""})`,
             }}
             alt="current slid"
           />

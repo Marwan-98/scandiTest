@@ -22,9 +22,15 @@ class ProductDetails extends Component {
   }
 
   async fetchData() {
+    const {
+      router: {
+        params: { productId },
+      },
+    } = this.props;
+
     this.setState({ loading: true });
     try {
-      const productData = await request("http://localhost:8000/", PRODUCT_DETAILS(this.props.router.params.productId));
+      const productData = await request("http://localhost:8000/", PRODUCT_DETAILS(productId));
 
       this.setState({ product: productData.product });
     } catch (e) {
@@ -49,9 +55,10 @@ class ProductDetails extends Component {
     });
   };
 
-  renderAddToCart(selectedAttributes, addProductToCart) {
+  renderAddToCart(addProductToCart) {
     const {
       product: { attributes, inStock },
+      selectedAttributes = {},
     } = this.state;
 
     const isDisabled = Object.keys(selectedAttributes).length !== attributes?.length || !!!inStock;
@@ -73,7 +80,9 @@ class ProductDetails extends Component {
     );
   }
 
-  renderDescription(description) {
+  renderDescription() {
+    const { product: { description } = {} } = this.state;
+
     const cleanHTML = DOMPurify.sanitize(description, { USE_PROFILES: { html: true } });
     const parsedHTML = parse(cleanHTML);
 
@@ -81,11 +90,7 @@ class ProductDetails extends Component {
   }
 
   render() {
-    const {
-      loading,
-      product: { name, gallery, attributes, prices, description } = {},
-      selectedAttributes = {},
-    } = this.state;
+    const { loading, product: { name, gallery, attributes, prices } = {}, selectedAttributes = {} } = this.state;
 
     if (loading) {
       return null;
@@ -93,7 +98,7 @@ class ProductDetails extends Component {
 
     return (
       <DataContext.Consumer>
-        {({ addProductToCart, storeCurrency }) => (
+        {({ addProductToCart, storeCurrency: { currencyLabel } }) => (
           <div className="ProductDetails">
             <Gallery gallery={gallery} />
             <div>
@@ -111,10 +116,10 @@ class ProductDetails extends Component {
                 ))}
               </div>
               <div className="ProductDetails-Price">
-                <Price prices={prices} currencyLabel={storeCurrency.currencyLabel} renderTitle />
+                <Price prices={prices} currencyLabel={currencyLabel} renderTitle />
               </div>
-              {this.renderAddToCart(selectedAttributes, addProductToCart)}
-              {this.renderDescription(description)}
+              {this.renderAddToCart(addProductToCart)}
+              {this.renderDescription()}
             </div>
           </div>
         )}

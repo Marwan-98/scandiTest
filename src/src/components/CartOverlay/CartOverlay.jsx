@@ -69,10 +69,10 @@ class CartOverlay extends Component {
               </span>
             </div>
             <Button
-              className={`CartOverlay-PlaceOrder ${cartData.products.length < 1 ? "disabled" : ""}`}
+              className={`CartOverlay-PlaceOrder ${products.length < 1 ? "disabled" : ""}`}
               title={"Place Order"}
               onClick={() => this.placeOrder(cartData, emptyCart)}
-              disabled={cartData.products.length < 1}
+              disabled={products.length < 1}
             />
           </div>
         )}

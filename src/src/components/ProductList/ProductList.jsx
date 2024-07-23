@@ -15,17 +15,21 @@ class ProductList extends Component {
   }
 
   async fetchData() {
+    const {
+      router: {
+        params: { categoryId },
+      },
+      updateSelectedCategory,
+    } = this.props;
+
     this.setState({ loading: true });
 
     try {
-      const categoryData = await request("http://localhost:8000/", CATEGORY_BY_ID(this.props.router.params.categoryId));
+      const categoryData = await request("http://localhost:8000/", CATEGORY_BY_ID(categoryId));
 
-      this.props.updateSelectedCategory(categoryData.category);
+      updateSelectedCategory(categoryData.category);
 
-      const productData = await request(
-        "http://localhost:8000/",
-        PRODUCT_BY_CATEGORY(this.props.router.params.categoryId)
-      );
+      const productData = await request("http://localhost:8000/", PRODUCT_BY_CATEGORY(categoryId));
 
       this.setState({ products: productData.products });
     } catch (e) {
@@ -40,7 +44,19 @@ class ProductList extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.router.params.categoryId !== this.props.router.params.categoryId) {
+    const {
+      router: {
+        params: { categoryId },
+      },
+    } = this.props;
+
+    const {
+      router: {
+        params: { categoryId: prevCategoryId },
+      },
+    } = prevProps;
+
+    if (prevCategoryId !== categoryId) {
       this.fetchData();
     }
   }

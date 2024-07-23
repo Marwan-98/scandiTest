@@ -32,6 +32,10 @@ class Header extends Component {
   }
 
   render() {
+    const {
+      selectedCategory: { id },
+    } = this.props;
+
     return (
       <DataContext.Consumer>
         {({ cartData: { itemsCount }, isCartOverlayVisible, updateCartOverlayVisibilty }) => (
@@ -41,9 +45,7 @@ class Header extends Component {
                 <Link
                   to={`/category/${category.id}`}
                   key={category.id}
-                  className={`Header-Nav-Item ${
-                    this.props.selectedCategory.id === category.id ? "Header-Nav-Item-Selected" : ""
-                  }`}
+                  className={`Header-Nav-Item ${id === category.id ? "Header-Nav-Item-Selected" : ""}`}
                 >
                   {category.name}
                 </Link>
