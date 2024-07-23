@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Types;
 
-use App\Resolvers\CurrencyResolver;
+use App\Resolvers\Currency\CurrencyResolver;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 
@@ -16,10 +16,10 @@ class PriceType extends ObjectType {
                 'amount' => Type::float(),
                 'currency' => [
                     'type' => new CurrencyType(),
-                    'resolve' => function($price) {
+                    'resolve' => function($root_value, $args) {
                         $currencyResolver = new CurrencyResolver();
 
-                        return $currencyResolver->resolveCurrency($price['currency_id']);
+                        return $currencyResolver->resolve($root_value, $args);
                     }
                 ]
             ],
