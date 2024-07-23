@@ -3,18 +3,9 @@
 namespace App\Controller;
 use App\Config\Database;
 
-use App\Resolvers\Category\CategoryResolver;
-use App\Resolvers\Category\AllCategoryResolver;
-use App\Resolvers\Order\OrderResolver;
-use App\Resolvers\Product\AllProductsResolver;
-use App\Resolvers\Product\ProductResolver;
-use App\Types\CategoryType;
-use App\Types\OrderType;
+use App\Controller\Query;
+use App\Controller\Mutation;
 use GraphQL\GraphQL as GraphQLBase;
-use App\Types\ProductType;
-use GraphQL\Type\Definition\InputObjectType;
-use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use GraphQL\Type\SchemaConfig;
 use http\Exception\RuntimeException;
@@ -24,75 +15,8 @@ class GraphQL {
     static public function handle(): bool|string
     {
         try {
-            $productType = new ProductType();
-            $categoryType = new CategoryType();
-            $orderType = new OrderType();
-
-            $queryType = new ObjectType([
-                'name' => 'Query',
-                'fields' => [
-                    'products' => [
-                        'type' => Type::listOf($productType),
-                        'args' => [
-                            'categoryId' => ['type' => Type::string()],
-                        ],
-                        'resolve' => function($root_value, $args) {
-                            $productModel = new AllProductsResolver();
-                            return $productModel->resolve($root_value, $args);
-                        },
-                    ],
-                    'product' => [
-                        'type' => $productType,
-                        'args' => [
-                            'id' => ['type' => Type::nonNull(Type::string())],
-                        ],
-                        'resolve' => function($rootValue, $args) {
-                            $productModel = new ProductResolver();
-                            return $productModel->resolve($rootValue, $args);
-                        }
-                    ],
-                    'categories' => [
-                        'type' => Type::listOf($categoryType),
-                        'resolve' => function($rootValue, $args) {
-                            $categoryResolver = new AllCategoryResolver();
-
-                            return $categoryResolver->resolve($rootValue, $args);
-                        }
-                    ],
-                    'category' => [
-                        'type' => $categoryType,
-                        'args' => [
-                            'id' => ['type' => Type::nonNull(Type::string())],
-                        ],
-                        'resolve' => function($rootValue, $args) {
-                            $categoryResolver = new CategoryResolver();
-
-                            return $categoryResolver->resolve($rootValue, $args);
-                        }
-                    ]
-                ],
-            ]);
-
-
-            $mutationType = new ObjectType([
-                'name' => 'Mutation',
-                'fields' => [
-                    'createOrder' => [
-                        'type' => Type::string(),
-                        'args' => [
-                            'cartData' => [
-                                'type' => $orderType
-                            ],
-                        ],
-                        'resolve' => function ($rootValue, $args) {
-                            $orderResolver = new OrderResolver();
-                            $order_id = $orderResolver->resolve($rootValue, $args);
-                            
-                            return "Order created with the id ".$order_id;
-                        }
-                    ],
-                ],
-            ]);
+            $queryType = new Query();
+            $mutationType = new Mutation();
 
             // See docs on schema options:
             // https://webonyx.github.io/graphql-php/schema-definition/#configuration-options
