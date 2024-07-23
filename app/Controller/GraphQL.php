@@ -5,7 +5,7 @@ use App\Config\Database;
 
 use App\Resolvers\Category\CategoryResolver;
 use App\Resolvers\Category\AllCategoryResolver;
-use App\Resolvers\OrderResolver;
+use App\Resolvers\Order\OrderResolver;
 use App\Resolvers\Product\AllProductsResolver;
 use App\Resolvers\Product\ProductResolver;
 use App\Types\CategoryType;
@@ -86,7 +86,7 @@ class GraphQL {
                         ],
                         'resolve' => function ($rootValue, $args) {
                             $orderResolver = new OrderResolver();
-                            $order_id = $orderResolver->resolveOrder($rootValue, $args);
+                            $order_id = $orderResolver->resolve($rootValue, $args);
                             
                             return "Order created with the id ".$order_id;
                         }
