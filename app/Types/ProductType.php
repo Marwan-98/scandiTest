@@ -34,9 +34,9 @@ class ProductType extends ObjectType {
                 'attributes' => [
                     'type' => Type::listOf(new AttributeType()),
                     'resolve' => function($root_value, $args) {
-                        $attributeResolver = new AttributeResolver();
+                        $attribute_resolver = new AttributeResolver();
                         
-                        return $attributeResolver->resolve($root_value, $args);
+                        return $attribute_resolver->resolve($root_value, $args);
                     }
                 ],
                 'brand' => Type::string(),

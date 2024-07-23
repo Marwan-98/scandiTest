@@ -3,7 +3,8 @@
 namespace App\Controller;
 use App\Config\Database;
 
-use App\Resolvers\CategoryResolver;
+use App\Resolvers\Category\CategoryResolver;
+use App\Resolvers\Category\AllCategoryResolver;
 use App\Resolvers\OrderResolver;
 use App\Resolvers\ProductResolver;
 use App\Types\CategoryType;
@@ -52,9 +53,9 @@ class GraphQL {
                     'categories' => [
                         'type' => Type::listOf($categoryType),
                         'resolve' => function($rootValue, $args) {
-                            $categoryResolver = new CategoryResolver();
+                            $categoryResolver = new AllCategoryResolver();
 
-                            return $categoryResolver->resolveCategories();
+                            return $categoryResolver->resolve($rootValue, $args);
                         }
                     ],
                     'category' => [
@@ -65,7 +66,7 @@ class GraphQL {
                         'resolve' => function($rootValue, $args) {
                             $categoryResolver = new CategoryResolver();
 
-                            return $categoryResolver->resolveCategoryById($args["id"]);
+                            return $categoryResolver->resolve($rootValue, $args);
                         }
                     ]
                 ],
