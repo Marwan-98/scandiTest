@@ -3,7 +3,6 @@ import "./ProductDetails.style.scss";
 import Gallery from "../Gallery/Gallery";
 import request from "graphql-request";
 import { PRODUCT_DETAILS } from "../../constants/queries";
-import WithRouter from "../../WithRouter";
 import { DataContext } from "../../DataContext";
 import Price from "../Price/Price";
 import Attribute from "../Attribute/Attribute";
@@ -22,14 +21,12 @@ class ProductDetails extends Component {
   }
 
   async fetchData() {
-    const {
-      router: {
-        params: { productId },
-      },
-    } = this.props;
-
     this.setState({ loading: true });
+
     try {
+      const pathname = window.location.pathname.split("/");
+      const productId = pathname[pathname.length - 1];
+
       const productData = await request("http://localhost:8000/", PRODUCT_DETAILS(productId));
 
       this.setState({ product: productData.product });
@@ -128,4 +125,4 @@ class ProductDetails extends Component {
   }
 }
 
-export default WithRouter(ProductDetails);
+export default ProductDetails;

@@ -15,16 +15,13 @@ class ProductList extends Component {
   }
 
   async fetchData() {
-    const {
-      router: {
-        params: { categoryId },
-      },
-      updateSelectedCategory,
-    } = this.props;
-
     this.setState({ loading: true });
 
     try {
+      const { updateSelectedCategory } = this.props;
+      const pathname = window.location.pathname.split("/");
+      const categoryId = pathname[pathname.length - 1];
+
       const categoryData = await request("http://localhost:8000/", CATEGORY_BY_ID(categoryId));
 
       updateSelectedCategory(categoryData.category);

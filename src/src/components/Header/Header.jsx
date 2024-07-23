@@ -4,7 +4,6 @@ import cartIcon from "./cart.png";
 import "./Header.style.scss";
 import CartOverlay from "../CartOverlay/CartOverlay";
 import { Link } from "react-router-dom";
-import WithRouter from "../../WithRouter";
 import { DataContext } from "../../DataContext";
 import { CATEGORIES_LIST } from "../../constants/queries";
 import request from "graphql-request";
@@ -19,9 +18,9 @@ class Header extends Component {
 
   async fetchData() {
     try {
-      const categoriesList = await request("http://localhost:8000/", CATEGORIES_LIST);
+      const data = await request("http://localhost:8000/", CATEGORIES_LIST);
 
-      this.setState({ categories: categoriesList });
+      this.setState({ categories: data.categories });
     } catch (e) {
       console.log(e);
     }
@@ -36,12 +35,14 @@ class Header extends Component {
       selectedCategory: { id },
     } = this.props;
 
+    const { categories } = this.state;
+
     return (
       <DataContext.Consumer>
         {({ cartData: { itemsCount }, isCartOverlayVisible, updateCartOverlayVisibilty }) => (
           <header className="Header">
             <nav className="Header-Nav">
-              {this.state.categories.categories?.map((category) => (
+              {categories?.map((category) => (
                 <Link
                   to={`/category/${category.id}`}
                   key={category.id}
@@ -64,4 +65,4 @@ class Header extends Component {
   }
 }
 
-export default WithRouter(Header);
+export default Header;
