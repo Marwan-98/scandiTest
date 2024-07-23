@@ -8,6 +8,8 @@ import { DataContext } from "../../DataContext";
 import Price from "../Price/Price";
 import Attribute from "../Attribute/Attribute";
 import Button from "../Button/Button";
+import DOMPurify from "dompurify";
+import parse from "html-react-parser";
 
 class ProductDetails extends Component {
   constructor() {
@@ -71,6 +73,13 @@ class ProductDetails extends Component {
     );
   }
 
+  renderDescription(description) {
+    const cleanHTML = DOMPurify.sanitize(description, { USE_PROFILES: { html: true } });
+    const parsedHTML = parse(cleanHTML);
+
+    return <div className="ProductDetails-Description">{parsedHTML}</div>;
+  }
+
   render() {
     const {
       loading,
@@ -105,9 +114,7 @@ class ProductDetails extends Component {
                 <Price prices={prices} currencyLabel={storeCurrency.currencyLabel} renderTitle />
               </div>
               {this.renderAddToCart(selectedAttributes, addProductToCart)}
-              <div className="ProductDetails-Description">
-                <p>{description}</p>
-              </div>
+              {this.renderDescription(description)}
             </div>
           </div>
         )}
