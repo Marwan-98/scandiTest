@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Types;
 
 use App\Resolvers\AttributeResolver;
-use App\Resolvers\GalleryResolver;
+use App\Resolvers\Gallery\GalleryResolver;
 use App\Resolvers\Price\PriceResolver;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
@@ -24,10 +24,10 @@ class ProductType extends ObjectType {
                     'args' => [
                         'first' => ['type' => Type::int()],
                     ],
-                    'resolve' => function ($product, $args) {
-                        $galleryResolver = new GalleryResolver();
+                    'resolve' => function ($root_value, $args) {
+                        $gallery_resolver = new GalleryResolver();
 
-                        return $galleryResolver->resolveProductGallery($product["id"], $args["first"] ?? null);
+                        return $gallery_resolver->resolve($root_value, $args);
                     }
                 ],
                 'description' => Type::string(),
@@ -42,10 +42,10 @@ class ProductType extends ObjectType {
                 'brand' => Type::string(),
                 'prices' => [
                     'type' => Type::listOf(new PriceType()),
-                    'resolve' => function($rootValue, $args) {
+                    'resolve' => function($root_value, $args) {
                         $price_resolver = new PriceResolver();
 
-                        return $price_resolver->resolve($rootValue, $args);
+                        return $price_resolver->resolve($root_value, $args);
                     }
                 ]
             ],
