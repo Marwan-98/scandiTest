@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 class Product extends Model {
-    public function getProducts(): array
+    public function getAll(): array
     {
         $query = "SELECT * FROM product";
 

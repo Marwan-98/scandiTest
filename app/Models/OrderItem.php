@@ -26,4 +26,11 @@ class OrderItem extends Model {
             $order_item_stmt->execute();
         }
     }
+
+    public function getAll() {
+        $query = "SELECT * FROM order_item";
+        $result = $this->database->query($query);
+
+        return $result;
+    }
 }

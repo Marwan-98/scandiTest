@@ -58,4 +58,11 @@ class Attribute extends Model {
 
         return $attributes;
     }
+
+    public function getAll() {
+        $query = "SELECT * FROM attribute";
+        $result = $this->database->query($query);
+
+        return $result;
+    }
 }

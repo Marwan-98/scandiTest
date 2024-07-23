@@ -15,4 +15,5 @@ abstract class Model {
     }
 
     abstract public function getById(string $id, ?int $first);
+    abstract public function getAll();
 }

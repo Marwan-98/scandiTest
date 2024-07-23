@@ -17,4 +17,11 @@ class Currency extends Model {
             'symbol' => $currency['symbol'],
         ];
     }
+
+    public function getAll() {
+        $query = "SELECT label, symbol FROM currency";
+        $result = $this->database->query($query);
+
+        return $result;
+    }
 }

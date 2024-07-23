@@ -21,4 +21,11 @@ class Price extends Model {
 
         return $prices;
     }
+
+    public function getAll() {
+        $query = "SELECT * FROM price";
+        $result = $this->database->query($query);
+
+        return $result;
+    }
 }

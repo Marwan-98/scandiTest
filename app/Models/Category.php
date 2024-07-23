@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 class Category extends Model {
-    public function getCategories(): array
+    public function getAll(): array
     {
         $stmt = $this->database->prepare('SELECT * FROM category');
         $stmt->execute();

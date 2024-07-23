@@ -32,4 +32,11 @@ class Gallery extends Model {
 
         return $gallery;
     }
+
+    public function getAll() {
+        $query = "SELECT id, product_id, url FROM gallery";
+        $result = $this->database->query($query);
+
+        return $result;
+    }
 }

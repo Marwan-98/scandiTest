@@ -28,4 +28,11 @@ class Order extends Model {
 
         return $order_id;
     }
+
+    public function getAll() {
+        $query = "SELECT * FROM orders";
+        $result = $this->database->query($query);
+
+        return $result;
+    }
 }
