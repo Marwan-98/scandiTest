@@ -7,7 +7,7 @@ namespace App\Resolvers\Order;
 use App\Resolvers\Resolver;
 use App\Models\Order as OrderModel;
 
-class OrderResolver {
+class OrderResolver extends Resolver {
     public function __construct()
     {
         $order_model = new OrderModel();
