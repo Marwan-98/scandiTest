@@ -11,31 +11,11 @@ class DatabaseException extends Exception
 
 class Database extends Mysqli {
     /**
-     * @var string
-     */
-    private string $servername = "mysql";
-
-    /**
-     * @var string
-     */
-    private string $username = "root";
-
-    /**
-     * @var string
-     */
-    private string $password = 'temppassword';
-
-    /**
-     * @var string
-     */
-    private string $dbname = "SCANDI_TEST";
-
-    /**
      * @throws DatabaseException
      */
     public function __construct() {
         // Create connection
-        parent::__construct($this->servername, $this->username, $this->password, $this->dbname);
+        parent::__construct($_ENV["DB_SERVER_NAME"], $_ENV["USER_NAME"], $_ENV["PASSWORD"], $_ENV["DB_NAME"]);
 
         $this->throwConnectionExceptionOnConnectionError();
     }

@@ -2,7 +2,7 @@ services:
   app-php:
     build:
       context: ../
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/Dockerfile-php
     container_name: scandi-test-php
     restart: always
     working_dir: /var/www
@@ -24,3 +24,11 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: temppassword
       MYSQL_DATABASE: SCANDI_TEST
+  app-react:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile-react
+    container_name: scandi-test-react
+    restart: always
+    ports:
+      - "8003:3000"

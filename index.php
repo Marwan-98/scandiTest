@@ -1,4 +1,5 @@
 <?php
+
 require __DIR__ . '/vendor/autoload.php';
 
 use App\GraphQL\Controller as GraphQLController;
@@ -22,13 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
 
-//$uri = trim($_SERVER['REQUEST_URI'], '/');
-//
-//$rawInput = file_get_contents('php://input');
-//
-//print_r($rawInput);
-//
-//route($uri);
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 $graphQL = new GraphQLController();
 

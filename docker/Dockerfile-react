@@ -1,0 +1,12 @@
+FROM node:22.5-alpine
+
+WORKDIR /scandi-test/
+
+COPY src/public /scandi-test/public
+COPY src/.env /scandi-test/
+COPY src/src /scandi-test/src
+COPY src/package.json /scandi-test/
+
+RUN npm install
+
+CMD ["npm", "start"]
