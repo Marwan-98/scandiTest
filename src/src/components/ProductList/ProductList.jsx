@@ -50,7 +50,7 @@ class ProductList extends Component {
 
   render() {
     const { selectedCategory: { name } = {} } = this.props;
-    const { loading } = this.state;
+    const { loading, products } = this.state;
 
     if (loading) {
       return null;
@@ -60,7 +60,7 @@ class ProductList extends Component {
       <div className="ProductList">
         <h1 className="ProductList-Heading">{name}</h1>
         <div className="ProductList-List">
-          {this.state.products?.map((product, idx) => (
+          {products?.map((product, idx) => (
             <ProductListItem product={product} key={idx} />
           ))}
         </div>

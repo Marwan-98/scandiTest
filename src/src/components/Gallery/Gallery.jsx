@@ -49,7 +49,7 @@ export class Gallery extends Component {
             style={{
               backgroundImage: `url(${gallery ? gallery[this.state.currentImageIdx] : ""})`,
             }}
-            alt="current slid"
+            alt="current slide"
           />
           <button
             className="ProductGallery-ImagesSliderChevron ProductGallery-ImagesSliderChevron-Right"
