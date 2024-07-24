@@ -19,6 +19,6 @@ class AllProductsResolver extends Resolver {
     {
         $category_id = $args["categoryId"];
 
-        return $this->model->getAll($category_id);
+        return $this->model->get_all($category_id);
     }
 }

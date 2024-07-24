@@ -35,8 +35,8 @@ class Controller {
             $query = $input['query'];
             $variableValues = $input['variables'] ?? null;
 
-            $rootValue = ['prefix' => 'You said: '];
-            $result = GraphQLBase::executeQuery($schema, $query, $rootValue, null, $variableValues);
+            $root_value = ['prefix' => 'You said: '];
+            $result = GraphQLBase::executeQuery($schema, $query, $root_value, null, $variableValues);
             $output = $result->toArray();
         } catch (Throwable $e) {
             $output = [

@@ -10,14 +10,14 @@ use App\GraphQL\Types\SelectedAttributeType;
 
 class OrderItemType extends InputObjectType {
     public function __construct() {
-        $selectedAttributes = new SelectedAttributeType();
+        $selected_attributes = new SelectedAttributeType();
 
         parent::__construct([
             'name' => 'OrderItem',
             'fields' => [
                 'productId' => Type::string(),
                 'quantity' => Type::int(),
-                'selectedAttributes' => Type::listOf($selectedAttributes)
+                'selectedAttributes' => Type::listOf($selected_attributes)
             ]
         ]);
     }

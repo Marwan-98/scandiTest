@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 class Category extends Model {
-    public function getAll(): array
+    public function get_all(): array
     {
         $stmt = $this->database->prepare('SELECT * FROM category');
         $stmt->execute();
@@ -13,9 +13,9 @@ class Category extends Model {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getById(string $categoryId, ?int $first = null) {
+    public function get_by_id(string $category_id, ?int $first = null) {
         $stmt = $this->database->prepare("SELECT * FROM category WHERE id = ?");
-        $stmt->bind_param("s", $categoryId);
+        $stmt->bind_param("s", $category_id);
         $stmt->execute();
 
         return $stmt->get_result()->fetch_assoc();

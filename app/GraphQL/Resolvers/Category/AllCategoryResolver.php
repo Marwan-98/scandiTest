@@ -16,6 +16,6 @@ class AllCategoryResolver extends Resolver {
     } 
     
     public function resolve($root_value, $args): array {
-        return $this->model->getAll();
+        return $this->model->get_all();
     }
 }

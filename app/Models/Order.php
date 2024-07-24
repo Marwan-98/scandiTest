@@ -7,7 +7,7 @@ use App\Models\Product as ProductModel;
 use App\Models\OrderItem as OrderItemModel;
 
 class Order extends Model {
-    public function getById(string $order_id, ?int $first) {
+    public function get_by_id(string $order_id, ?int $first) {
         $stmt = $this->database->prepare("SELECT * FROM orders where id = ?");
         $stmt->bind_param("i", $order_id);
         $stmt->execute();
@@ -29,7 +29,7 @@ class Order extends Model {
         return $order_id;
     }
 
-    public function getAll() {
+    public function get_all() {
         $query = "SELECT * FROM orders";
         $result = $this->database->query($query);
 

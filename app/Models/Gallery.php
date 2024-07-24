@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 class Gallery extends Model {
-    public function getById(string $productId, ?int $first = null): array
+    public function get_by_id(string $product_id, ?int $first = null): array
     {
         $query = "SELECT id, product_id, url FROM gallery WHERE product_id = ?";
 
@@ -16,9 +16,9 @@ class Gallery extends Model {
         $stmt = $this->database->prepare($query);
 
         if ($first !== null) {
-            $stmt->bind_param('si', $productId, $first);
+            $stmt->bind_param('si', $product_id, $first);
         } else {
-            $stmt->bind_param('s', $productId);
+            $stmt->bind_param('s', $product_id);
         }
         
         $stmt->execute();
@@ -33,7 +33,7 @@ class Gallery extends Model {
         return $gallery;
     }
 
-    public function getAll() {
+    public function get_all() {
         $query = "SELECT id, product_id, url FROM gallery";
         $result = $this->database->query($query);
 

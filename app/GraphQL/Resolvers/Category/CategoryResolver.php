@@ -15,9 +15,9 @@ class CategoryResolver extends Resolver {
         parent::__construct($category_model);
     } 
 
-    public function resolve($rootValue, $args): array {
+    public function resolve($root_value, $args): array {
         $category_id = $args["id"];
 
-        return $this->model->getById($category_id);
+        return $this->model->get_by_id($category_id);
     }
 }

@@ -19,6 +19,6 @@ class CurrencyResolver extends Resolver{
     {
         $price_id = $root_value['currency_id'];
 
-        return $this->model->getById($price_id);
+        return $this->model->get_by_id($price_id);
     }
 }

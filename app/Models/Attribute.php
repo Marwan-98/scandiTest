@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 class Attribute extends Model {
-    public function getById(string $productId, ?int $first = null): array {
+    public function get_by_id(string $product_id, ?int $first = null): array {
         $query = 'SELECT
             attribute.id,
             attribute.name,
@@ -19,7 +19,7 @@ class Attribute extends Model {
 
         $attribute_stmt = $this->database->prepare($query);
 
-        $attribute_stmt->bind_param('s', $productId);        
+        $attribute_stmt->bind_param('s', $product_id);        
         $attribute_stmt->execute();
         $result = $attribute_stmt->get_result();
 
@@ -36,7 +36,7 @@ class Attribute extends Model {
 
             $item_stmt = $this->database->prepare($query);
             
-            $item_stmt->bind_param('ss', $productId, $attribute['id']);
+            $item_stmt->bind_param('ss', $product_id, $attribute['id']);
             $item_stmt->execute();
             $item_result = $item_stmt->get_result();
 
@@ -59,7 +59,7 @@ class Attribute extends Model {
         return $attributes;
     }
 
-    public function getAll() {
+    public function get_all() {
         $query = "SELECT * FROM attribute";
         $result = $this->database->query($query);
 

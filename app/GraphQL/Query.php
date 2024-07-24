@@ -15,14 +15,14 @@ use GraphQL\Type\Definition\Type;
 
 class Query extends ObjectType {
     public function __construct() {
-        $productType = new ProductType();
-        $categoryType = new CategoryType();
+        $product_type = new ProductType();
+        $category_type = new CategoryType();
         
         parent::__construct([
             'name' => 'Query',
             'fields' => [
                 'products' => [
-                    'type' => Type::listOf($productType),
+                    'type' => Type::listOf($product_type),
                     'args' => [
                         'categoryId' => ['type' => Type::string()],
                     ],
@@ -32,32 +32,32 @@ class Query extends ObjectType {
                     },
                 ],
                 'product' => [
-                    'type' => $productType,
+                    'type' => $product_type,
                     'args' => [
                         'id' => ['type' => Type::nonNull(Type::string())],
                     ],
-                    'resolve' => function($rootValue, $args) {
+                    'resolve' => function($root_value, $args) {
                         $productModel = new ProductResolver();
-                        return $productModel->resolve($rootValue, $args);
+                        return $productModel->resolve($root_value, $args);
                     }
                 ],
                 'categories' => [
-                    'type' => Type::listOf($categoryType),
-                    'resolve' => function($rootValue, $args) {
+                    'type' => Type::listOf($category_type),
+                    'resolve' => function($root_value, $args) {
                         $categoryResolver = new AllCategoryResolver();
 
-                        return $categoryResolver->resolve($rootValue, $args);
+                        return $categoryResolver->resolve($root_value, $args);
                     }
                 ],
                 'category' => [
-                    'type' => $categoryType,
+                    'type' => $category_type,
                     'args' => [
                         'id' => ['type' => Type::nonNull(Type::string())],
                     ],
-                    'resolve' => function($rootValue, $args) {
+                    'resolve' => function($root_value, $args) {
                         $categoryResolver = new CategoryResolver();
 
-                        return $categoryResolver->resolve($rootValue, $args);
+                        return $categoryResolver->resolve($root_value, $args);
                     }
                 ]
             ],

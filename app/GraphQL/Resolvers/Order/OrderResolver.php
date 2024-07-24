@@ -15,7 +15,7 @@ class OrderResolver extends Resolver {
         parent::__construct($order_model);
     }   
 
-    public function resolve($rootValue, $args): int
+    public function resolve($root_value, $args): int
     {
         $total = $args['cartData']['total'];
         $order_items = $args['cartData']['orderItems'];

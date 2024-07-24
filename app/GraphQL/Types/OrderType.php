@@ -10,13 +10,13 @@ use App\GraphQL\Types\OrderItemType;
 
 class OrderType extends InputObjectType {
     public function __construct() {
-        $orderItemType = new OrderItemType();
+        $order_item_type = new OrderItemType();
 
         parent::__construct([
             'name' => 'Order',
             'fields' => [
                 'total' => Type::string(),
-                'orderItems' => Type::listOf($orderItemType),
+                'orderItems' => Type::listOf($order_item_type),
             ],
         ]);
     }

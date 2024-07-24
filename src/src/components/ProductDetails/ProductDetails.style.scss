@@ -33,8 +33,10 @@
       width: 36px;
       height: 36px;
       border: 1px 0px 0px 0px;
+      font-size: 0;
       color: transparent;
       cursor: pointer;
+      user-select: none;
 
       &.selected {
         border: 1px solid #5ece7b;

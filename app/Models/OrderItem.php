@@ -6,7 +6,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 class OrderItem extends Model {
-    public function getById(string $order_item_id, ?int $first) {
+    public function get_by_id(string $order_item_id, ?int $first) {
         $stmt = $this->database->prepare("SELECT * FROM order_item where id = ?");
         $stmt->bind_param("i", $order_item_id);
         $stmt->execute();
@@ -27,7 +27,7 @@ class OrderItem extends Model {
         }
     }
 
-    public function getAll() {
+    public function get_all() {
         $query = "SELECT * FROM order_item";
         $result = $this->database->query($query);
 

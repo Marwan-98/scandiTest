@@ -14,6 +14,6 @@ abstract class Model {
         $this->database = new Database();
     }
 
-    abstract public function getById(string $id, ?int $first);
-    abstract public function getAll();
+    abstract public function get_by_id(string $root_id, ?int $first);
+    abstract public function get_all();
 }

@@ -11,7 +11,7 @@ use GraphQL\Type\Definition\Type;
 
 class Mutation extends ObjectType {
     public function __construct() {
-        $orderType = new OrderType();
+        $order_type = new OrderType();
         
         parent::__construct([
             'name' => 'Mutation',
@@ -20,12 +20,12 @@ class Mutation extends ObjectType {
                     'type' => Type::string(),
                     'args' => [
                         'cartData' => [
-                            'type' => $orderType
+                            'type' => $order_type
                         ],
                     ],
-                    'resolve' => function ($rootValue, $args) {
+                    'resolve' => function ($root_value, $args) {
                         $orderResolver = new OrderResolver();
-                        $order_id = $orderResolver->resolve($rootValue, $args);
+                        $order_id = $orderResolver->resolve($root_value, $args);
                         
                         return "Order created with the id ".$order_id;
                     }

@@ -16,6 +16,6 @@ class PriceResolver extends Resolver {
     public function resolve($root_value, $args): array {
         $product_id = $root_value["id"];
 
-        return $this->model->getById($product_id);
+        return $this->model->get_by_id($product_id);
     }
 }

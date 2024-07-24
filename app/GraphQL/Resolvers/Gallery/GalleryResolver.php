@@ -19,6 +19,6 @@ class GalleryResolver extends Resolver {
         $product_id = $root_value["id"];
         $first = $args["first"] ?? null;
 
-        return $this->model->getById($product_id, $first);
+        return $this->model->get_by_id($product_id, $first);
     }
 }

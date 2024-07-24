@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Models;
 
 class Price extends Model {
-    public function getById(string $productId, ?int $first = null): array
+    public function get_by_id(string $product_id, ?int $first = null): array
     {
         $stmt = $this->database->prepare("SELECT amount, currency_id FROM price where product_id = ?");
-        $stmt->bind_param("s", $productId);
+        $stmt->bind_param("s", $product_id);
         $stmt->execute();
         
         $result = $stmt->get_result();
@@ -22,7 +22,7 @@ class Price extends Model {
         return $prices;
     }
 
-    public function getAll() {
+    public function get_all() {
         $query = "SELECT * FROM price";
         $result = $this->database->query($query);
 
