@@ -6,7 +6,7 @@ export class DataProvider extends Component {
   constructor() {
     super();
     this.state = {
-      cartData: {
+      cartData: JSON.parse(localStorage.getItem("cartData")) || {
         products: [],
         itemsCount: 0,
         cartTotal: 0,
@@ -24,6 +24,10 @@ export class DataProvider extends Component {
     this.updateProductQuantity = this.updateProductQuantity.bind(this);
     this.updateSelectedCategory = this.updateSelectedCategory.bind(this);
     this.emptyCart = this.emptyCart.bind(this);
+  }
+
+  updateLocalCart(newCart) {
+    localStorage.setItem("cartData", JSON.stringify(newCart));
   }
 
   updateSelectedCategory(category) {
@@ -70,13 +74,17 @@ export class DataProvider extends Component {
         const newProducts = [...products, { ...newProduct }];
 
         if (index === -1) {
+          const newCartData = {
+            ...prevState.cartData,
+            products: newProducts,
+            itemsCount: itemsCount + 1,
+            cartTotal: this.updateCartTotal(newProducts),
+          };
+
+          this.updateLocalCart(newCartData);
+
           return {
-            cartData: {
-              ...prevState.cartData,
-              products: newProducts,
-              itemsCount: itemsCount + 1,
-              cartTotal: this.updateCartTotal(newProducts),
-            },
+            cartData: newCartData,
           };
         }
 
@@ -87,13 +95,17 @@ export class DataProvider extends Component {
           quantity: updatedProducts[index].quantity + 1,
         };
 
+        const newCartData = {
+          ...prevState.cartData,
+          products: updatedProducts,
+          itemsCount: itemsCount + 1,
+          cartTotal: this.updateCartTotal(updatedProducts),
+        };
+
+        this.updateLocalCart(newCartData);
+
         return {
-          cartData: {
-            ...prevState.cartData,
-            products: updatedProducts,
-            itemsCount: itemsCount + 1,
-            cartTotal: this.updateCartTotal(updatedProducts),
-          },
+          cartData: newCartData,
         };
       },
       () => {
@@ -124,13 +136,16 @@ export class DataProvider extends Component {
 
         productsCopy.splice(index, 1);
 
+        const newCartData = {
+          ...cartData,
+          products: productsCopy,
+          itemsCount: newItemsCount,
+          cartTotal: this.updateCartTotal(productsCopy),
+        };
+
+        this.updateLocalCart(newCartData);
         return {
-          cartData: {
-            ...cartData,
-            products: productsCopy,
-            itemsCount: newItemsCount,
-            cartTotal: this.updateCartTotal(productsCopy),
-          },
+          cartData: newCartData,
         };
       }
 
@@ -141,25 +156,33 @@ export class DataProvider extends Component {
         quantity: updatedProducts[index].quantity + quantityChange,
       };
 
+      const newCartData = {
+        ...prevState.cartData,
+        products: updatedProducts,
+        itemsCount: newItemsCount,
+        cartTotal: this.updateCartTotal(updatedProducts),
+      };
+
+      this.updateLocalCart(newCartData);
+
       return {
-        cartData: {
-          ...prevState.cartData,
-          products: updatedProducts,
-          itemsCount: newItemsCount,
-          cartTotal: this.updateCartTotal(updatedProducts),
-        },
+        cartData: newCartData,
       };
     });
   }
 
   emptyCart() {
+    const newCartData = {
+      products: [],
+      itemsCount: 0,
+      cartTotal: 0,
+    };
+
+    this.updateLocalCart(newCartData);
+
     this.setState(
       {
-        cartData: {
-          products: [],
-          itemsCount: 0,
-          cartTotal: 0,
-        },
+        cartData: newCartData,
       },
       () => this.updateCartOverlayVisibilty()
     );
