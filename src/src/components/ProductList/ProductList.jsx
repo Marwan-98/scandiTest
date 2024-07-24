@@ -17,10 +17,11 @@ class ProductList extends Component {
     this.setState({ loading: true });
 
     try {
-      const pathname = window.location.pathname.split("/");
-      const categoryId = pathname[pathname.length - 1];
+      const {
+        selectedCategory: { id: selectedCategory },
+      } = this.props;
 
-      const productData = await request(process.env.REACT_APP_BASE_URL, PRODUCT_BY_CATEGORY(categoryId));
+      const productData = await request(process.env.REACT_APP_BASE_URL, PRODUCT_BY_CATEGORY(selectedCategory));
 
       this.setState({ products: productData.products });
     } catch (e) {
@@ -44,12 +45,12 @@ class ProductList extends Component {
     } = prevProps;
 
     if (selectedCategory !== prevSelectedCategory) {
+      console.log(selectedCategory, prevSelectedCategory);
       this.fetchData();
     }
   }
 
-  render() {
-    const { selectedCategory: { name } = {} } = this.props;
+  renderProductList() {
     const { loading, products } = this.state;
 
     if (loading) {
@@ -57,13 +58,21 @@ class ProductList extends Component {
     }
 
     return (
+      <div className="ProductList-List">
+        {products?.map((product, idx) => (
+          <ProductListItem product={product} key={idx} />
+        ))}
+      </div>
+    );
+  }
+
+  render() {
+    const { selectedCategory: { name } = {} } = this.props;
+
+    return (
       <div className="ProductList">
         <h1 className="ProductList-Heading">{name}</h1>
-        <div className="ProductList-List">
-          {products?.map((product, idx) => (
-            <ProductListItem product={product} key={idx} />
-          ))}
-        </div>
+        {this.renderProductList()}
       </div>
     );
   }

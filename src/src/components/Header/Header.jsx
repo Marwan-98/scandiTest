@@ -13,19 +13,28 @@ class Header extends Component {
     super();
     this.state = {
       categories: [],
+      loading: false,
     };
   }
 
   async fetchData() {
+    this.setState({ loading: true });
+
     try {
       const { updateSelectedCategory } = this.props;
+      const pathname = window.location.pathname.split("/");
+      const categoryId = pathname[pathname.length - 1];
 
       const data = await request(process.env.REACT_APP_BASE_URL, CATEGORIES_LIST);
 
       this.setState({ categories: data.categories });
-      updateSelectedCategory(data.categories[0]);
+
+      const categoryData = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID(categoryId));
+      updateSelectedCategory(categoryData.category);
     } catch (e) {
       console.log(e);
+    } finally {
+      this.setState({ loading: false });
     }
   }
 
@@ -33,20 +42,14 @@ class Header extends Component {
     this.fetchData();
   }
 
-  async updateCategory(categoryId) {
-    const { updateSelectedCategory } = this.props;
-
-    const categoryData = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID(categoryId));
-
-    updateSelectedCategory(categoryData.category);
-  }
-
   render() {
-    const {
-      selectedCategory: { id },
-    } = this.props;
+    const { selectedCategory: { id } = {}, updateSelectedCategory } = this.props;
 
-    const { categories } = this.state;
+    const { categories, loading } = this.state;
+
+    if (loading || !id) {
+      return null;
+    }
 
     return (
       <DataContext.Consumer>
@@ -58,7 +61,7 @@ class Header extends Component {
                   to={`/category/${category.id}`}
                   key={category.id}
                   className={`Header-Nav-Item ${id === category.id ? "Header-Nav-Item-Selected" : ""}`}
-                  onClick={() => this.updateCategory(category.id)}
+                  onClick={() => updateSelectedCategory(category)}
                 >
                   {category.name}
                 </Link>

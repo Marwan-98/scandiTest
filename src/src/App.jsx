@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import "./App.scss";
 import Header from "./components/Header/Header.jsx";
@@ -22,6 +22,7 @@ class App extends Component {
                 <main>
                   <div className={`Overlay ${context.isCartOverlayVisible && "Overlay-Active"}`} />
                   <Routes>
+                    <Route path="*" element={<Navigate to={"/category/1"} replace />} />
                     <Route
                       path="/category/:categoryId"
                       element={
