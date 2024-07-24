@@ -40,6 +40,19 @@ class ProductListItem extends Component {
     );
   }
 
+  renderOutOfStock(inStock) {
+    if (inStock) {
+      return null;
+    }
+
+    return (
+      <>
+        <div className="ProductListItem-Overlay-Active" />
+        <span className="ProductListItem-OverlayText active">OUT OF STOCK</span>
+      </>
+    );
+  }
+
   render() {
     const {
       product: { id, inStock, gallery, name, prices },
@@ -50,8 +63,7 @@ class ProductListItem extends Component {
         {({ addProductToCart }) => (
           <Link to={`/products/${id}`} className="ProductListItem">
             <div className="ProductListItem-ImageContainer">
-              <div className={`ProductListItem-Overlay ${inStock ? "" : "ProductListItem-Overlay-Active"}`} />
-              <span className={`ProductListItem-OverlayText ${inStock ? "" : "active"}`}>OUT OF STOCK</span>
+              {this.renderOutOfStock(inStock)}
               <div style={{ backgroundImage: `url(${gallery[0]})` }} alt="product" className="ProductListItem-Image" />
             </div>
             {this.renderQuickShop(inStock, addProductToCart)}
