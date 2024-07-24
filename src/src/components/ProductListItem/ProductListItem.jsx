@@ -27,14 +27,14 @@ class ProductListItem extends Component {
   }
 
   renderQuickShop(inStock, addProductToCart) {
-    const { product } = this.props;
-
     if (!inStock) {
       return null;
     }
-
     return (
-      <button className="ProductListItem-AddToCartButton" onClick={(e) => this.quickShop(e, product, addProductToCart)}>
+      <button
+        className="ProductListItem-AddToCartButton"
+        onClick={(e) => this.quickShop(e, this.props.product, addProductToCart)}
+      >
         <img src={cartImage} alt="add to cart" width={24} height={24} />
       </button>
     );

@@ -20,7 +20,7 @@ class ProductList extends Component {
       const pathname = window.location.pathname.split("/");
       const categoryId = pathname[pathname.length - 1];
 
-      const productData = await request("http://localhost:8000/", PRODUCT_BY_CATEGORY(categoryId));
+      const productData = await request(process.env.REACT_APP_BASE_URL, PRODUCT_BY_CATEGORY(categoryId));
 
       this.setState({ products: productData.products });
     } catch (e) {

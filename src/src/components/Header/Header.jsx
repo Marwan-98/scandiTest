@@ -20,7 +20,7 @@ class Header extends Component {
     try {
       const { updateSelectedCategory } = this.props;
 
-      const data = await request("http://localhost:8000/", CATEGORIES_LIST);
+      const data = await request(process.env.REACT_APP_BASE_URL, CATEGORIES_LIST);
 
       this.setState({ categories: data.categories });
       updateSelectedCategory(data.categories[0]);
@@ -36,7 +36,7 @@ class Header extends Component {
   async updateCategory(categoryId) {
     const { updateSelectedCategory } = this.props;
 
-    const categoryData = await request("http://localhost:8000/", CATEGORY_BY_ID(categoryId));
+    const categoryData = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID(categoryId));
 
     updateSelectedCategory(categoryData.category);
   }

@@ -27,7 +27,7 @@ class CartOverlay extends Component {
     };
 
     try {
-      await request("http://localhost:8000/", PLACE_ORDER, variables).then(() => emptyCart());
+      await request(process.env.REACT_APP_BASE_URL, PLACE_ORDER, variables).then(() => emptyCart());
     } catch (error) {
       console.log(error);
     }

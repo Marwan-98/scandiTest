@@ -27,7 +27,7 @@ class ProductDetails extends Component {
       const pathname = window.location.pathname.split("/");
       const productId = pathname[pathname.length - 1];
 
-      const productData = await request("http://localhost:8000/", PRODUCT_DETAILS(productId));
+      const productData = await request(process.env.REACT_APP_BASE_URL, PRODUCT_DETAILS(productId));
 
       this.setState({ product: productData.product });
     } catch (e) {
