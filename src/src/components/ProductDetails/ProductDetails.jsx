@@ -54,6 +54,7 @@ class ProductDetails extends Component {
 
   renderAddToCart(addProductToCart) {
     const {
+      product,
       product: { attributes, inStock },
       selectedAttributes = {},
     } = this.state;
@@ -67,7 +68,7 @@ class ProductDetails extends Component {
         title={title}
         onClick={() =>
           addProductToCart({
-            ...this.state.product,
+            ...product,
             quantity: 1,
             selectedAttributes,
           })

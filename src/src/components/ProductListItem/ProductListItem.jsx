@@ -30,11 +30,11 @@ class ProductListItem extends Component {
     if (!inStock) {
       return null;
     }
+
+    const { product } = this.props;
+
     return (
-      <button
-        className="ProductListItem-AddToCartButton"
-        onClick={(e) => this.quickShop(e, this.props.product, addProductToCart)}
-      >
+      <button className="ProductListItem-AddToCartButton" onClick={(e) => this.quickShop(e, product, addProductToCart)}>
         <img src={cartImage} alt="add to cart" width={24} height={24} />
       </button>
     );

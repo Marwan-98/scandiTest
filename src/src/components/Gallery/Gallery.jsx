@@ -11,8 +11,9 @@ export class Gallery extends Component {
   }
 
   updateCurrentImageIndex(amount) {
+    const { currentImageIdx } = this.state;
     const { gallery } = this.props;
-    const currentIndex = this.state.currentImageIdx;
+    const currentIndex = currentImageIdx;
     const newIndex = currentIndex + amount;
 
     const wrappedIndex = newIndex > gallery.length - 1 ? 0 : newIndex < 0 ? gallery.length - 1 : newIndex;
@@ -25,6 +26,7 @@ export class Gallery extends Component {
   }
 
   render() {
+    const { currentImageIdx } = this.state;
     const { gallery } = this.props;
 
     return (
@@ -47,7 +49,7 @@ export class Gallery extends Component {
           <div
             className="ProductGallery-ImagesMain"
             style={{
-              backgroundImage: `url(${gallery ? gallery[this.state.currentImageIdx] : ""})`,
+              backgroundImage: `url(${gallery ? gallery[currentImageIdx] : ""})`,
             }}
             alt="current slide"
           />
