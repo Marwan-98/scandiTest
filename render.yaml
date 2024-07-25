@@ -1,0 +1,34 @@
+services:
+  -type: web
+    name: app-php
+    runtime: docker
+    dockerfilePath: ./docker/Dockerfile-php
+    dockerContext: ../
+  -type: web
+    name: app-mysql
+    runtime: docker
+    image: mysql:5.6
+    envVars:
+      - key: MYSQL_ROOT_PASSWORD
+      value: temppassword
+      - key: MYSQL_DATABASE
+      value: SCANDI_TEST
+  -type: web
+    name: app-nginx
+    runtime: docker
+    image: nginx:1.19-alpine
+    envVars:
+      - key: MYSQL_ROOT_PASSWORD
+      value: temppassword
+      - key: MYSQL_DATABASE
+      value: SCANDI_TEST
+      - key: PORT
+      value: 8000
+  -type: web
+    name: app-react
+    runtime: docker
+    dockerfilePath: ./docker/Dockerfile-react
+    dockerContext: ../
+    envVars:
+      - key: PORT
+      value: 8003
