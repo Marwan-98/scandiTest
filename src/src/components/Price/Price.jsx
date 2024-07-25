@@ -32,8 +32,8 @@ export class Price extends Component {
     if (renderTitle) {
       return (
         <>
-          <h2 className="ProductDetails-SubTitle">Price:</h2>
-          <h5 className="CartOverlay-ProductPrice">
+          <h2 className="Price-Title">Price:</h2>
+          <h5 className="Price-Details">
             {symbol}
             {amount}
           </h5>
@@ -42,7 +42,7 @@ export class Price extends Component {
     }
 
     return (
-      <h5 className="CartOverlay-ProductPrice">
+      <h5 className="Price-Details">
         {symbol}
         {amount}
       </h5>

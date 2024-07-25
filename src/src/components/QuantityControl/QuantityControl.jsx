@@ -10,18 +10,18 @@ export class QuantityControl extends Component {
     return (
       <DataContext.Consumer>
         {({ updateProductQuantity }) => (
-          <div className="CartOverlay-ProductCount">
+          <div className="QuantityControl">
             <div
-              className="CartOverlay-CountControl"
+              className="QuantityControl-CountControl"
               onClick={() => updateProductQuantity({ id: productId, selectedAttributes }, 1)}
             >
               <PlusIcon />
             </div>
-            <div className="CartOverlay-CountNumber">
+            <div className="QuantityControl-CountNumber">
               <span>{productQuantity}</span>
             </div>
             <div
-              className="CartOverlay-CountControl"
+              className="QuantityControl-CountControl"
               onClick={() => updateProductQuantity({ id: productId, selectedAttributes }, -1)}
             >
               <MinusIcon />

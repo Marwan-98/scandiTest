@@ -11,12 +11,12 @@ export class CartListItem extends Component {
     return (
       <DataContext.Consumer>
         {({ storeCurrency: { currencyLabel } }) => (
-          <div className="CartOverlay-CartListItem" key={productId}>
-            <div className="CartOverlay-ProductInfo">
-              <div className="CartOverlay-ProductDetails">
-                <h4 className="CartOverlay-ProductTitle">{name}</h4>
+          <div className="CartListItem">
+            <div className="CartListItem-ProductInfo">
+              <div className="CartListItem-ProductDetails">
+                <h4 className="CartListItem-ProductTitle">{name}</h4>
                 <Price currencyLabel={currencyLabel} prices={prices} />
-                <div className="CartOverlay-ProductAttributes">
+                <div className="CartListItem-ProductAttributes">
                   {attributes?.map((attribute) => (
                     <Attribute
                       key={attribute.id}
@@ -35,7 +35,7 @@ export class CartListItem extends Component {
                 selectedAttributes={selectedAttributes}
               />
             </div>
-            <div className="CartOverlay-ProductImage">
+            <div className="CartListItem-ProductImage">
               <div style={{ backgroundImage: `url(${gallery[0]})` }} />
             </div>
           </div>

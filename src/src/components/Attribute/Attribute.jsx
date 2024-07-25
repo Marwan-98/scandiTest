@@ -29,9 +29,9 @@ export class Attribute extends Component {
     } = this.props;
 
     return (
-      <div className={`ProductDetails-AttributeSet-${size}`}>
-        <h2 className="ProductDetails-SubTitle">{name}:</h2>
-        <div className="ProductDetails-AttributeOptions">
+      <div className={`Attribute-AttributeSet-${size}`}>
+        <h2 className="Attribute-SubTitle">{name}:</h2>
+        <div className="Attribute-AttributeOptions">
           {items.map((item) => (
             <AttributeItem
               key={item.id}
