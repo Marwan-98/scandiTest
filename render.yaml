@@ -1,11 +1,11 @@
 services:
   -type: web
-    name: app-php
+    name: php
     runtime: docker
     dockerfilePath: ./docker/Dockerfile-php
     dockerContext: ../
   -type: web
-    name: app-mysql
+    name: mysql
     runtime: docker
     image: mysql:5.6
     envVars:
@@ -14,7 +14,7 @@ services:
       - key: MYSQL_DATABASE
       value: SCANDI_TEST
   -type: web
-    name: app-nginx
+    name: nginx
     runtime: docker
     image: nginx:1.19-alpine
     envVars:
@@ -25,7 +25,7 @@ services:
       - key: PORT
       value: 8000
   -type: web
-    name: app-react
+    name: react
     runtime: docker
     dockerfilePath: ./docker/Dockerfile-react
     dockerContext: ../
