@@ -63,7 +63,7 @@ class CartOverlay extends Component {
             </div>
             <div className="CartOverlay-Total">
               <span>Total:</span>
-              <span>
+              <span data-testid="cart-total">
                 {currencySymbol}
                 {cartTotal}
               </span>

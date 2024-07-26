@@ -61,7 +61,7 @@ class ProductListItem extends Component {
     return (
       <DataContext.Consumer>
         {({ addProductToCart }) => (
-          <Link to={`/products/${id}`} className="ProductListItem">
+          <Link to={`/products/${id}`} className="ProductListItem" data-testid={`product-${name}`}>
             <div className="ProductListItem-ImageContainer">
               {this.renderOutOfStock(inStock)}
               <div style={{ backgroundImage: `url(${gallery[0]})` }} alt="product" className="ProductListItem-Image" />

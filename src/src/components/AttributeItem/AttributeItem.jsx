@@ -10,7 +10,25 @@ export class AttributeItem extends Component {
       type,
       selectedAttributes,
       attributeId,
+      attributeName,
+      isInCartList,
     } = this.props;
+
+    if (isInCartList) {
+      return (
+        <div
+          className={`AttributeItem AttributeItem-${capitalizeString(type)}
+        ${selectedAttributes[attributeId]?.itemId === itemId ? "selected" : ""}`}
+          style={{ backgroundColor: value }}
+          onClick={onClick ?? null}
+          data-testid={`cart-item-attribute-${attributeName}-${displayValue}-${
+            selectedAttributes[attributeId]?.itemId === itemId ? "selected" : ""
+          }`}
+        >
+          {displayValue}
+        </div>
+      );
+    }
 
     return (
       <div

@@ -25,7 +25,7 @@ export class CartListItem extends Component {
                       selectedAttributes={selectedAttributes}
                       updateSelectedAttributes={this.updateSelectedAttributes}
                       productId={productId}
-                      size="cart"
+                      isInCartList
                     />
                   ))}
                 </div>

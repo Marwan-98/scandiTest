@@ -15,15 +15,17 @@ export class QuantityControl extends Component {
             <div
               className="QuantityControl-CountControl"
               onClick={() => updateProductQuantity({ id: productId, selectedAttributes }, 1)}
+              data-testid="cart-item-amount-increase"
             >
               <PlusIcon />
             </div>
             <div className="QuantityControl-CountNumber">
-              <span>{productQuantity}</span>
+              <span data-testid="cart-item-amount">{productQuantity}</span>
             </div>
             <div
               className="QuantityControl-CountControl"
               onClick={() => updateProductQuantity({ id: productId, selectedAttributes }, -1)}
+              data-testid="cart-item-amount-decrease"
             >
               <MinusIcon />
             </div>

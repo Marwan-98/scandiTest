@@ -63,13 +63,14 @@ class Header extends Component {
                   key={category.id}
                   className={`Header-Nav-Item ${id === category.id ? "Header-Nav-Item-Selected" : ""}`}
                   onClick={() => updateSelectedCategory(category)}
+                  data-testid={`${id === category.id ? "active-category-link" : "active-category-link"}`}
                 >
                   {category.name}
                 </Link>
               ))}
             </nav>
             <img src={logo} alt="logo" height={41} width={41} />
-            <div onClick={() => updateCartOverlayVisibilty()} className="Cart">
+            <div onClick={() => updateCartOverlayVisibilty()} className="Cart" data-testid="cart-btn">
               {itemsCount > 0 && <span className="Cart-ItemsCount">{itemsCount}</span>}
               <img src={cartIcon} alt="cart icon" height={20} width={20} />
             </div>

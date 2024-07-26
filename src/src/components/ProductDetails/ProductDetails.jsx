@@ -74,6 +74,7 @@ class ProductDetails extends Component {
           })
         }
         disabled={isDisabled}
+        data-testid="add-to-cart"
       />
     );
   }
@@ -84,7 +85,11 @@ class ProductDetails extends Component {
     const cleanHTML = DOMPurify.sanitize(description, { USE_PROFILES: { html: true } });
     const parsedHTML = parse(cleanHTML);
 
-    return <div className="ProductDetails-Description">{parsedHTML}</div>;
+    return (
+      <div className="ProductDetails-Description" data-testid="product-description">
+        {parsedHTML}
+      </div>
+    );
   }
 
   render() {

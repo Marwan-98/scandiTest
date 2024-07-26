@@ -30,7 +30,7 @@ export class Gallery extends Component {
     const { gallery } = this.props;
 
     return (
-      <div className="ProductGallery-Images">
+      <div className="ProductGallery-Images" data-testid="product-gallery">
         <div className="ProductGallery-ImagesList">
           {gallery?.map((url, idx) => (
             <div key={idx} onClick={() => this.setCurrentImageIndex(idx)}>
