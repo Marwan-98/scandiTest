@@ -22,7 +22,7 @@ class App extends Component {
                 <main>
                   <div className={`Overlay ${context.isCartOverlayVisible && "Overlay-Active"}`} />
                   <Routes>
-                    <Route path="*" element={<Navigate to={"/category/1"} replace />} />
+                    <Route path="*" element={<Navigate to={"/all"} replace />} />
                     <Route
                       path="/:categoryId"
                       element={
