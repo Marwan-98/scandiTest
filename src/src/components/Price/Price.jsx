@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./Price.style.scss";
 
 export class Price extends Component {
   constructor() {

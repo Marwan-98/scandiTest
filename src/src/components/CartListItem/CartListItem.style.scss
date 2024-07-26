@@ -1,0 +1,46 @@
+.CartListItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 250px;
+  margin-block-end: 40px;
+
+  &-ProductTitle {
+    font-size: 18px;
+    font-weight: 300;
+    margin-block-start: 0;
+    margin-block-end: 16px;
+  }
+
+  &-ProductAttributes {
+    margin-block-start: 16px;
+  }
+
+  &-ProductInfo {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    position: relative;
+    height: 205px;
+    min-height: 205px;
+    gap: 4px;
+  }
+
+  &-ProductDetails {
+    flex-grow: 1;
+  }
+
+  &-ProductImage {
+    width: 180px;
+    height: 100%;
+
+    div {
+      height: 100%;
+      width: 100%;
+      background-size: contain;
+      background-position: top;
+      background-repeat: no-repeat;
+    }
+  }
+}

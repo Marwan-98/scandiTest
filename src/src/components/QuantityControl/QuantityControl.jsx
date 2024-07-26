@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { DataContext } from "../../DataContext";
 import PlusIcon from "../PlusIcon/PlusIcon";
 import MinusIcon from "../MinusIcon/MinusIcon";
+import "./QuantityControl.style.scss";
 
 export class QuantityControl extends Component {
   render() {

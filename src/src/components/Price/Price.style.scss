@@ -1,0 +1,22 @@
+.CartOverlay {
+  .Price {
+    &-Details {
+      font-size: 16px;
+      font-weight: 400;
+      margin: 0;
+    }
+  }
+}
+
+.Price {
+  &-Title {
+    font-size: 18px;
+    text-transform: uppercase;
+  }
+
+  &-Details {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+  }
+}

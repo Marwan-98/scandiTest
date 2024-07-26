@@ -3,6 +3,7 @@ import Price from "../Price/Price";
 import { DataContext } from "../../DataContext";
 import Attribute from "../Attribute/Attribute";
 import QuantityControl from "../QuantityControl/QuantityControl";
+import "./CartListItem.style.scss";
 
 export class CartListItem extends Component {
   render() {

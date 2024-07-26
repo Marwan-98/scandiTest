@@ -29,7 +29,7 @@ export class Attribute extends Component {
     } = this.props;
 
     return (
-      <div className={`Attribute-AttributeSet-${size}`}>
+      <div className={`Attribute-AttributeSet Attribute-AttributeSet-${size ?? "page"}`}>
         <h2 className="Attribute-SubTitle">{name}:</h2>
         <div className="Attribute-AttributeOptions">
           {items.map((item) => (

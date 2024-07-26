@@ -14,7 +14,7 @@ export class AttributeItem extends Component {
 
     return (
       <div
-        className={`AttributeItem-${capitalizeString(type)}
+        className={`AttributeItem AttributeItem-${capitalizeString(type)}
         ${selectedAttributes[attributeId]?.itemId === itemId ? "selected" : ""}`}
         style={{ backgroundColor: value }}
         onClick={onClick ?? null}
