@@ -3,6 +3,7 @@ import cartImage from "./empty-cart.png";
 import "./ProductListItem.style.scss";
 import { Link } from "react-router-dom";
 import { DataContext } from "../../DataContext";
+import { toKebabCase } from "../../utils/toKebabCase";
 
 class ProductListItem extends Component {
   quickShop(e, product, addToCart) {
@@ -61,7 +62,7 @@ class ProductListItem extends Component {
     return (
       <DataContext.Consumer>
         {({ addProductToCart }) => (
-          <Link to={`/products/${id}`} className="ProductListItem" data-testid={`product-${name}`}>
+          <Link to={`/products/${id}`} className="ProductListItem" data-testid={`product-${toKebabCase(name)}`}>
             <div className="ProductListItem-ImageContainer">
               {this.renderOutOfStock(inStock)}
               <div style={{ backgroundImage: `url(${gallery[0]})` }} alt="product" className="ProductListItem-Image" />

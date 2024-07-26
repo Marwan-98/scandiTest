@@ -24,7 +24,7 @@ class App extends Component {
                   <Routes>
                     <Route path="*" element={<Navigate to={"/category/1"} replace />} />
                     <Route
-                      path="/category/:categoryId"
+                      path="/:categoryId"
                       element={
                         <ProductList
                           selectedCategory={context.selectedCategory}

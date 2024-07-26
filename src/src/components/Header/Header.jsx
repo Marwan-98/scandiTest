@@ -24,7 +24,7 @@ class Header extends Component {
       const { updateSelectedCategory, selectedCategory: { id: selectedCategoryId = 1 } = {} } = this.props;
       const pathname = window.location.pathname.split("/");
       const param = pathname[pathname.length - 1];
-      const categoryId = pathname.includes("category") ? param : selectedCategoryId;
+      const categoryId = !pathname.includes("product") ? param : selectedCategoryId;
 
       const data = await request(process.env.REACT_APP_BASE_URL, CATEGORIES_LIST);
 
@@ -59,7 +59,7 @@ class Header extends Component {
             <nav className="Header-Nav">
               {categories?.map((category) => (
                 <Link
-                  to={`/category/${category.id}`}
+                  to={`/${category.name}`}
                   key={category.id}
                   className={`Header-Nav-Item ${id === category.id ? "Header-Nav-Item-Selected" : ""}`}
                   onClick={() => updateSelectedCategory(category)}

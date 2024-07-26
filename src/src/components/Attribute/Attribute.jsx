@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import AttributeItem from "../AttributeItem/AttributeItem";
 import "./Attribute.style.scss";
+import { toKebabCase } from "../../utils/toKebabCase";
 
 export class Attribute extends Component {
   canUpdateAttribute(item) {
@@ -32,7 +33,7 @@ export class Attribute extends Component {
       return (
         <div
           className={`Attribute-AttributeSet Attribute-AttributeSet-cart`}
-          data-testid={`cart-item-attribute-${name}`}
+          data-testid={`cart-item-attribute-${toKebabCase(name)}`}
         >
           <h2 className="Attribute-SubTitle">{name}:</h2>
           <div className="Attribute-AttributeOptions">
@@ -54,7 +55,10 @@ export class Attribute extends Component {
     }
 
     return (
-      <div className={`Attribute-AttributeSet Attribute-AttributeSet-page`} data-testid={`product-attribute-${name}`}>
+      <div
+        className={`Attribute-AttributeSet Attribute-AttributeSet-page`}
+        data-testid={`product-attribute-${toKebabCase(name)}`}
+      >
         <h2 className="Attribute-SubTitle">{name}:</h2>
         <div className="Attribute-AttributeOptions">
           {items.map((item) => (

@@ -19,6 +19,12 @@ $data = json_decode($json, true);
 $categories = $data["data"]["categories"];
 $products = $data["data"]["products"];
 
+$conn->query("DROP DATABASE IF EXISTS SCANDI_TEST;");
+
+$conn->query("CREATE DATABASE SCANDI_TEST");
+
+$conn->query("USE SCANDI_TEST");
+
 $conn->query("CREATE TABLE category (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(255) NOT NULL

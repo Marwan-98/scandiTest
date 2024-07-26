@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { capitalizeString } from "../../utils/capitalizeString";
 import "./AttributeItem.style.scss";
+import { toKebabCase } from "../../utils/toKebabCase";
 
 export class AttributeItem extends Component {
   render() {
@@ -21,7 +22,7 @@ export class AttributeItem extends Component {
         ${selectedAttributes[attributeId]?.itemId === itemId ? "selected" : ""}`}
           style={{ backgroundColor: value }}
           onClick={onClick ?? null}
-          data-testid={`cart-item-attribute-${attributeName}-${displayValue}-${
+          data-testid={`cart-item-attribute-${toKebabCase(attributeName)}-${toKebabCase(displayValue)}-${
             selectedAttributes[attributeId]?.itemId === itemId ? "selected" : ""
           }`}
         >
@@ -33,9 +34,11 @@ export class AttributeItem extends Component {
     return (
       <div
         className={`AttributeItem AttributeItem-${capitalizeString(type)}
-        ${selectedAttributes[attributeId]?.itemId === itemId ? "selected" : ""}`}
+        ${selectedAttributes[attributeId]?.itemId === itemId ? " selected" : ""}`}
         style={{ backgroundColor: value }}
         onClick={onClick ?? null}
+        data-testid={`product-attribute-${toKebabCase(attributeName)}-${displayValue}
+        ${selectedAttributes[attributeId]?.itemId === itemId ? " selected" : ""}`}
       >
         {displayValue}
       </div>

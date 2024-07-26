@@ -14,7 +14,7 @@ class Category extends Model {
     }
 
     public function get_by_id(string $category_id, ?int $first = null) {
-        $stmt = $this->database->prepare("SELECT * FROM category WHERE id = ?");
+        $stmt = $this->database->prepare("SELECT * FROM category WHERE name = ?");
         $stmt->bind_param("s", $category_id);
         $stmt->execute();
 
