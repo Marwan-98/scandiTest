@@ -105,9 +105,7 @@ class ProductDetails extends Component {
           <div className="ProductDetails">
             <Gallery gallery={gallery} />
             <div>
-              <div className="ProductDetails-Title">
-                <h1>{name}</h1>
-              </div>
+              <h1 className="ProductDetails-Title">{name}</h1>
               <div>
                 {attributes?.map((attribute) => (
                   <Attribute
