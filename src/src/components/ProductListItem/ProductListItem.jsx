@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import cartImage from "./empty-cart.png";
 import "./ProductListItem.style.scss";
-import { Link } from "react-router-dom";
 import { DataContext } from "../../DataContext";
 import { toKebabCase } from "../../utils/toKebabCase";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 class ProductListItem extends Component {
   quickShop(e, product, addToCart) {

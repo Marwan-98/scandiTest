@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Route } from "react-router-dom";
 import "./App.scss";
 import Header from "./components/Header/Header.jsx";
@@ -6,6 +6,7 @@ import ProductList from "./components/ProductList/ProductList.jsx";
 import ProductDetails from "./components/ProductDetails/ProductDetails.jsx";
 import { Component } from "react";
 import { DataContext } from "./DataContext.js";
+import { Redirect, Switch } from "react-router-dom/cjs/react-router-dom.min.js";
 
 class App extends Component {
   render() {
@@ -21,19 +22,18 @@ class App extends Component {
                 />
                 <main>
                   <div className={`Overlay ${context.isCartOverlayVisible && "Overlay-Active"}`} />
-                  <Routes>
-                    <Route path="*" element={<Navigate to={"/all"} replace />} />
-                    <Route
-                      path="/:categoryId"
-                      element={
-                        <ProductList
-                          selectedCategory={context.selectedCategory}
-                          updateSelectedCategory={context.updateSelectedCategory}
-                        />
-                      }
-                    />
-                    <Route path="/products/:productId" element={<ProductDetails />} />
-                  </Routes>
+                  <Switch>
+                    <Route exact path="/" render={() => <Redirect to="/all" />} />
+                    <Route path="/products/:productId">
+                      <ProductDetails />
+                    </Route>
+                    <Route path="/:categoryId">
+                      <ProductList
+                        selectedCategory={context.selectedCategory}
+                        updateSelectedCategory={context.updateSelectedCategory}
+                      />
+                    </Route>
+                  </Switch>
                 </main>
               </BrowserRouter>
             </div>

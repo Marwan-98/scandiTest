@@ -3,10 +3,10 @@ import logo from "../../logo.png";
 import cartIcon from "./cart.png";
 import "./Header.style.scss";
 import CartOverlay from "../CartOverlay/CartOverlay";
-import { Link } from "react-router-dom";
 import { DataContext } from "../../DataContext";
 import { CATEGORIES_LIST, CATEGORY_BY_ID } from "../../constants/queries";
 import request from "graphql-request";
+import { Link, withRouter } from "react-router-dom/cjs/react-router-dom.min";
 
 class Header extends Component {
   constructor() {
@@ -21,16 +21,13 @@ class Header extends Component {
     this.setState({ loading: true });
 
     try {
-      const { updateSelectedCategory, selectedCategory: { name = "all" } = {} } = this.props;
-
-      const param = window.location.pathname.split("/");
-      const categoryId = param.includes("products") ? name : param[param.length - 1];
+      const { updateSelectedCategory, selectedCategory: { name: categoryId = "all" } = {} } = this.props;
 
       const data = await request(process.env.REACT_APP_BASE_URL, CATEGORIES_LIST);
 
       this.setState({ categories: data.categories });
 
-      const categoryData = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID(categoryId ?? "all"));
+      const categoryData = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID(categoryId));
       updateSelectedCategory(categoryData.category);
     } catch (e) {
       console.log(e);
@@ -86,4 +83,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);
