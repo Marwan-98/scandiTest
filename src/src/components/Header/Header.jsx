@@ -21,10 +21,7 @@ class Header extends Component {
     this.setState({ loading: true });
 
     try {
-      const { updateSelectedCategory } = this.props;
-      const pathname = window.location.pathname.split("/");
-      const categoryId =
-        !pathname.includes("products") || pathname.length === 1 ? pathname[pathname.length - 1] : "all";
+      const { updateSelectedCategory, selectedCategory: { name: categoryId = "all" } = {} } = this.props;
 
       const data = await request(process.env.REACT_APP_BASE_URL, CATEGORIES_LIST);
 

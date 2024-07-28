@@ -12,7 +12,7 @@ export class DataProvider extends Component {
         cartTotal: 0,
       },
       isCartOverlayVisible: false,
-      selectedCategory: {},
+      selectedCategory: JSON.parse(localStorage.getItem("selectedCategory")) || {},
       storeCurrency: {
         currencyLabel: "USD",
         currencySymbol: "$",
@@ -32,6 +32,7 @@ export class DataProvider extends Component {
 
   updateSelectedCategory(category) {
     this.setState({ selectedCategory: category });
+    localStorage.setItem("selectedCategory", JSON.stringify(category));
   }
 
   updateCartOverlayVisibilty() {
