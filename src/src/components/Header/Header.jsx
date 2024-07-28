@@ -21,14 +21,19 @@ class Header extends Component {
     this.setState({ loading: true });
 
     try {
-      const { updateSelectedCategory, selectedCategory: { name: categoryId = "all" } = {} } = this.props;
+      const { updateSelectedCategory, selectedCategory: { name = "all" } = {} } = this.props;
 
-      const data = await request(process.env.REACT_APP_BASE_URL, CATEGORIES_LIST);
+      const param = window.location.pathname.split("/");
+      const categoryId = param.includes("products") ? name : param[param.length - 1];
 
-      this.setState({ categories: data.categories });
+      if (categoryId) {
+        const data = await request(process.env.REACT_APP_BASE_URL, CATEGORIES_LIST);
 
-      const categoryData = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID(categoryId));
-      updateSelectedCategory(categoryData.category);
+        this.setState({ categories: data.categories });
+
+        const categoryData = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID(categoryId));
+        updateSelectedCategory(categoryData.category);
+      }
     } catch (e) {
       console.log(e);
     } finally {
