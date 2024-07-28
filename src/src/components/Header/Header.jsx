@@ -23,7 +23,8 @@ class Header extends Component {
     try {
       const { updateSelectedCategory } = this.props;
       const pathname = window.location.pathname.split("/");
-      const categoryId = !pathname.includes("products") ? pathname[pathname.length - 1] : "all";
+      const categoryId =
+        !pathname.includes("products") || pathname.length === 1 ? pathname[pathname.length - 1] : "all";
 
       const data = await request(process.env.REACT_APP_BASE_URL, CATEGORIES_LIST);
 
