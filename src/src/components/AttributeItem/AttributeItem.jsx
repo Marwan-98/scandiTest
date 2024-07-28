@@ -43,7 +43,17 @@ export class AttributeItem extends Component {
           selectedAttributes[attributeId]?.itemId === itemId ? "-selected" : ""
         }`}
       >
-        {displayValue}
+        <div
+          className={`AttributeItem AttributeItem-${capitalizeString(type)} ${
+            selectedAttributes[attributeId]?.itemId === itemId ? "selected" : ""
+          }`}
+          data-testid={`product-attribute-${toKebabCase(attributeName)}-${value}${
+            selectedAttributes[attributeId]?.itemId === itemId ? "-selected" : ""
+          }`}
+          onClick={onClick ?? null}
+        >
+          {displayValue}
+        </div>
       </div>
     );
   }
