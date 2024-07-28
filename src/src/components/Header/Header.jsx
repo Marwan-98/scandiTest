@@ -26,14 +26,12 @@ class Header extends Component {
       const param = window.location.pathname.split("/");
       const categoryId = param.includes("products") ? name : param[param.length - 1];
 
-      if (categoryId) {
-        const data = await request(process.env.REACT_APP_BASE_URL, CATEGORIES_LIST);
+      const data = await request(process.env.REACT_APP_BASE_URL, CATEGORIES_LIST);
 
-        this.setState({ categories: data.categories });
+      this.setState({ categories: data.categories });
 
-        const categoryData = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID(categoryId));
-        updateSelectedCategory(categoryData.category);
-      }
+      const categoryData = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID(categoryId ?? "all"));
+      updateSelectedCategory(categoryData.category);
     } catch (e) {
       console.log(e);
     } finally {
