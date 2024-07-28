@@ -58,7 +58,7 @@ export class DataProvider extends Component {
     return cartTotal.toFixed(2);
   }
 
-  addProductToCart(newProduct) {
+  addProductToCart(newProduct, quickShop = false) {
     this.setState(
       (prevState) => {
         const {
@@ -109,8 +109,10 @@ export class DataProvider extends Component {
         };
       },
       () => {
-        this.updateCartOverlayVisibilty();
-        window.scrollTo(0, 0);
+        if (quickShop) {
+          this.updateCartOverlayVisibilty();
+          window.scrollTo(0, 0);
+        }
       }
     );
   }
@@ -180,12 +182,9 @@ export class DataProvider extends Component {
 
     this.updateLocalCart(newCartData);
 
-    this.setState(
-      {
-        cartData: newCartData,
-      },
-      () => this.updateCartOverlayVisibilty()
-    );
+    this.setState({
+      cartData: newCartData,
+    });
   }
 
   render() {

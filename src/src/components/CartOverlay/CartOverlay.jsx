@@ -34,15 +34,11 @@ class CartOverlay extends Component {
   }
 
   renderItemsCount(itemsCount) {
-    if (itemsCount === 0) {
-      return null;
+    if (itemsCount === 1) {
+      return `My Bag, ${itemsCount} item`;
     }
 
-    if (itemsCount > 1) {
-      return `My Bag, ${itemsCount} items`;
-    }
-
-    return `My Bag, ${itemsCount} item`;
+    return `My Bag, ${itemsCount} items`;
   }
 
   render() {
@@ -54,7 +50,7 @@ class CartOverlay extends Component {
           storeCurrency: { currencySymbol },
           emptyCart,
         }) => (
-          <div className="CartOverlay">
+          <div className="CartOverlay" data-testid="cart-overlay">
             <span>{this.renderItemsCount(itemsCount)}</span>
             <div className="CartOverlay-CartList">
               {products?.map((product) => (
@@ -64,8 +60,7 @@ class CartOverlay extends Component {
             <div className="CartOverlay-Total">
               <span>Total:</span>
               <span data-testid="cart-total">
-                {currencySymbol}
-                {cartTotal}
+                {currencySymbol} {cartTotal}
               </span>
             </div>
             <Button
@@ -73,6 +68,7 @@ class CartOverlay extends Component {
               title={"Place Order"}
               onClick={() => this.placeOrder(cartData, emptyCart)}
               disabled={products.length < 1}
+              data-testid="place-order-btn"
             />
           </div>
         )}

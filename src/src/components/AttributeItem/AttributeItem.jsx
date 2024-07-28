@@ -18,12 +18,13 @@ export class AttributeItem extends Component {
     if (isInCartList) {
       return (
         <div
-          className={`AttributeItem AttributeItem-${capitalizeString(type)}
-        ${selectedAttributes[attributeId]?.itemId === itemId ? "selected" : ""}`}
+          className={`AttributeItem AttributeItem-${capitalizeString(type)} ${
+            selectedAttributes[attributeId]?.itemId === itemId ? "selected" : ""
+          }`}
           style={{ backgroundColor: value }}
           onClick={onClick ?? null}
-          data-testid={`cart-item-attribute-${toKebabCase(attributeName)}-${toKebabCase(displayValue)}-${
-            selectedAttributes[attributeId]?.itemId === itemId ? "selected" : ""
+          data-testid={`cart-item-attribute-${toKebabCase(attributeName)}-${displayValue}${
+            selectedAttributes[attributeId]?.itemId === itemId ? "-selected" : ""
           }`}
         >
           {displayValue}
@@ -33,12 +34,14 @@ export class AttributeItem extends Component {
 
     return (
       <div
-        className={`AttributeItem AttributeItem-${capitalizeString(type)}
-        ${selectedAttributes[attributeId]?.itemId === itemId ? " selected" : ""}`}
+        className={`AttributeItem AttributeItem-${capitalizeString(type)} ${
+          selectedAttributes[attributeId]?.itemId === itemId ? "selected" : ""
+        }`}
         style={{ backgroundColor: value }}
         onClick={onClick ?? null}
-        data-testid={`product-attribute-${toKebabCase(attributeName)}-${displayValue}
-        ${selectedAttributes[attributeId]?.itemId === itemId ? " selected" : ""}`}
+        data-testid={`product-attribute-${toKebabCase(attributeName)}-${displayValue}${
+          selectedAttributes[attributeId]?.itemId === itemId ? "-selected" : ""
+        }`}
       >
         {displayValue}
       </div>

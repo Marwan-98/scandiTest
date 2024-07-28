@@ -20,11 +20,14 @@ class ProductListItem extends Component {
       return attribute;
     });
 
-    addToCart({
-      ...product,
-      quantity: 1,
-      selectedAttributes: selectedAttributes,
-    });
+    addToCart(
+      {
+        ...product,
+        quantity: 1,
+        selectedAttributes: selectedAttributes,
+      },
+      true
+    );
   }
 
   renderQuickShop(inStock, addProductToCart) {
@@ -71,8 +74,7 @@ class ProductListItem extends Component {
             <div className="ProductListItem-Details">
               <h3 className="ProductListItem-Details-Title">{name}</h3>
               <span className="ProductListItem-Details-Price">
-                {prices[0].currency.symbol}
-                {prices[0].amount}
+                {prices[0].currency.symbol} {prices[0].amount}
               </span>
             </div>
           </Link>

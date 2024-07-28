@@ -35,8 +35,7 @@ export class Price extends Component {
         <>
           <h2 className="Price-Title">Price:</h2>
           <h5 className="Price-Details">
-            {symbol}
-            {amount}
+            {symbol} {amount}
           </h5>
         </>
       );
@@ -44,8 +43,7 @@ export class Price extends Component {
 
     return (
       <h5 className="Price-Details">
-        {symbol}
-        {amount}
+        {symbol} {amount}
       </h5>
     );
   }

@@ -71,7 +71,11 @@ class Header extends Component {
             </nav>
             <img src={logo} alt="logo" height={41} width={41} />
             <div onClick={() => updateCartOverlayVisibilty()} className="Cart" data-testid="cart-btn">
-              {itemsCount > 0 && <span className="Cart-ItemsCount">{itemsCount}</span>}
+              {itemsCount > 0 && (
+                <span className="Cart-ItemsCount" data-testid="cart-count-bubble">
+                  {itemsCount}
+                </span>
+              )}
               <img src={cartIcon} alt="cart icon" height={20} width={20} />
             </div>
             {isCartOverlayVisible && <CartOverlay />}
