@@ -9,6 +9,7 @@ import Attribute from "../Attribute/Attribute";
 import Button from "../Button/Button";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
+import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 
 class ProductDetails extends Component {
   constructor() {
@@ -24,8 +25,7 @@ class ProductDetails extends Component {
     this.setState({ loading: true });
 
     try {
-      const pathname = window.location.pathname.split("/");
-      const productId = pathname[pathname.length - 1];
+      const { match: { params: { productId } } = {} } = this.props;
 
       const productData = await request(process.env.REACT_APP_BASE_URL, PRODUCT_DETAILS(productId));
 
@@ -129,4 +129,4 @@ class ProductDetails extends Component {
   }
 }
 
-export default ProductDetails;
+export default withRouter(ProductDetails);

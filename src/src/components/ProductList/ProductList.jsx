@@ -3,6 +3,7 @@ import "./ProductList.style.scss";
 import ProductListItem from "../ProductListItem/ProductListItem.jsx";
 import { request } from "graphql-request";
 import { PRODUCT_BY_CATEGORY } from "../../constants/queries.js";
+import { withRouter } from "react-router-dom/cjs/react-router-dom.min.js";
 
 class ProductList extends Component {
   constructor() {
@@ -18,10 +19,10 @@ class ProductList extends Component {
 
     try {
       const {
-        selectedCategory: { id: selectedCategory },
+        selectedCategory: { id: categoryId = "1" },
       } = this.props;
 
-      const productData = await request(process.env.REACT_APP_BASE_URL, PRODUCT_BY_CATEGORY(selectedCategory));
+      const productData = await request(process.env.REACT_APP_BASE_URL, PRODUCT_BY_CATEGORY(categoryId));
 
       this.setState({ products: productData.products });
     } catch (e) {
@@ -35,17 +36,11 @@ class ProductList extends Component {
     this.fetchData();
   }
 
-  componentDidUpdate(prevProps) {
-    const {
-      selectedCategory: { id: selectedCategory },
-    } = this.props;
+  componentDidUpdate(prevProps, prevState) {
+    const { match: { params: { categoryId } } = {} } = this.props;
+    const { match: { params: { categoryId: prevCategoryId } } = {} } = prevProps;
 
-    const {
-      selectedCategory: { id: prevSelectedCategory },
-    } = prevProps;
-
-    if (selectedCategory !== prevSelectedCategory) {
-      console.log(selectedCategory, prevSelectedCategory);
+    if (categoryId !== prevCategoryId) {
       this.fetchData();
     }
   }
@@ -78,4 +73,4 @@ class ProductList extends Component {
   }
 }
 
-export default ProductList;
+export default withRouter(ProductList);

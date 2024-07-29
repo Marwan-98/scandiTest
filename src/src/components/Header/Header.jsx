@@ -21,14 +21,21 @@ class Header extends Component {
     this.setState({ loading: true });
 
     try {
-      const { updateSelectedCategory, selectedCategory: { name: categoryId = "all" } = {} } = this.props;
+      const {
+        updateSelectedCategory,
+        match: { params: { categoryId } } = {},
+        selectedCategory: { name: selectedCategoryName = "all" },
+      } = this.props;
+
+      const currentId = categoryId ? categoryId : selectedCategoryName;
 
       const data = await request(process.env.REACT_APP_BASE_URL, CATEGORIES_LIST);
 
       this.setState({ categories: data.categories });
 
-      const categoryData = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID(categoryId));
-      updateSelectedCategory(categoryData.category);
+      const { category } = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID(currentId));
+
+      updateSelectedCategory(category);
     } catch (e) {
       console.log(e);
     } finally {
@@ -41,26 +48,31 @@ class Header extends Component {
   }
 
   render() {
-    const { selectedCategory: { id } = {}, updateSelectedCategory } = this.props;
+    const {
+      match: { params: { categoryId } } = {},
+      selectedCategory: { name: selectedCategoryName = "all" },
+    } = this.props;
 
     const { categories, loading } = this.state;
 
-    if (loading || !id) {
+    const currentId = categoryId ? categoryId : selectedCategoryName;
+
+    if (loading) {
       return null;
     }
 
     return (
       <DataContext.Consumer>
-        {({ cartData: { itemsCount }, isCartOverlayVisible, updateCartOverlayVisibilty }) => (
+        {({ cartData: { itemsCount }, isCartOverlayVisible, updateCartOverlayVisibilty, updateSelectedCategory }) => (
           <header className="Header">
             <nav className="Header-Nav">
               {categories?.map((category) => (
                 <Link
                   to={`/${category.name}`}
                   key={category.id}
-                  className={`Header-Nav-Item ${id === category.id ? "Header-Nav-Item-Selected" : ""}`}
+                  className={`Header-Nav-Item ${currentId === category.name ? "Header-Nav-Item-Selected" : ""}`}
+                  data-testid={`${currentId === category.id ? "active-category-link" : "category-link"}`}
                   onClick={() => updateSelectedCategory(category)}
-                  data-testid={`${id === category.id ? "active-category-link" : "category-link"}`}
                 >
                   {category.name}
                 </Link>
