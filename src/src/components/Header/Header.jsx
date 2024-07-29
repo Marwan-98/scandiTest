@@ -71,7 +71,7 @@ class Header extends Component {
                   to={`/${category.name}`}
                   key={category.id}
                   className={`Header-Nav-Item ${currentId === category.name ? "Header-Nav-Item-Selected" : ""}`}
-                  data-testid={`${currentId === category.id ? "active-category-link" : "category-link"}`}
+                  data-testid={`${currentId === category.name ? "active-category-link" : "category-link"}`}
                   onClick={() => updateSelectedCategory(category)}
                 >
                   {category.name}
