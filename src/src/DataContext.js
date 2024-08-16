@@ -36,7 +36,7 @@ export class DataProvider extends Component {
   }
 
   updateCartOverlayVisibilty() {
-    this.setState({ isCartOverlayVisible: !this.state.isCartOverlayVisible });
+    this.setState({ isCartOverlayVisible: true });
   }
 
   getProductPrice(prices) {
