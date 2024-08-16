@@ -31,4 +31,8 @@ services:
     container_name: scandi-test-react
     restart: always
     ports:
-      - "8003:3000"
+      - "3000:3000"
+    environment:
+      - WATCHPACK_POLLING=true
+    volumes:
+      - ../src/src:/scandi-test/src
