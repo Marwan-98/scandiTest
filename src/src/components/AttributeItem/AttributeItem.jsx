@@ -41,6 +41,9 @@ export class AttributeItem extends Component {
           selectedAttributes[attributeId]?.itemId === itemId ? "-selected" : ""
         }`}
         onClick={onClick ?? null}
+        style={{
+          backgroundColor: type === "swatch" ? value : "",
+        }}
       >
         {displayValue}
       </div>
