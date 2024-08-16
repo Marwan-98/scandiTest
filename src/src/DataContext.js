@@ -59,7 +59,7 @@ export class DataProvider extends Component {
     return cartTotal.toFixed(2);
   }
 
-  addProductToCart(newProduct, quickShop = false) {
+  addProductToCart(newProduct) {
     this.setState(
       (prevState) => {
         const {
@@ -110,10 +110,8 @@ export class DataProvider extends Component {
         };
       },
       () => {
-        if (quickShop) {
-          this.updateCartOverlayVisibilty();
-          window.scrollTo(0, 0);
-        }
+        this.updateCartOverlayVisibilty();
+        window.scrollTo(0, 0);
       }
     );
   }
