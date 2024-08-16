@@ -27,7 +27,7 @@ class App extends Component {
 
                 <main>
                   <div
-                    className={`Overlay ${context.isCartOverlayVisible && "Overlay-Active"}`}
+                    className={`Overlay ${context.isCartOverlayVisible ? "Overlay-Active" : ""}`}
                     data-testid="cart-overlay"
                   />
                   <Switch>
