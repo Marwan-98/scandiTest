@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import logo from "../../logo.png";
 import cartIcon from "./cart.png";
 import "./Header.style.scss";
-import CartOverlay from "../CartOverlay/CartOverlay";
 import { DataContext } from "../../DataContext";
 import { CATEGORIES_LIST, CATEGORY_BY_ID } from "../../constants/queries";
 import request from "graphql-request";
@@ -87,7 +86,6 @@ class Header extends Component {
               )}
               <img src={cartIcon} alt="cart icon" height={20} width={20} />
             </div>
-            {isCartOverlayVisible && <CartOverlay />}
           </header>
         )}
       </DataContext.Consumer>

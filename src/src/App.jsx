@@ -5,6 +5,7 @@ import ProductDetails from "./components/ProductDetails/ProductDetails.jsx";
 import { Component } from "react";
 import { DataContext } from "./DataContext.js";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom/cjs/react-router-dom.min.js";
+import CartOverlay from "./components/CartOverlay/CartOverlay.jsx";
 
 class App extends Component {
   render() {
@@ -26,10 +27,9 @@ class App extends Component {
                 />
 
                 <main>
-                  <div
-                    className={`Overlay ${context.isCartOverlayVisible ? "Overlay-Active" : ""}`}
-                    data-testid="cart-overlay"
-                  />
+                  <div className={`Overlay ${context.isCartOverlayVisible ? "Overlay-Active" : ""}`}>
+                    {context.isCartOverlayVisible && <CartOverlay />}
+                  </div>
                   <Switch>
                     <Route exact path="/" render={() => <Redirect to="/all" />} />
                     <Route path="/products/:productId">
