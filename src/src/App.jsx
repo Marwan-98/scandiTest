@@ -16,7 +16,7 @@ class App extends Component {
               <BrowserRouter>
                 <Route
                   exact
-                  path={["/products/:productId", "/:categoryId"]}
+                  path={["/products/:productId", "/:categoryName"]}
                   render={() => (
                     <Header
                       selectedCategory={context.selectedCategory}
@@ -32,7 +32,7 @@ class App extends Component {
                     <Route path="/products/:productId">
                       <ProductDetails />
                     </Route>
-                    <Route path="/:categoryId">
+                    <Route path="/:categoryName">
                       <ProductList
                         selectedCategory={context.selectedCategory}
                         updateSelectedCategory={context.updateSelectedCategory}

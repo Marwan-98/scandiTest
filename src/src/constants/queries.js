@@ -65,7 +65,7 @@ export const CATEGORY_BY_ID = (id) => gql`
 
 export const PRODUCT_BY_CATEGORY = (id) => gql`
   query Query {
-    products(categoryId: "${id}") {
+    products(categoryName: "${id}") {
       id
       name
       inStock

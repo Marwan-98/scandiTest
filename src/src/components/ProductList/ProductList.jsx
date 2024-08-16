@@ -18,11 +18,9 @@ class ProductList extends Component {
     this.setState({ loading: true });
 
     try {
-      const {
-        selectedCategory: { id: categoryId = "1" },
-      } = this.props;
+      const { match: { params: { categoryName } } = {} } = this.props;
 
-      const productData = await request(process.env.REACT_APP_BASE_URL, PRODUCT_BY_CATEGORY(categoryId));
+      const productData = await request(process.env.REACT_APP_BASE_URL, PRODUCT_BY_CATEGORY(categoryName));
 
       this.setState({ products: productData.products });
     } catch (e) {
@@ -37,10 +35,10 @@ class ProductList extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { match: { params: { categoryId } } = {} } = this.props;
-    const { match: { params: { categoryId: prevCategoryId } } = {} } = prevProps;
+    const { match: { params: { categoryName } } = {} } = this.props;
+    const { match: { params: { categoryName: prevCategoryName } } = {} } = prevProps;
 
-    if (categoryId !== prevCategoryId) {
+    if (categoryName !== prevCategoryName) {
       this.fetchData();
     }
   }
@@ -62,7 +60,12 @@ class ProductList extends Component {
   }
 
   render() {
-    const { selectedCategory: { name } = {} } = this.props;
+    const { selectedCategory: { name } = {}, match: { params: { categoryName } } = {} } = this.props;
+    const { loading } = this.state;
+
+    if (loading || name !== categoryName) {
+      return null;
+    }
 
     return (
       <div className="ProductList">

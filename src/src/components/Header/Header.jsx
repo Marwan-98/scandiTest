@@ -23,17 +23,17 @@ class Header extends Component {
     try {
       const {
         updateSelectedCategory,
-        match: { params: { categoryId } } = {},
+        match: { params: { categoryName } } = {},
         selectedCategory: { name: selectedCategoryName = "all" },
       } = this.props;
 
-      const currentId = categoryId ? categoryId : selectedCategoryName;
+      const currentCategoryName = categoryName ? categoryName : selectedCategoryName;
 
       const data = await request(process.env.REACT_APP_BASE_URL, CATEGORIES_LIST);
 
       this.setState({ categories: data.categories });
 
-      const { category } = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID(currentId));
+      const { category } = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID(currentCategoryName));
 
       updateSelectedCategory(category);
     } catch (e) {
@@ -49,13 +49,13 @@ class Header extends Component {
 
   render() {
     const {
-      match: { params: { categoryId } } = {},
+      match: { params: { categoryName } } = {},
       selectedCategory: { name: selectedCategoryName = "all" },
     } = this.props;
 
     const { categories, loading } = this.state;
 
-    const currentId = categoryId ? categoryId : selectedCategoryName;
+    const currentId = categoryName ? categoryName : selectedCategoryName;
 
     if (loading) {
       return null;

@@ -24,11 +24,11 @@ class Query extends ObjectType {
                 'products' => [
                     'type' => Type::listOf($product_type),
                     'args' => [
-                        'categoryId' => ['type' => Type::string()],
+                        'categoryName' => ['type' => Type::string()],
                     ],
                     'resolve' => function($root_value, $args) {
-                        $productModel = new AllProductsResolver();
-                        return $productModel->resolve($root_value, $args);
+                        $allProductResolver = new AllProductsResolver();
+                        return $allProductResolver->resolve($root_value, $args);
                     },
                 ],
                 'product' => [
@@ -37,8 +37,8 @@ class Query extends ObjectType {
                         'id' => ['type' => Type::nonNull(Type::string())],
                     ],
                     'resolve' => function($root_value, $args) {
-                        $productModel = new ProductResolver();
-                        return $productModel->resolve($root_value, $args);
+                        $productResolver = new ProductResolver();
+                        return $productResolver->resolve($root_value, $args);
                     }
                 ],
                 'categories' => [
