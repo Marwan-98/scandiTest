@@ -37,23 +37,12 @@ export class AttributeItem extends Component {
         className={`AttributeItem AttributeItem-${capitalizeString(type)} ${
           selectedAttributes[attributeId]?.itemId === itemId ? "selected" : ""
         }`}
-        style={{ backgroundColor: value }}
-        onClick={onClick ?? null}
-        data-testid={`product-attribute-${toKebabCase(attributeName)}-${displayValue}${
+        data-testid={`product-attribute-${toKebabCase(attributeName)}-${value}${
           selectedAttributes[attributeId]?.itemId === itemId ? "-selected" : ""
         }`}
+        onClick={onClick ?? null}
       >
-        <div
-          className={`AttributeItem AttributeItem-${capitalizeString(type)} ${
-            selectedAttributes[attributeId]?.itemId === itemId ? "selected" : ""
-          }`}
-          data-testid={`product-attribute-${toKebabCase(attributeName)}-${value}${
-            selectedAttributes[attributeId]?.itemId === itemId ? "-selected" : ""
-          }`}
-          onClick={onClick ?? null}
-        >
-          {displayValue}
-        </div>
+        {displayValue}
       </div>
     );
   }
