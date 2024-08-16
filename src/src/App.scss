@@ -33,10 +33,12 @@ body,
 
   .Overlay {
     &-Active {
+      padding-inline: 101px;
+
       position: absolute;
       height: calc(100% - 89px);
       width: 100%;
-      top: 89px;
+      top: 105px;
       bottom: 0;
       left: 0;
       background: #39374838;

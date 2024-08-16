@@ -26,19 +26,23 @@ class App extends Component {
                 />
 
                 <main>
-                  <div className={`Overlay ${context.isCartOverlayVisible ? "Overlay-Active" : ""}`} />
-                  <Switch>
-                    <Route exact path="/" render={() => <Redirect to="/all" />} />
-                    <Route path="/products/:productId">
-                      <ProductDetails />
-                    </Route>
-                    <Route path="/:categoryName">
-                      <ProductList
-                        selectedCategory={context.selectedCategory}
-                        updateSelectedCategory={context.updateSelectedCategory}
-                      />
-                    </Route>
-                  </Switch>
+                  <div
+                    className={`Overlay ${context.isCartOverlayVisible ? "Overlay-Active" : ""}`}
+                    data-testid="cart-overlay"
+                  >
+                    <Switch>
+                      <Route exact path="/" render={() => <Redirect to="/all" />} />
+                      <Route path="/products/:productId">
+                        <ProductDetails />
+                      </Route>
+                      <Route path="/:categoryName">
+                        <ProductList
+                          selectedCategory={context.selectedCategory}
+                          updateSelectedCategory={context.updateSelectedCategory}
+                        />
+                      </Route>
+                    </Switch>
+                  </div>
                 </main>
               </BrowserRouter>
             </div>
