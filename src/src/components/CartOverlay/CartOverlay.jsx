@@ -50,7 +50,7 @@ class CartOverlay extends Component {
           storeCurrency: { currencySymbol },
           emptyCart,
         }) => (
-          <div className="CartOverlay">
+          <div className="CartOverlay" data-testid="cart-overlay">
             <span>{this.renderItemsCount(itemsCount)}</span>
             <div className="CartOverlay-CartList">
               {products?.map((product) => (
