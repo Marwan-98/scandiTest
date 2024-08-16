@@ -20,11 +20,14 @@ class ProductListItem extends Component {
       return attribute;
     });
 
-    addToCart({
-      ...product,
-      quantity: 1,
-      selectedAttributes: selectedAttributes,
-    });
+    addToCart(
+      {
+        ...product,
+        quantity: 1,
+        selectedAttributes: selectedAttributes,
+      },
+      true
+    );
   }
 
   renderQuickShop(inStock, addProductToCart) {
