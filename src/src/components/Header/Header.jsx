@@ -33,7 +33,7 @@ class Header extends Component {
       this.setState({ categories: data.categories });
 
       const variables = {
-        currentCategoryName,
+        categoryName: currentCategoryName,
       };
 
       const { category } = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID, variables);

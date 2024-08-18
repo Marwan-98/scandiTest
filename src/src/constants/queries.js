@@ -56,7 +56,7 @@ export const CATEGORIES_LIST = gql`
 
 export const CATEGORY_BY_ID = gql`
   query Query($categoryName: String!) {
-    category(categoryName: $categoryName) {
+    category(id: $categoryName) {
       id
       name
     }
