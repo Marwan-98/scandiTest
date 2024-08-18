@@ -20,7 +20,7 @@ class CartOverlay extends Component {
     });
 
     const variables = {
-      input: {
+      order: {
         total: cartData.cartTotal,
         orderItems: orderItems,
       },
@@ -53,14 +53,15 @@ class CartOverlay extends Component {
           <div className="CartOverlay" data-testid="cart-overlay">
             <span>{this.renderItemsCount(itemsCount)}</span>
             <div className="CartOverlay-CartList">
-              {products?.map((product) => (
-                <CartListItem key={product.id} product={product} />
+              {products?.map((product, idx) => (
+                <CartListItem key={`${product.id}-${idx}`} product={product} />
               ))}
             </div>
             <div className="CartOverlay-Total">
               <span>Total:</span>
               <span data-testid="cart-total">
-                {currencySymbol} {cartTotal}
+                {currencySymbol}
+                {cartTotal}
               </span>
             </div>
             <Button

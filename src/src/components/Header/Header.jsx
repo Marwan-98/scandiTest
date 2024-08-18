@@ -32,7 +32,11 @@ class Header extends Component {
 
       this.setState({ categories: data.categories });
 
-      const { category } = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID(currentCategoryName));
+      const variables = {
+        currentCategoryName,
+      };
+
+      const { category } = await request(process.env.REACT_APP_BASE_URL, CATEGORY_BY_ID, variables);
 
       updateSelectedCategory(category);
     } catch (e) {

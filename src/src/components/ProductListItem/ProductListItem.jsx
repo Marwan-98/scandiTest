@@ -4,6 +4,7 @@ import "./ProductListItem.style.scss";
 import { DataContext } from "../../DataContext";
 import { toKebabCase } from "../../utils/toKebabCase";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import Price from "../Price/Price";
 
 class ProductListItem extends Component {
   quickShop(e, product, addToCart) {
@@ -61,8 +62,12 @@ class ProductListItem extends Component {
 
     return (
       <DataContext.Consumer>
-        {({ addProductToCart }) => (
-          <Link to={`/products/${id}`} className="ProductListItem" data-testid={`product-${toKebabCase(name)}`}>
+        {({ addProductToCart, storeCurrency: { currencyLabel } }) => (
+          <Link
+            to={`/products/${id}`}
+            className={`ProductListItem${!inStock ? " out-of-stock" : ""}`}
+            data-testid={`product-${toKebabCase(name)}`}
+          >
             <div className="ProductListItem-ImageContainer">
               {this.renderOutOfStock(inStock)}
               <div style={{ backgroundImage: `url(${gallery[0]})` }} alt="product" className="ProductListItem-Image" />
@@ -70,8 +75,8 @@ class ProductListItem extends Component {
             {this.renderQuickShop(inStock, addProductToCart)}
             <div className="ProductListItem-Details">
               <h3 className="ProductListItem-Details-Title">{name}</h3>
-              <span className="ProductListItem-Details-Price">
-                {prices[0].currency.symbol} {prices[0].amount}
+              <span className={`ProductListItem-Details-Price`}>
+                <Price prices={prices} currencyLabel={currencyLabel} />
               </span>
             </div>
           </Link>

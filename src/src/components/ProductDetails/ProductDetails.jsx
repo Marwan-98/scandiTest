@@ -27,7 +27,11 @@ class ProductDetails extends Component {
     try {
       const { match: { params: { productId } } = {} } = this.props;
 
-      const productData = await request(process.env.REACT_APP_BASE_URL, PRODUCT_DETAILS(productId));
+      const variables = {
+        productId,
+      };
+
+      const productData = await request(process.env.REACT_APP_BASE_URL, PRODUCT_DETAILS, variables);
 
       this.setState({ product: productData.product });
     } catch (e) {

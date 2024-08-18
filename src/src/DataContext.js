@@ -36,9 +36,7 @@ export class DataProvider extends Component {
   }
 
   updateCartOverlayVisibilty() {
-    setTimeout(() => {
-      this.setState({ isCartOverlayVisible: !this.state.isCartOverlayVisible });
-    }, 2000);
+    this.setState({ isCartOverlayVisible: !this.state.isCartOverlayVisible });
   }
 
   getProductPrice(prices) {
@@ -74,7 +72,7 @@ export class DataProvider extends Component {
             product.id === newProduct.id
         );
 
-        const newProducts = [...products, { ...newProduct }];
+        const newProducts = [...products, structuredClone(newProduct)];
 
         if (index === -1) {
           const newCartData = {

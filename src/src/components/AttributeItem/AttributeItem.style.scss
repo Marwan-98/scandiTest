@@ -2,8 +2,10 @@
   .AttributeItem {
     cursor: pointer;
     user-select: none;
+    margin-block-end: 16px;
 
     &-Text {
+      font-family: "Source Sans 3";
       min-height: 45px;
       min-width: 63px;
       display: flex;
@@ -13,8 +15,8 @@
       padding: 5px;
       font-size: 16px;
       font-weight: 400;
-      text-transform: none;
-      text-align: center;
+      line-height: 18px;
+      letter-spacing: 0.05em;
 
       &.selected {
         background-color: #1d1f22;

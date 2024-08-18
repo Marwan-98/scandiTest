@@ -20,7 +20,11 @@ class ProductList extends Component {
     try {
       const { match: { params: { categoryName } } = {} } = this.props;
 
-      const productData = await request(process.env.REACT_APP_BASE_URL, PRODUCT_BY_CATEGORY(categoryName));
+      const variables = {
+        categoryName,
+      };
+
+      const productData = await request(process.env.REACT_APP_BASE_URL, PRODUCT_BY_CATEGORY, variables);
 
       this.setState({ products: productData.products });
     } catch (e) {
@@ -69,7 +73,7 @@ class ProductList extends Component {
 
     return (
       <div className="ProductList">
-        <h1 className="ProductList-Heading">{name}</h1>
+        <h2 className="ProductList-Heading">{name}</h2>
         {this.renderProductList()}
       </div>
     );

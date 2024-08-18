@@ -72,13 +72,23 @@
 
   &-Details {
     font-size: 18px;
+    color: #1d1f22;
 
     &-Title {
       font-weight: 300;
     }
 
-    &-Price {
+    .Price-Details {
+      font-size: 18px;
       font-weight: 400;
+    }
+  }
+
+  &.out-of-stock {
+    .ProductListItem-Details {
+      &-Price {
+        color: #8d8f9a;
+      }
     }
   }
 

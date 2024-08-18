@@ -9,14 +9,16 @@
 }
 
 .Price {
+  font-weight: 700;
+
   &-Title {
+    font-family: "Roboto Condensed";
     font-size: 18px;
     text-transform: uppercase;
   }
 
   &-Details {
     font-size: 24px;
-    font-weight: 700;
     margin: 0;
   }
 }

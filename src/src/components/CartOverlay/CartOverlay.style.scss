@@ -147,5 +147,10 @@
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
+
+    &.disabled {
+      background-color: #8d8f9a;
+      cursor: not-allowed;
+    }
   }
 }

@@ -16,9 +16,9 @@ export const PRODUCTS_LIST = gql`
   }
 `;
 
-export const PRODUCT_DETAILS = (id) => gql`
-  query Query {
-    product(id: "${id}") {
+export const PRODUCT_DETAILS = gql`
+  query Query($productId: String!) {
+    product(id: $productId) {
       id
       name
       gallery
@@ -54,18 +54,18 @@ export const CATEGORIES_LIST = gql`
   }
 `;
 
-export const CATEGORY_BY_ID = (id) => gql`
-  query Query {
-    category(id: "${id}") {
+export const CATEGORY_BY_ID = gql`
+  query Query($categoryName: String!) {
+    category(categoryName: $categoryName) {
       id
       name
     }
   }
 `;
 
-export const PRODUCT_BY_CATEGORY = (id) => gql`
-  query Query {
-    products(categoryName: "${id}") {
+export const PRODUCT_BY_CATEGORY = gql`
+  query Query($categoryName: String!) {
+    products(categoryName: $categoryName) {
       id
       name
       inStock
@@ -92,7 +92,7 @@ export const PRODUCT_BY_CATEGORY = (id) => gql`
 `;
 
 export const PLACE_ORDER = gql`
-  mutation Mutation($input: Order!) {
-    createOrder(cartData: $input)
+  mutation Mutation($order: Order!) {
+    createOrder(cartData: $order)
   }
 `;
