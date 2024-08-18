@@ -22,7 +22,7 @@ export class AttributeItem extends Component {
             selectedAttributes[attributeId]?.itemId === itemId ? "selected" : ""
           }`}
           style={{ backgroundColor: value }}
-          onClick={onClick ?? null}
+          onClick={onClick}
           data-testid={`cart-item-attribute-${toKebabCase(attributeName)}-${displayValue}${
             selectedAttributes[attributeId]?.itemId === itemId ? "-selected" : ""
           }`}
@@ -40,7 +40,7 @@ export class AttributeItem extends Component {
         data-testid={`product-attribute-${toKebabCase(attributeName)}-${value}${
           selectedAttributes[attributeId]?.itemId === itemId ? "-selected" : ""
         }`}
-        onClick={onClick ?? null}
+        onClick={onClick}
         style={{
           backgroundColor: type === "swatch" ? value : "",
         }}

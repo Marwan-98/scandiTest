@@ -23,7 +23,6 @@ export class CartListItem extends Component {
                       key={attribute.id}
                       attribute={attribute}
                       selectedAttributes={selectedAttributes}
-                      updateSelectedAttributes={this.updateSelectedAttributes}
                       productId={productId}
                       isInCartList
                     />

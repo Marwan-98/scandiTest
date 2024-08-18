@@ -1,7 +1,7 @@
-
 # Scandiweb Test Assignment
 
 ## Table of Contents
+
 - [Overview](#overview)
 - [Description](#overview)
 - [Prerequisites](#prerequisites)
@@ -26,9 +26,7 @@ A simple eCommerce application consisting of two main views:
 
 2. Product Details Page (PDP)
 
-- These pages shows all Product details, images and desription, Allowing the user to configure it before adding it to the cart
-
-
+- These pages shows all Product details, images and description, Allowing the user to configure it before adding it to the cart
 
 ### Prerequisites
 
@@ -38,35 +36,34 @@ You only need [Docker](https://www.docker.com/get-started/) to install this app
 
 To get started, follow these steps:
 
-1. Clone the Repository:
+1.  Clone the Repository:
 
         git clone https://github.com/Marwan-98/scandiTest.git
 
-2. Navigate to your Project Directory
+2.  Navigate to your Project Directory
 
-3. Create `.env` file in the `root` directory containing the following variables
+3.  Create `.env` file in the `root` directory containing the following variables
 
         DB_SERVER_NAME="mysql"
         USER_NAME="root"
         PASSWORD="temppassword"
         DB_NAME="SCANDI_TEST"
 
-4. Create `.env` file in the `/src` directory containing the following variable
+4.  Create `.env` file in the `/src` directory containing the following variable
 
         REACT_APP_BASE_URL="http://localhost:8000/"
 
-5. Build your Docker Containers
+5.  Build your Docker Containers
 
         docker compose build
 
-6. Start Built Containers
+6.  Start Built Containers
 
         docker compose up -d
 
-7. Populate the Database
+7.  Populate the Database
 
         docker exec scandi-test-php php /var/www/database-setup.php
 
-8. Navigate to your localhost
-        
+8.  Navigate to your localhost
         http://localhost:3000/
